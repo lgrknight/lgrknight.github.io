@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>knight</title>
+  <subtitle>knight</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
+  <updated>2017-03-08T01:41:40.836Z</updated>
+  <id>https://github.com/lgrknight/lgrknight.github.io/</id>
+  
+  <author>
+    <name>knight</name>
+    <email>lgrknight@163.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>你好世界</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/08/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/08/你好世界/</id>
+    <published>2017-03-08T01:41:23.000Z</published>
+    <updated>2017-03-08T01:41:40.836Z</updated>
+    
+    <content type="html"><![CDATA[<p>你好世界</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;你好世界&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
