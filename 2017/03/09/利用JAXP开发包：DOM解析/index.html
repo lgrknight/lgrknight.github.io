@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        knight&#39;s blog
+        利用JAXP开发包：DOM解析｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/archives/2017/03/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -124,167 +124,142 @@
 
 <!-- Main Content -->
 
+<!--only post-->
 
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://omhz9w11z.bkt.clouddn.com/icon.jpg"/>
-                        <h5><a href="/about/">knight</a></h5>
-                        <p>求知若饥 虚心若愚</p>
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>利用JAXP开发包：DOM解析</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2017-03-09
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#xml"
+                           title="xml">xml</a>
+                        
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2017/03/09/利用JAXP开发包：DOM解析/">
-        <h2 class="post-title">
+    <div class="post-title-haojen">
+        <span>
             利用JAXP开发包：DOM解析
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-09
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                解析方式：（W3C
-
-DOM：Document Object Model文档对象模型
-Node：节点
-Document：代表整棵树
-Element:元素
-Attr：属性（只有元素才有属性）
-Text：文本
-
-
-有点：增删改查方便，简单
-缺点：需要读取整个xml才能构建DOM树。对于比较大的xml..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="http://omhz9w11z.bkt.clouddn.com/icon.jpg"/>
-                    
-                    <h5><a href="/about/">knight</a></h5>
-                    
-                    <p>求知若饥 虚心若愚</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://twitter.com/ehazon">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-            <section>
-                <div class="tags">
-                    
-                    
-                    
-                </div>
-            </section>
-            
-
-            
-
-        </div>
+        </span>
     </div>
-</div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><strong>解析方式：（W3C</strong></p>
+<ul>
+<li>DOM：Document Object Model文档对象模型<ul>
+<li>Node：节点<ul>
+<li>Document：代表整棵树</li>
+<li>Element:元素</li>
+<li>Attr：属性（只有元素才有属性）</li>
+<li>Text：文本</li>
+</ul>
+</li>
+<li>有点：增删改查方便，简单</li>
+<li>缺点：需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出。</li>
+</ul>
+</li>
+<li>SAX：Simpl API for Xml</li>
+</ul>
+<p><strong>常用的XML解析器：</strong><br> <code>JAXP</code>、<code>Dom4J</code>、<code>JDom</code></p>
+<p><strong>JAXP:</strong></p>
+<ul>
+<li>存在JDK中，SUN公司提供。</li>
+<li>Java API for XML Processing=JAXP</li>
+<li>由以下包：</li>
+<li>org.w3c.dom:标准和规范（学习规范）</li>
+<li>javax.xml:具体的实现</li>
+</ul>
+<p><strong>演示：JAXP对LocList进行DOM方式的解析</strong><br>    //得到解析器，通过解析器加载XML文件，得到代表这个xml的Document对象<br>    //具体做法<br>    //得到创建解析器的工厂：DocumentBuilderFactory<br>    <code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</code><br>    //通过工厂得到解析器：DocumentBuilder<br>    <code>DocumentBuilder builder = factory.newDocumentBuilder();</code><br>    //加载xml文件：得到了Document对象<br>    <code>Document document = builder.parse(&quot;src/LocList.xml&quot;);</code> //向上转型</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#xml"
+                           title="xml">xml</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
