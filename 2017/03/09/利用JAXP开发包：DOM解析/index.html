@@ -201,9 +201,45 @@
 <li>org.w3c.dom:标准和规范（学习规范）</li>
 <li>javax.xml:具体的实现</li>
 </ul>
-<p><strong>演示：JAXP对LocList进行DOM方式的解析</strong><br>    //得到解析器，通过解析器加载XML文件，得到代表这个xml的Document对象<br>    //具体做法<br>    //得到创建解析器的工厂：DocumentBuilderFactory<br>    <code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</code><br>    //通过工厂得到解析器：DocumentBuilder<br>    <code>DocumentBuilder builder = factory.newDocumentBuilder();</code><br>    //加载xml文件：得到了Document对象<br>    <code>Document document = builder.parse(&quot;src/LocList.xml&quot;);</code> //向上转型</p>
+<p><strong>演示：JAXP对LocList进行DOM方式的解析</strong></p>
+<ul>
+<li><p>//得到解析器，通过解析器加载XML文件，得到代表这个xml的Document对象<br>  //具体做法</p>
+<ul>
+<li>//得到创建解析器的工厂：DocumentBuilderFactory<br><code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</code></li>
+<li>//通过工厂得到解析器：DocumentBuilder<br><code>DocumentBuilder builder = factory.newDocumentBuilder();</code></li>
+<li>//加载xml文件：得到了Document对象<br><code>Document document = builder.parse(&quot;src/LocList.xml&quot;);</code> //向上转型</li>
+</ul>
+</li>
+<li><p>进行一些元素操作之后，会有把内存中的Document写入xml文件的需求<br>//具体做法<br><code>TransformerFactory tf = TransformerFactory.newInstance();</code><br><code>Transformer ts = tf.newTransformer();</code><br><code>ts.transform(new DOMSource(document), new StreamResult(&quot;src/LocList.xml&quot;));</code></p>
+</li>
+</ul>
 
                 <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/03/09/利用JAXP开发包：DOM解析/"
+                     data-title="利用JAXP开发包：DOM解析"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/http://omhz9w11z.bkt.clouddn.com/flower.JPG"
+                     data-content="解析方式：（W3C
+
+DOM：Document Object Model文档对象模型
+Node... | knight&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
                 
 
                 <ul class="pager">
@@ -211,6 +247,16 @@
                     
                 </ul>
 
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/03/09/利用JAXP开发包：DOM解析/"
+                         data-title="利用JAXP开发包：DOM解析"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
                 
 
                 
@@ -256,6 +302,25 @@
     </div>
 </article>
 
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'http://lgrknight.duoshuo.com/';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
 
 
 
