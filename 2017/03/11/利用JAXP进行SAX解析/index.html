@@ -190,56 +190,56 @@
 <li><p>// 解析文档<br><code>reader.parse(&quot;src/book.xml&quot;);</code></p>
 </li>
 <li><p>内容处理器</p>
-<p>  class MyContentHandler implements ContentHandler {</p>
-<pre><code>public void startDocument() throws SAXException {
-System.out.println(&quot;读到了文档的开始&quot;);
-}
+<pre><code>class MyContentHandler implements ContentHandler {
 
-public void endDocument() throws SAXException {
-System.out.println(&quot;读到了文档的结束&quot;);
-}
+    public void startDocument() throws SAXException {
+        System.out.println(&quot;读到了文档的开始&quot;);
+    }
 
-public void startElement(String uri, String localName, String qName,
+    public void endDocument() throws SAXException {
+        System.out.println(&quot;读到了文档的结束&quot;);
+    }
+
+    public void startElement(String uri, String localName, String qName,
     Attributes atts) throws SAXException {
-System.out.println(&quot;读到了元素的开始：&quot;+qName);
-}
+        System.out.println(&quot;读到了元素的开始：&quot;+qName);
+    }
 
-public void endElement(String uri, String localName, String qName)
-    throws SAXException {
-System.out.println(&quot;读到了元素的结束：&quot;+qName);
-}
+    public void endElement(String uri, String localName, String qName)
+            throws SAXException {
+        System.out.println(&quot;读到了元素的结束：&quot;+qName);
+    }
 
-public void characters(char[] ch, int start, int length)
-    throws SAXException {
-System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
-}
+    public void characters(char[] ch, int start, int length)throws SAXException {
+        System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
+    }
 
-public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator(Locator locator) {
 
-}
+    }
 
-public void startPrefixMapping(String prefix, String uri)
-    throws SAXException {
+    public void startPrefixMapping(String prefix, String uri)
+        throws SAXException {
 
-}
+    }
 
-public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(String prefix) throws SAXException {
 
-}
+    }
 
-public void ignorableWhitespace(char[] ch, int start, int length)
-    throws SAXException {
+    public void ignorableWhitespace(char[] ch, int start, int length)
+        throws SAXException {
 
-}
+    }
 
-public void processingInstruction(String target, String data)
-    throws SAXException {
+    public void processingInstruction(String target, String data)
+        throws SAXException {
 
-}
+    }
 
-public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity(String name) throws SAXException {
 
-}
+    }
 </code></pre><p>  }</p>
 </li>
 </ul>
@@ -327,6 +327,15 @@ public void skippedEntity(String name) throws SAXException {
                 
 
                 <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jokerliang.cn/">JokerLiang</a></li>
+                        
+                    </ul>
+                </div>
                 
             </div>
         </div>
