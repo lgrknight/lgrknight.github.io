@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        knight&#39;s blog
+        利用JAXP进行SAX解析｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/archives/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -124,195 +124,239 @@
 
 <!-- Main Content -->
 
+<!--only post-->
 
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://omhz9w11z.bkt.clouddn.com/icon.jpg"/>
-                        <h5><a href="/about/">knight</a></h5>
-                        <p>求知若饥 虚心若愚</p>
+
+<img class="wechat-title-img"
+     src="http://omhz9w11z.bkt.clouddn.com/flower.JPG">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/flower.JPG')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>利用JAXP进行SAX解析</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2017-03-11
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#xml"
+                           title="xml">xml</a>
+                        
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2017/03/11/利用JAXP进行SAX解析/">
-        <h2 class="post-title">
+    <div class="post-title-haojen">
+        <span>
             利用JAXP进行SAX解析
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-11
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。
+        </span>
+    </div>
+</header>
 
-SAX：Simple API for XML。来自开..
-            </p>
-        </div>
-    </a>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。</p>
+<ul>
+<li>SAX：Simple API for XML。来自开源社区。</li>
+<li>原理：<br><img src="http://i.imgur.com/MzzYlaV.png" alt=""><br>SAX解析是读到XML文档的每一部分，就立刻进行解析。调用对应处理器的响应方法。</li>
+</ul>
+<p><strong>//理解SAX解析的原理</strong></p>
+<ul>
+<li>// 得到创建解析器的工厂<br><code>SAXParserFactory spf = SAXParserFactory.newInstance();</code></li>
+<li>// 得到解析器<br><code>SAXParser parser = spf.newSAXParser();</code></li>
+<li>// 得到读取器<br><code>XMLReader reader = parser.getXMLReader();</code></li>
+<li>// 给读取器注册内容处理器（ContentHandler）<br><code>reader.setContentHandler(new MyContentHandler());</code></li>
+<li><p>// 解析文档<br><code>reader.parse(&quot;src/book.xml&quot;);</code></p>
+</li>
+<li><p>内容处理器</p>
+<p>  class MyContentHandler implements ContentHandler {</p>
+<pre><code>public void startDocument() throws SAXException {
+System.out.println(&quot;读到了文档的开始&quot;);
+}
 
-</div>
+public void endDocument() throws SAXException {
+System.out.println(&quot;读到了文档的结束&quot;);
+}
 
-<hr>
+public void startElement(String uri, String localName, String qName,
+    Attributes atts) throws SAXException {
+System.out.println(&quot;读到了元素的开始：&quot;+qName);
+}
 
+public void endElement(String uri, String localName, String qName)
+    throws SAXException {
+System.out.println(&quot;读到了元素的结束：&quot;+qName);
+}
 
+public void characters(char[] ch, int start, int length)
+    throws SAXException {
+System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
+}
 
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2017/03/09/利用JAXP开发包：DOM解析/">
-        <h2 class="post-title">
-            利用JAXP开发包：DOM解析
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-09
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                解析方式：（W3C
+public void setDocumentLocator(Locator locator) {
 
-DOM：Document Object Model文档对象模型
-Node：节点
-Document：代表整棵树
-Element:元素
-Attr：属性（只有元素才有属性）
-Text：文本
+}
 
+public void startPrefixMapping(String prefix, String uri)
+    throws SAXException {
 
-有点：增删改查方便，简单
-缺点：需要读取整个xml才能构建DOM树。对于比较大的xml..
-            </p>
-        </div>
-    </a>
+}
 
-</div>
+public void endPrefixMapping(String prefix) throws SAXException {
 
-<hr>
+}
 
+public void ignorableWhitespace(char[] ch, int start, int length)
+    throws SAXException {
 
+}
 
+public void processingInstruction(String target, String data)
+    throws SAXException {
 
-<!-- 翻页 pager -->
+}
 
-<ul class="pager">
-    
-    
+public void skippedEntity(String name) throws SAXException {
+
+}
+</code></pre><p>  }</p>
+</li>
 </ul>
 
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="http://omhz9w11z.bkt.clouddn.com/icon.jpg"/>
-                    
-                    <h5><a href="/about/">knight</a></h5>
-                    
-                    <p>求知若饥 虚心若愚</p>
-                    
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/03/11/利用JAXP进行SAX解析/"
+                     data-title="利用JAXP进行SAX解析"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/"
+                     data-images=""
+                     data-content="昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解... | knight&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
                     <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://twitter.com/ehazon">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/lgrknight">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
                 </div>
-            </section>
+                <!-- 多说 Share end-->
+                
 
-            <!-- Featured Tags  标签 -->
-            
-            <section>
-                <div class="tags">
+                <ul class="pager">
                     
                     
-                    <a href="/tags/#xml" title="xml"
-                       rel="2">xml</a>
+                    <li class="next">
+                        <a href="/2017/03/09/利用JAXP开发包：DOM解析/" data-toggle="tooltip" data-placement="top"
+                           title="利用JAXP开发包：DOM解析">Next Post &rarr;</a>
+                    </li>
                     
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/03/11/利用JAXP进行SAX解析/"
+                         data-title="利用JAXP进行SAX解析"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
                     
                 </div>
-            </section>
-            
-
-            
-
+            </div>
         </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#xml"
+                           title="xml">xml</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
-</div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'http://lgrknight.duoshuo.com/';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
