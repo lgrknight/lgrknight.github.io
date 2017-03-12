@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-11T06:29:28.748Z</updated>
+  <updated>2017-03-12T11:00:00.221Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -16,11 +16,128 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>HTTP协议</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/</id>
+    <published>2017-03-11T10:37:39.000Z</published>
+    <updated>2017-03-12T11:00:00.221Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>1、HTTP协议概述</strong></p>
+<ul>
+<li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
+<li>HTTP1.0:每次发出请求都需要建立网络连接</li>
+<li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
+<li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
+</ul>
+<p><strong>2、HTTP协议的组成</strong></p>
+<ul>
+<li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
+<li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
+</ul>
+<p><strong>3、请求部分详解</strong></p>
+<ul>
+<li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
+<pre><code>      username=abc&amp;password=123
+         提交的数据在请求正文中的，相对安全，长度没有限制。
+
+/app1/1.html ：请求的资源地址。（URI）
+       URL：协议+主机：端口+资源地址
+              http://localhost:8080/app1/1.html
+</code></pre><p>HTTP/1.1:客户端浏览器使用的协议的版本。</p>
+</li>
+</ul>
+<ul>
+<li>3.2请求消息头：（做好笔记，记住常用的头）<ul>
+<li>作用：向服务器端传递附加信息（暗号指令）</li>
+<li>Accept:告知服务器，客户端可以接受的数据类型（MIME类型）</li>
+<li>文件系统：通过文件的扩展名区分不同的文件的。txt jpeg</li>
+<li>MIME类型：大类型/小类型。  txt—&gt;text/plain   html—-&gt;text/html js—-&gt;text/javascript (具体对应关系：Tomcat\conf\web.xml) </li>
+<li>Accept-Encoding：告知服务器，客户端可以接受的压缩编码。比如gzip</li>
+<li>Accept-Language：告知服务器，客户端支持的语言</li>
+<li>Referer：告知服务器，从哪个页面过来的。<ul>
+<li>作用：统计广告的投放效果；防止盗链。</li>
+</ul>
+</li>
+<li>Content-Type：告知服务器，请求正文的MIME类型<ul>
+<li>默认类型：application/x-www-form-urlencoded(表单enctype属性的默认取值)</li>
+<li>具体体现：username=abc&amp;password=123</li>
+<li>其他类型：multipart/form-data(文件上传时用的)</li>
+</ul>
+</li>
+<li>If-Modified-Since：告知服务器，当前访问的资源，缓存中的文件的最后修改时间。</li>
+<li>User-Agent:告知服务器，浏览器的类型</li>
+<li>Content-Length：请求正文的数据长度</li>
+<li>Cookie：（<strong>*</strong>重要）会话管理有关</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
+</ul>
+<p><strong>4、响应部分详解</strong></p>
+<ul>
+<li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
+<ul>
+<li>HTTP/1.1 ：说明服务器端用的协议版本</li>
+<li>200 ：响应状态码</li>
+<li>1XX 2XX 3XX 4XX 5XX</li>
+<li>2XX:处理完毕</li>
+<li>4XX：请求有误</li>
+<li>5XX：服务器有误</li>
+<li>记住常用的响应码：<ul>
+<li>200：一切正常</li>
+<li>302/307:请求重定向</li>
+<li>304：服务器上的资源没有发生改变</li>
+<li>404：访问的地址不存在</li>
+<li>500：服务器端错误</li>
+<li>OK：响应吗描述</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>4.2响应消息头：</p>
+<ul>
+<li>作用：服务器端向客户端传递的附加信息（暗号指令）</li>
+<li>Location：告知客户端，你去访问的地址。<br>和302/307实现请求重定向</li>
+<li>Content-Encoding：告知客户端，响应正文使用的压缩编码（gzip）</li>
+<li>Content-Length:告知客户端，响应正文的长度</li>
+<li>Content-Type：告知客户端，响应文正的MIME类型。默认text/html</li>
+<li>Refresh:告知客户端，定时刷新</li>
+<li>Content-Disposition：告知客户端，用下载的方式打开<br>attachment;filename=23.jpg</li>
+<li><p>Set-Cookie:(<strong>*</strong>)会话有关</p>
+</li>
+<li><p>Expires: -1 控制时间的</p>
+</li>
+<li>Cache-Control: no-cache (1.1) </li>
+<li>Pragma: no-cache   (1.0)<br>三头一块用，用于告知浏览器，不要缓存。</li>
+</ul>
+</li>
+<li><p>4.3响应正文：<br>浏览器解析的正文内容，右键查看源码一样的</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;1、HTTP协议概述&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTTP是什么？超文本传输协议。&lt;br&gt;描述客户端和服务器端的数据标准，该协议由W3C维护和管理。&lt;br&gt;版本：&lt;/li&gt;
+&lt;li&gt;HTTP1.0:每次发出请求都需要建立网络连接&lt;/li&gt;
+&lt;
+    
+    </summary>
+    
+    
+      <category term="http" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/http/"/>
+    
+  </entry>
+  
+  <entry>
     <title>利用JAXP进行SAX解析</title>
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/%E5%88%A9%E7%94%A8JAXP%E8%BF%9B%E8%A1%8CSAX%E8%A7%A3%E6%9E%90/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/</id>
     <published>2017-03-10T16:03:44.000Z</published>
-    <updated>2017-03-11T06:29:28.748Z</updated>
+    <updated>2017-03-12T10:36:03.332Z</updated>
     
     <content type="html"><![CDATA[<p>昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。</p>
 <ul>
@@ -109,7 +226,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/%E5%88%A9%E7%94%A8JAXP%E5%BC%80%E5%8F%91%E5%8C%85%EF%BC%9ADOM%E8%A7%A3%E6%9E%90/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/</id>
     <published>2017-03-09T14:31:47.000Z</published>
-    <updated>2017-03-11T05:58:13.597Z</updated>
+    <updated>2017-03-12T10:35:58.110Z</updated>
     
     <content type="html"><![CDATA[<p><strong>解析方式：（W3C</strong></p>
 <ul>
