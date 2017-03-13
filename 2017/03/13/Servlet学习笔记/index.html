@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        HTTP协议｜knight&#39;s blog
+        Servlet学习笔记｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>HTTP协议</h1>
+                    <h1>Servlet学习笔记</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-03-11
+                          日期 2017-03-13
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#http"
-                           title="http">http</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            HTTP协议
+            Servlet学习笔记
         </span>
     </div>
 </header>
@@ -176,97 +176,141 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p><strong>1、HTTP协议概述</strong></p>
-<ul>
-<li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
-<li>HTTP1.0:每次发出请求都需要建立网络连接</li>
-<li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
-<li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
+                <p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
+<h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
+<li>Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） </li>
+<li>Servlet中的方法<br><code>public void service(ServletRequest req,ServletResponse res)
+throws ServletException,java.io.IOException</code><br><code>ServletRequest req:</code>代表着请求对象，该对象中有HTTP协议的请求部分的所有内容。它的实现类由服务器提供的，封装数据也是服务器来做的。<br><code>ServletResponse res：</code>代表着响应对象，该对象中由我们写数据（HTTP协议的响应部分）进去。它的实现类也是由服务器提供的。</li>
+<li>执行过程<br><img src="http://i.imgur.com/7aMDTvN.png" alt=""></li>
 </ul>
-<p><strong>2、HTTP协议的组成</strong></p>
+<h2 id="2、关于Servlet的一些类"><a href="#2、关于Servlet的一些类" class="headerlink" title="2、关于Servlet的一些类"></a>2、关于Servlet的一些类</h2><ul>
+<li><p>Servlet接口</p>
 <ul>
-<li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
-<li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
+<li>定义了所有Servlet需要实现的方法</li>
+<li>它定义了init destory service等方法</li>
+<li>为了解决基于请求-响应模型的数据处理（没有涉及与HTTP协议相关的API）</li>
 </ul>
-<p><strong>3、请求部分详解</strong></p>
+</li>
+<li><p>GenericServlet抽象类</p>
 <ul>
-<li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
-<pre><code>      username=abc&amp;password=123
-         提交的数据在请求正文中的，相对安全，长度没有限制。
+<li>它是Servlet接口的实现类</li>
+<li>它扩展了一些方法</li>
+<li>也没有涉及与HTTP协议相关的API</li>
+</ul>
+</li>
+<li><p>HttpServlet抽象类</p>
+<ul>
+<li>它继承于GenericServlet</li>
+<li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
+<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。</li>
+</ul>
+</li>
+<li><p>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</p>
+</li>
+</ul>
+<h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
+<li>生命周期<ol>
+<li>实例化：Servlet 容器创建 Servlet 的实例</li>
+<li>初始化 ：该容器调用 init 方法</li>
+<li>请求处理：如果请求 Servlet，则容器调用 service 方法</li>
+<li>服务终止：销毁实例之前调用 destroy 方法</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>其中，init方法只有在Servlet第一次被请求加载时被调用一次，当有客户再请求Servlet服务时，web服务器将启动一个新的线程，在该线程中，调用service方法响应客户的请求。<br><strong>一个Servlet可以配置多个url-pattern</strong></p>
+<ul>
+<li>URL 配置格式 三种：<ol>
+<li>完全路径匹配 (以/开始 ) 例如：/hello/init </li>
+<li>目录匹配 (以/开始) 例如：/<em> 、 /abc/</em><br><code>/</code> 代表网站根目录<br><code>/*</code>表示任何路径都可以匹配到这个Servlet<br><code>/abc/*</code>表示abc目录下的任何路径都可以匹配到这个Servlet</li>
+<li>扩展名 (不能以/开始) 例如：<em>.do、 </em>.action</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>优先级：完全匹配&gt;目录匹配 &gt; 扩展名匹配 </li>
+</ul>
+<h2 id="4、ServletConfig获得初始化参数"><a href="#4、ServletConfig获得初始化参数" class="headerlink" title="4、ServletConfig获得初始化参数"></a>4、ServletConfig获得初始化参数</h2><ul>
+<li>init方法中的ServletConfig对象<ul>
+<li>getInitParameter（String)—— 通过name获得value</li>
+<li>getInitParameterNames() —– 获得所有name </li>
+</ul>
+</li>
+<li>结论：子类Servlet不需要覆写init(ServletConfig), 只需要通过GenericServlet中 getServletConfig()方法来获得ServletConfig对象。<blockquote>
+<p>ServletConfig 配置初始化数据，只能在配置Servlet获得，其它Servlet无法获得 —– 每个Servlet程序都对应一个ServletConfig对象 </p>
+</blockquote>
+</li>
+</ul>
+<h2 id="5、web引用对象——ServletContext"><a href="#5、web引用对象——ServletContext" class="headerlink" title="5、web引用对象——ServletContext"></a>5、web引用对象——ServletContext</h2><ul>
+<li>web容器在启动时，它会为每一个web应用创建一个ServletContext对象，这个对象代表当前web应用。</li>
+<li>操作ServletContext必须通过ServletConfig获得对象。可以通过ServletConfig.getServletContext方法来获得ServletContext对象。</li>
+<li><p>由于一个web应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。<br><strong>应用：</strong></p>
+<ol>
+<li>获得整个web应用初始化参数</li>
+</ol>
+<ul>
+<li>和ServletConfig对象有什么不同？<br>如果用ServletConfig对象配置参数，只对配置的Servlet有效，如果通过ServletContext对象配置参数，所有的Servlet都可以访问。</li>
+<li>配置方法，在web.xml中添加如下格式的代码：</li>
+<li>获得 hobby 全局参数：<br>  // 通过ServletConfig 获得 ServletContext<pre><code>`ServletContext context = getServletConfig().getServletContext();`
+// 上面写法可以简化一下
+`ServletContext context = getServletContext();`
+// 读取全局初始化参数
+`System.out.println(context.getInitParameter(&quot;hobby&quot;));`
+</code></pre></li>
+</ul>
+<ol>
+<li>实现全局数据共享</li>
+</ol>
+<ul>
+<li>预期效果：在ServletContext中 保存站点访问次数 ，每当一个用户访问站点，将访问次数+1。所有Servlet都可以获得该数据</li>
+<li>在CountServlet 初始化过程中，向ServletContext 保存访问次数为0。<br>利用<code>ServletContext.setAttribute(&quot;KEY&quot;,&quot;VALUE&quot;);</code></li>
+<li><p>代码实现(只显示init方法和doGet方法：</p>
+<pre><code>public void init() throws ServletException {
+    // 向ServletContext 保存访问次数 0
+    // 获得ServletContext对象
+    ServletContext context = getServletContext();
+    // 保存数据 setAttribute
+    context.setAttribute(&quot;visittimes&quot;, 0);
 
-/app1/1.html ：请求的资源地址。（URI）
-       URL：协议+主机：端口+资源地址
-              http://localhost:8080/app1/1.html
-</code></pre><p>HTTP/1.1:客户端浏览器使用的协议的版本。</p>
-</li>
+}
+
+public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    // 每次访问 执行 doGet --- 将visittimes 次数 +1
+
+    // 1、从ServletContext中获得 访问次数
+    ServletContext context = getServletContext();
+    int times = (Integer) context.getAttribute(&quot;visittimes&quot;);
+
+    // 2、访问次数 +1
+    times++;
+
+    // 3、将访问次数更新回去 ServletContext
+    context.setAttribute(&quot;visittimes&quot;, times);
+
+    System.out.println(&quot;网站被访问了一次！&quot;);
+}
+</code></pre></li>
 </ul>
-<ul>
-<li>3.2请求消息头：（做好笔记，记住常用的头）<ul>
-<li>作用：向服务器端传递附加信息（暗号指令）</li>
-<li>Accept:告知服务器，客户端可以接受的数据类型（MIME类型）</li>
-<li>文件系统：通过文件的扩展名区分不同的文件的。txt jpeg</li>
-<li>MIME类型：大类型/小类型。  txt—&gt;text/plain   html—-&gt;text/html js—-&gt;text/javascript (具体对应关系：Tomcat\conf\web.xml) </li>
-<li>Accept-Encoding：告知服务器，客户端可以接受的压缩编码。比如gzip</li>
-<li>Accept-Language：告知服务器，客户端支持的语言</li>
-<li>Referer：告知服务器，从哪个页面过来的。<ul>
-<li>作用：统计广告的投放效果；防止盗链。</li>
-</ul>
-</li>
-<li>Content-Type：告知服务器，请求正文的MIME类型<ul>
-<li>默认类型：application/x-www-form-urlencoded(表单enctype属性的默认取值)</li>
-<li>具体体现：username=abc&amp;password=123</li>
-<li>其他类型：multipart/form-data(文件上传时用的)</li>
-</ul>
-</li>
-<li>If-Modified-Since：告知服务器，当前访问的资源，缓存中的文件的最后修改时间。</li>
-<li>User-Agent:告知服务器，浏览器的类型</li>
-<li>Content-Length：请求正文的数据长度</li>
-<li>Cookie：（<strong>*</strong>重要）会话管理有关</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
-</ul>
-<p><strong>4、响应部分详解</strong></p>
-<ul>
-<li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
-<ul>
-<li>HTTP/1.1 ：说明服务器端用的协议版本</li>
-<li>200 ：响应状态码</li>
-<li>1XX 2XX 3XX 4XX 5XX</li>
-<li>2XX:处理完毕</li>
-<li>4XX：请求有误</li>
-<li>5XX：服务器有误</li>
-<li>记住常用的响应码：<ul>
-<li>200：一切正常</li>
-<li>302/307:请求重定向</li>
-<li>304：服务器上的资源没有发生改变</li>
-<li>404：访问的地址不存在</li>
-<li>500：服务器端错误</li>
-<li>OK：响应吗描述</li>
+<ol>
+<li>实现服务器端转发功能（少见，现在多用request、response）</li>
+<li>读取web工程资源文件（必须使用绝对磁盘路径）<ul>
+<li>使用java application 读取文件，读取当前工程下所有文件 —– 使用相对路径读取文件。</li>
+<li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
+<li>如何获得绝对磁盘路径？<ul>
+<li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
+<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
+<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
+<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
+<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
+<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>4.2响应消息头：</p>
-<ul>
-<li>作用：服务器端向客户端传递的附加信息（暗号指令）</li>
-<li>Location：告知客户端，你去访问的地址。<br>和302/307实现请求重定向</li>
-<li>Content-Encoding：告知客户端，响应正文使用的压缩编码（gzip）</li>
-<li>Content-Length:告知客户端，响应正文的长度</li>
-<li>Content-Type：告知客户端，响应文正的MIME类型。默认text/html</li>
-<li>Refresh:告知客户端，定时刷新</li>
-<li>Content-Disposition：告知客户端，用下载的方式打开<br>attachment;filename=23.jpg</li>
-<li><p>Set-Cookie:(<strong>*</strong>)会话有关</p>
-</li>
-<li><p>Expires: -1 控制时间的</p>
-</li>
-<li>Cache-Control: no-cache (1.1) </li>
-<li>Pragma: no-cache   (1.0)<br>三头一块用，用于告知浏览器，不要缓存。</li>
 </ul>
 </li>
-<li><p>4.3响应正文：<br>浏览器解析的正文内容，右键查看源码一样的</p>
+</ol>
 </li>
 </ul>
 
@@ -275,13 +319,11 @@
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/11/HTTP协议/"
-                     data-title="HTTP协议"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/backgroud3.jpg"
-                     data-content="1、HTTP协议概述
-
-HTTP是什么？超文本传输协议。描述客户端和服务器端的数据标准，该协议... | knight&#39;s blog ">
+                     data-thread-key="2017/03/13/Servlet学习笔记/"
+                     data-title="Servlet学习笔记"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/backgroud5.jpg"
+                     data-content="这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -299,15 +341,10 @@ HTTP是什么？超文本传输协议。描述客户端和服务器端的数据�
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/13/Servlet学习笔记/" data-toggle="tooltip" data-placement="top"
-                           title="Servlet学习笔记">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/11/利用JAXP进行SAX解析/" data-toggle="tooltip" data-placement="top"
-                           title="利用JAXP进行SAX解析">Next Post &rarr;</a>
+                        <a href="/2017/03/11/HTTP协议/" data-toggle="tooltip" data-placement="top"
+                           title="HTTP协议">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -316,9 +353,9 @@ HTTP是什么？超文本传输协议。描述客户端和服务器端的数据�
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/11/HTTP协议/"
-                         data-title="HTTP协议"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/">
+                         data-thread-key="2017/03/13/Servlet学习笔记/"
+                         data-title="Servlet学习笔记"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -330,7 +367,7 @@ HTTP是什么？超文本传输协议。描述客户端和服务器端的数据�
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、Servlet简介"><span class="toc-text">1、Servlet简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、关于Servlet的一些类"><span class="toc-text">2、关于Servlet的一些类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Servlet生命周期"><span class="toc-text">3、Servlet生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、ServletConfig获得初始化参数"><span class="toc-text">4、ServletConfig获得初始化参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、web引用对象——ServletContext"><span class="toc-text">5、web引用对象——ServletContext</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、缺省Servlet"><span class="toc-text">6、缺省Servlet</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -352,8 +389,8 @@ HTTP是什么？超文本传输协议。描述客户端和服务器端的数据�
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#http"
-                           title="http">http</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </section>

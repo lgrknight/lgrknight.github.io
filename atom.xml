@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-12T11:00:00.221Z</updated>
+  <updated>2017-03-13T14:59:03.873Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,164 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Servlet学习笔记</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/</id>
+    <published>2017-03-13T12:43:20.000Z</published>
+    <updated>2017-03-13T14:59:03.873Z</updated>
+    
+    <content type="html"><![CDATA[<p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
+<h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
+<li>Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） </li>
+<li>Servlet中的方法<br><code>public void service(ServletRequest req,ServletResponse res)
+throws ServletException,java.io.IOException</code><br><code>ServletRequest req:</code>代表着请求对象，该对象中有HTTP协议的请求部分的所有内容。它的实现类由服务器提供的，封装数据也是服务器来做的。<br><code>ServletResponse res：</code>代表着响应对象，该对象中由我们写数据（HTTP协议的响应部分）进去。它的实现类也是由服务器提供的。</li>
+<li>执行过程<br><img src="http://i.imgur.com/7aMDTvN.png" alt=""></li>
+</ul>
+<h2 id="2、关于Servlet的一些类"><a href="#2、关于Servlet的一些类" class="headerlink" title="2、关于Servlet的一些类"></a>2、关于Servlet的一些类</h2><ul>
+<li><p>Servlet接口</p>
+<ul>
+<li>定义了所有Servlet需要实现的方法</li>
+<li>它定义了init destory service等方法</li>
+<li>为了解决基于请求-响应模型的数据处理（没有涉及与HTTP协议相关的API）</li>
+</ul>
+</li>
+<li><p>GenericServlet抽象类</p>
+<ul>
+<li>它是Servlet接口的实现类</li>
+<li>它扩展了一些方法</li>
+<li>也没有涉及与HTTP协议相关的API</li>
+</ul>
+</li>
+<li><p>HttpServlet抽象类</p>
+<ul>
+<li>它继承于GenericServlet</li>
+<li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
+<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。</li>
+</ul>
+</li>
+<li><p>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</p>
+</li>
+</ul>
+<h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
+<li>生命周期<ol>
+<li>实例化：Servlet 容器创建 Servlet 的实例</li>
+<li>初始化 ：该容器调用 init 方法</li>
+<li>请求处理：如果请求 Servlet，则容器调用 service 方法</li>
+<li>服务终止：销毁实例之前调用 destroy 方法</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>其中，init方法只有在Servlet第一次被请求加载时被调用一次，当有客户再请求Servlet服务时，web服务器将启动一个新的线程，在该线程中，调用service方法响应客户的请求。<br><strong>一个Servlet可以配置多个url-pattern</strong></p>
+<ul>
+<li>URL 配置格式 三种：<ol>
+<li>完全路径匹配 (以/开始 ) 例如：/hello/init </li>
+<li>目录匹配 (以/开始) 例如：/<em> 、 /abc/</em><br><code>/</code> 代表网站根目录<br><code>/*</code>表示任何路径都可以匹配到这个Servlet<br><code>/abc/*</code>表示abc目录下的任何路径都可以匹配到这个Servlet</li>
+<li>扩展名 (不能以/开始) 例如：<em>.do、 </em>.action</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>优先级：完全匹配&gt;目录匹配 &gt; 扩展名匹配 </li>
+</ul>
+<h2 id="4、ServletConfig获得初始化参数"><a href="#4、ServletConfig获得初始化参数" class="headerlink" title="4、ServletConfig获得初始化参数"></a>4、ServletConfig获得初始化参数</h2><ul>
+<li>init方法中的ServletConfig对象<ul>
+<li>getInitParameter（String)—— 通过name获得value</li>
+<li>getInitParameterNames() —– 获得所有name </li>
+</ul>
+</li>
+<li>结论：子类Servlet不需要覆写init(ServletConfig), 只需要通过GenericServlet中 getServletConfig()方法来获得ServletConfig对象。<blockquote>
+<p>ServletConfig 配置初始化数据，只能在配置Servlet获得，其它Servlet无法获得 —– 每个Servlet程序都对应一个ServletConfig对象 </p>
+</blockquote>
+</li>
+</ul>
+<h2 id="5、web引用对象——ServletContext"><a href="#5、web引用对象——ServletContext" class="headerlink" title="5、web引用对象——ServletContext"></a>5、web引用对象——ServletContext</h2><ul>
+<li>web容器在启动时，它会为每一个web应用创建一个ServletContext对象，这个对象代表当前web应用。</li>
+<li>操作ServletContext必须通过ServletConfig获得对象。可以通过ServletConfig.getServletContext方法来获得ServletContext对象。</li>
+<li><p>由于一个web应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。<br><strong>应用：</strong></p>
+<ol>
+<li>获得整个web应用初始化参数</li>
+</ol>
+<ul>
+<li>和ServletConfig对象有什么不同？<br>如果用ServletConfig对象配置参数，只对配置的Servlet有效，如果通过ServletContext对象配置参数，所有的Servlet都可以访问。</li>
+<li>配置方法，在web.xml中添加如下格式的代码：</li>
+<li>获得 hobby 全局参数：<br>  // 通过ServletConfig 获得 ServletContext<pre><code>`ServletContext context = getServletConfig().getServletContext();`
+// 上面写法可以简化一下
+`ServletContext context = getServletContext();`
+// 读取全局初始化参数
+`System.out.println(context.getInitParameter(&quot;hobby&quot;));`
+</code></pre></li>
+</ul>
+<ol>
+<li>实现全局数据共享</li>
+</ol>
+<ul>
+<li>预期效果：在ServletContext中 保存站点访问次数 ，每当一个用户访问站点，将访问次数+1。所有Servlet都可以获得该数据</li>
+<li>在CountServlet 初始化过程中，向ServletContext 保存访问次数为0。<br>利用<code>ServletContext.setAttribute(&quot;KEY&quot;,&quot;VALUE&quot;);</code></li>
+<li><p>代码实现(只显示init方法和doGet方法：</p>
+<pre><code>public void init() throws ServletException {
+    // 向ServletContext 保存访问次数 0
+    // 获得ServletContext对象
+    ServletContext context = getServletContext();
+    // 保存数据 setAttribute
+    context.setAttribute(&quot;visittimes&quot;, 0);
+
+}
+
+public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    // 每次访问 执行 doGet --- 将visittimes 次数 +1
+
+    // 1、从ServletContext中获得 访问次数
+    ServletContext context = getServletContext();
+    int times = (Integer) context.getAttribute(&quot;visittimes&quot;);
+
+    // 2、访问次数 +1
+    times++;
+
+    // 3、将访问次数更新回去 ServletContext
+    context.setAttribute(&quot;visittimes&quot;, times);
+
+    System.out.println(&quot;网站被访问了一次！&quot;);
+}
+</code></pre></li>
+</ul>
+<ol>
+<li>实现服务器端转发功能（少见，现在多用request、response）</li>
+<li>读取web工程资源文件（必须使用绝对磁盘路径）<ul>
+<li>使用java application 读取文件，读取当前工程下所有文件 —– 使用相对路径读取文件。</li>
+<li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
+<li>如何获得绝对磁盘路径？<ul>
+<li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
+<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
+<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
+<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
+<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
+<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。&lt;/p&gt;
+&lt;h2 id=&quot;1、Servlet简介&quot;&gt;&lt;a href=&quot;#1、Servlet简介&quot; class=&quot;headerlink&quot; tit
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
   
   <entry>
     <title>HTTP协议</title>
