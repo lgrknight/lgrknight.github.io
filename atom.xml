@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-14T14:08:25.501Z</updated>
+  <updated>2017-03-14T14:13:19.631Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request%E5%92%8CResponse%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/</id>
     <published>2017-03-14T11:29:30.000Z</published>
-    <updated>2017-03-14T14:08:25.501Z</updated>
+    <updated>2017-03-14T14:13:19.631Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出的文字时又是满满的感动。</p>
@@ -513,7 +513,10 @@ public class RequestDemo4 extends HttpServlet {
 <h3 id="转发和包含的小细节："><a href="#转发和包含的小细节：" class="headerlink" title="转发和包含的小细节："></a>转发和包含的小细节：</h3><p>转发：</p>
 <ul>
 <li>转发前后，源输出的任何响应正文无效</li>
-<li>转发前会清空响应对象中的正文内容<br>包含：</li>
+<li>转发前会清空响应对象中的正文内容</li>
+</ul>
+<p>包含：</p>
+<ul>
 <li>只会包含目标的正文，头部信息包含前清空</li>
 </ul>
 ]]></content>

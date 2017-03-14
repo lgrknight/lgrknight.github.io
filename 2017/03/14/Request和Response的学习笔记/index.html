@@ -667,7 +667,10 @@ public class RequestDemo4 extends HttpServlet {
 <h3 id="转发和包含的小细节："><a href="#转发和包含的小细节：" class="headerlink" title="转发和包含的小细节："></a>转发和包含的小细节：</h3><p>转发：</p>
 <ul>
 <li>转发前后，源输出的任何响应正文无效</li>
-<li>转发前会清空响应对象中的正文内容<br>包含：</li>
+<li>转发前会清空响应对象中的正文内容</li>
+</ul>
+<p>包含：</p>
+<ul>
 <li>只会包含目标的正文，头部信息包含前清空</li>
 </ul>
 
