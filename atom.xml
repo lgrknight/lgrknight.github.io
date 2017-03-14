@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-14T00:06:29.241Z</updated>
+  <updated>2017-03-14T00:09:03.338Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/</id>
     <published>2017-03-13T12:43:20.000Z</published>
-    <updated>2017-03-14T00:06:29.241Z</updated>
+    <updated>2017-03-14T00:09:03.338Z</updated>
     
     <content type="html"><![CDATA[<p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
 <h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
@@ -144,19 +144,19 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
 <li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
 <li>如何获得绝对磁盘路径？<ul>
 <li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
-<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
-<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
-<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
-<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
-<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
-</ul>
-</li>
+<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
 </li>
+</ul>
+<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
+<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
+<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
+<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
+<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
 </ul>
 ]]></content>
     
@@ -177,22 +177,19 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/</id>
     <published>2017-03-11T10:37:39.000Z</published>
-    <updated>2017-03-12T11:00:00.221Z</updated>
+    <updated>2017-03-14T00:11:01.362Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>1、HTTP协议概述</strong></p>
-<ul>
+    <content type="html"><![CDATA[<h2 id="1、HTTP协议概述"><a href="#1、HTTP协议概述" class="headerlink" title="1、HTTP协议概述"></a>1、HTTP协议概述</h2><ul>
 <li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
 <li>HTTP1.0:每次发出请求都需要建立网络连接</li>
 <li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
 <li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
 </ul>
-<p><strong>2、HTTP协议的组成</strong></p>
-<ul>
+<h2 id="2、HTTP协议的组成"><a href="#2、HTTP协议的组成" class="headerlink" title="2、HTTP协议的组成"></a>2、HTTP协议的组成</h2><ul>
 <li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
 <li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
 </ul>
-<p><strong>3、请求部分详解</strong></p>
-<ul>
+<h2 id="3、请求部分详解"><a href="#3、请求部分详解" class="headerlink" title="3、请求部分详解"></a>3、请求部分详解</h2><ul>
 <li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
 <pre><code>      username=abc&amp;password=123
          提交的数据在请求正文中的，相对安全，长度没有限制。
@@ -231,8 +228,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
 <ul>
 <li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
 </ul>
-<p><strong>4、响应部分详解</strong></p>
-<ul>
+<h2 id="4、响应部分详解"><a href="#4、响应部分详解" class="headerlink" title="4、响应部分详解"></a>4、响应部分详解</h2><ul>
 <li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
 <ul>
 <li>HTTP/1.1 ：说明服务器端用的协议版本</li>
@@ -276,11 +272,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;1、HTTP协议概述&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;HTTP是什么？超文本传输协议。&lt;br&gt;描述客户端和服务器端的数据标准，该协议由W3C维护和管理。&lt;br&gt;版本：&lt;/li&gt;
-&lt;li&gt;HTTP1.0:每次发出请求都需要建立网络连接&lt;/li&gt;
-&lt;
+      &lt;h2 id=&quot;1、HTTP协议概述&quot;&gt;&lt;a href=&quot;#1、HTTP协议概述&quot; class=&quot;headerlink&quot; title=&quot;1、HTTP协议概述&quot;&gt;&lt;/a&gt;1、HTTP协议概述&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HTTP是什么？超文本传输协议。&lt;br&gt;描述客户端和服务器端的数
     
     </summary>
     

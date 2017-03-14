@@ -298,19 +298,19 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
 <li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
 <li>如何获得绝对磁盘路径？<ul>
 <li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
-<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
-<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
-<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
-<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
-<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
-</ul>
-</li>
+<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
 </li>
+</ul>
+<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
+<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
+<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
+<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
+<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
 </ul>
 
                 <hr>

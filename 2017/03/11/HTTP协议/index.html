@@ -176,20 +176,17 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p><strong>1、HTTP协议概述</strong></p>
-<ul>
+                <h2 id="1、HTTP协议概述"><a href="#1、HTTP协议概述" class="headerlink" title="1、HTTP协议概述"></a>1、HTTP协议概述</h2><ul>
 <li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
 <li>HTTP1.0:每次发出请求都需要建立网络连接</li>
 <li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
 <li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
 </ul>
-<p><strong>2、HTTP协议的组成</strong></p>
-<ul>
+<h2 id="2、HTTP协议的组成"><a href="#2、HTTP协议的组成" class="headerlink" title="2、HTTP协议的组成"></a>2、HTTP协议的组成</h2><ul>
 <li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
 <li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
 </ul>
-<p><strong>3、请求部分详解</strong></p>
-<ul>
+<h2 id="3、请求部分详解"><a href="#3、请求部分详解" class="headerlink" title="3、请求部分详解"></a>3、请求部分详解</h2><ul>
 <li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
 <pre><code>      username=abc&amp;password=123
          提交的数据在请求正文中的，相对安全，长度没有限制。
@@ -228,8 +225,7 @@
 <ul>
 <li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
 </ul>
-<p><strong>4、响应部分详解</strong></p>
-<ul>
+<h2 id="4、响应部分详解"><a href="#4、响应部分详解" class="headerlink" title="4、响应部分详解"></a>4、响应部分详解</h2><ul>
 <li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
 <ul>
 <li>HTTP/1.1 ：说明服务器端用的协议版本</li>
@@ -280,8 +276,7 @@
                      data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/"
                      data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/backgroud3.jpg"
                      data-content="1、HTTP协议概述
-
-HTTP是什么？超文本传输协议。描述客户端和服务器端的数据标准，该协议... | knight&#39;s blog ">
+HTTP是什么？超文本传输协议。描述客户端和服务器端的数据标准，该协议由... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -330,7 +325,7 @@ HTTP是什么？超文本传输协议。描述客户端和服务器端的数据�
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、HTTP协议概述"><span class="toc-text">1、HTTP协议概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、HTTP协议的组成"><span class="toc-text">2、HTTP协议的组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、请求部分详解"><span class="toc-text">3、请求部分详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、响应部分详解"><span class="toc-text">4、响应部分详解</span></a></li></ol>
                 </div>
             </div>
         </div>
