@@ -202,11 +202,10 @@ throws ServletException,java.io.IOException</code><br><code>ServletRequest req:<
 <ul>
 <li>它继承于GenericServlet</li>
 <li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
-<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。</li>
+<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。<br><img src="http://i.imgur.com/5Dy9rMH.png" alt=""></li>
 </ul>
 </li>
-<li><p>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</p>
-</li>
+<li>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</li>
 </ul>
 <h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
 <li>生命周期<ol>
