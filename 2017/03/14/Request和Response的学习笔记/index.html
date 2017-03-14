@@ -1,28 +1,182 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>knight</title>
-  <subtitle>knight</subtitle>
-  <link href="/atom.xml" rel="self"/>
-  
-  <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-14T14:08:25.501Z</updated>
-  <id>https://github.com/lgrknight/lgrknight.github.io/</id>
-  
-  <author>
-    <name>knight</name>
-    <email>lgrknight@163.com</email>
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Request和Response的学习笔记</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request%E5%92%8CResponse%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/</id>
-    <published>2017-03-14T11:29:30.000Z</published>
-    <updated>2017-03-14T14:08:25.501Z</updated>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="李广儒在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://omhz9w11z.bkt.clouddn.com/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="knight" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Request和Response的学习笔记｜knight&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/flower.JPG')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    knight
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud4.jpg">
+
+
+<style>
     
-    <content type="html"><![CDATA[<blockquote>
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud4.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Request和Response的学习笔记</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2017-03-14
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Request和Response的学习笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
 <p>今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出的文字时又是满满的感动。</p>
 </blockquote>
 <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><ul>
@@ -516,437 +670,265 @@ public class RequestDemo4 extends HttpServlet {
 <li>转发前会清空响应对象中的正文内容<br>包含：</li>
 <li>只会包含目标的正文，头部信息包含前清空</li>
 </ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出
-    
-    </summary>
-    
-    
-      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Servlet学习笔记</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/</id>
-    <published>2017-03-13T12:43:20.000Z</published>
-    <updated>2017-03-14T00:09:03.338Z</updated>
-    
-    <content type="html"><![CDATA[<p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
-<h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
-<li>Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） </li>
-<li>Servlet中的方法<br><code>public void service(ServletRequest req,ServletResponse res)
-throws ServletException,java.io.IOException</code><br><code>ServletRequest req:</code>代表着请求对象，该对象中有HTTP协议的请求部分的所有内容。它的实现类由服务器提供的，封装数据也是服务器来做的。<br><code>ServletResponse res：</code>代表着响应对象，该对象中由我们写数据（HTTP协议的响应部分）进去。它的实现类也是由服务器提供的。</li>
-<li>执行过程<br><img src="http://i.imgur.com/7aMDTvN.png" alt=""></li>
-</ul>
-<h2 id="2、关于Servlet的一些类"><a href="#2、关于Servlet的一些类" class="headerlink" title="2、关于Servlet的一些类"></a>2、关于Servlet的一些类</h2><ul>
-<li><p>Servlet接口</p>
-<ul>
-<li>定义了所有Servlet需要实现的方法</li>
-<li>它定义了init destory service等方法</li>
-<li>为了解决基于请求-响应模型的数据处理（没有涉及与HTTP协议相关的API）</li>
-</ul>
-</li>
-<li><p>GenericServlet抽象类</p>
-<ul>
-<li>它是Servlet接口的实现类</li>
-<li>它扩展了一些方法</li>
-<li>也没有涉及与HTTP协议相关的API</li>
-</ul>
-</li>
-<li><p>HttpServlet抽象类</p>
-<ul>
-<li>它继承于GenericServlet</li>
-<li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
-<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。<br><img src="http://i.imgur.com/5Dy9rMH.png" alt=""></li>
-</ul>
-</li>
-<li>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</li>
-</ul>
-<h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
-<li>生命周期<ol>
-<li>实例化：Servlet 容器创建 Servlet 的实例</li>
-<li>初始化 ：该容器调用 init 方法</li>
-<li>请求处理：如果请求 Servlet，则容器调用 service 方法</li>
-<li>服务终止：销毁实例之前调用 destroy 方法</li>
-</ol>
-</li>
-</ul>
-<blockquote>
-<p>其中，init方法只有在Servlet第一次被请求加载时被调用一次，当有客户再请求Servlet服务时，web服务器将启动一个新的线程，在该线程中，调用service方法响应客户的请求。<br><strong>一个Servlet可以配置多个url-pattern</strong></p>
-<ul>
-<li>URL 配置格式 三种：<ol>
-<li>完全路径匹配 (以/开始 ) 例如：/hello/init </li>
-<li>目录匹配 (以/开始) 例如：/<em> 、 /abc/</em><br><code>/</code> 代表网站根目录<br><code>/*</code>表示任何路径都可以匹配到这个Servlet<br><code>/abc/*</code>表示abc目录下的任何路径都可以匹配到这个Servlet</li>
-<li>扩展名 (不能以/开始) 例如：<em>.do、 </em>.action</li>
-</ol>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li>优先级：完全匹配&gt;目录匹配 &gt; 扩展名匹配 </li>
-</ul>
-<h2 id="4、ServletConfig获得初始化参数"><a href="#4、ServletConfig获得初始化参数" class="headerlink" title="4、ServletConfig获得初始化参数"></a>4、ServletConfig获得初始化参数</h2><ul>
-<li>init方法中的ServletConfig对象<ul>
-<li>getInitParameter（String)—— 通过name获得value</li>
-<li>getInitParameterNames() —– 获得所有name </li>
-</ul>
-</li>
-<li>结论：子类Servlet不需要覆写init(ServletConfig), 只需要通过GenericServlet中 getServletConfig()方法来获得ServletConfig对象。<blockquote>
-<p>ServletConfig 配置初始化数据，只能在配置Servlet获得，其它Servlet无法获得 —– 每个Servlet程序都对应一个ServletConfig对象 </p>
-</blockquote>
-</li>
-</ul>
-<h2 id="5、web引用对象——ServletContext"><a href="#5、web引用对象——ServletContext" class="headerlink" title="5、web引用对象——ServletContext"></a>5、web引用对象——ServletContext</h2><ul>
-<li>web容器在启动时，它会为每一个web应用创建一个ServletContext对象，这个对象代表当前web应用。</li>
-<li>操作ServletContext必须通过ServletConfig获得对象。可以通过ServletConfig.getServletContext方法来获得ServletContext对象。</li>
-<li><p>由于一个web应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。<br><strong>应用：</strong></p>
-<ol>
-<li>获得整个web应用初始化参数</li>
-</ol>
-<ul>
-<li>和ServletConfig对象有什么不同？<br>如果用ServletConfig对象配置参数，只对配置的Servlet有效，如果通过ServletContext对象配置参数，所有的Servlet都可以访问。</li>
-<li>配置方法，在web.xml中添加如下格式的代码：</li>
-<li>获得 hobby 全局参数：<br>  // 通过ServletConfig 获得 ServletContext<pre><code>`ServletContext context = getServletConfig().getServletContext();`
-// 上面写法可以简化一下
-`ServletContext context = getServletContext();`
-// 读取全局初始化参数
-`System.out.println(context.getInitParameter(&quot;hobby&quot;));`
-</code></pre></li>
-</ul>
-<ol>
-<li>实现全局数据共享</li>
-</ol>
-<ul>
-<li>预期效果：在ServletContext中 保存站点访问次数 ，每当一个用户访问站点，将访问次数+1。所有Servlet都可以获得该数据</li>
-<li>在CountServlet 初始化过程中，向ServletContext 保存访问次数为0。<br>利用<code>ServletContext.setAttribute(&quot;KEY&quot;,&quot;VALUE&quot;);</code></li>
-<li><p>代码实现(只显示init方法和doGet方法：</p>
-<pre><code>public void init() throws ServletException {
-    // 向ServletContext 保存访问次数 0
-    // 获得ServletContext对象
-    ServletContext context = getServletContext();
-    // 保存数据 setAttribute
-    context.setAttribute(&quot;visittimes&quot;, 0);
 
-}
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/03/14/Request和Response的学习笔记/"
+                     data-title="Request和Response的学习笔记"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/backgroud4.jpg"
+                     data-content="
+今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是... | knight&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
 
-public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-    // 每次访问 执行 doGet --- 将visittimes 次数 +1
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/13/Servlet学习笔记/" data-toggle="tooltip" data-placement="top"
+                           title="Servlet学习笔记">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
 
-    // 1、从ServletContext中获得 访问次数
-    ServletContext context = getServletContext();
-    int times = (Integer) context.getAttribute(&quot;visittimes&quot;);
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/03/14/Request和Response的学习笔记/"
+                         data-title="Request和Response的学习笔记"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
 
-    // 2、访问次数 +1
-    times++;
+                
 
-    // 3、将访问次数更新回去 ServletContext
-    context.setAttribute(&quot;visittimes&quot;, times);
+            </div>
 
-    System.out.println(&quot;网站被访问了一次！&quot;);
-}
-</code></pre></li>
-</ul>
-<ol>
-<li>实现服务器端转发功能（少见，现在多用request、response）</li>
-<li>读取web工程资源文件（必须使用绝对磁盘路径）<ul>
-<li>使用java application 读取文件，读取当前工程下所有文件 —– 使用相对路径读取文件。</li>
-<li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
-<li>如何获得绝对磁盘路径？<ul>
-<li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
-<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
-<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
-<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
-<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
-<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。&lt;/p&gt;
-&lt;h2 id=&quot;1、Servlet简介&quot;&gt;&lt;a href=&quot;#1、Servlet简介&quot; class=&quot;headerlink&quot; tit
-    
-    </summary>
-    
-    
-      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HTTP协议</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/</id>
-    <published>2017-03-11T10:37:39.000Z</published>
-    <updated>2017-03-14T00:11:01.362Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、HTTP协议概述"><a href="#1、HTTP协议概述" class="headerlink" title="1、HTTP协议概述"></a>1、HTTP协议概述</h2><ul>
-<li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
-<li>HTTP1.0:每次发出请求都需要建立网络连接</li>
-<li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
-<li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
-</ul>
-<h2 id="2、HTTP协议的组成"><a href="#2、HTTP协议的组成" class="headerlink" title="2、HTTP协议的组成"></a>2、HTTP协议的组成</h2><ul>
-<li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
-<li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
-</ul>
-<h2 id="3、请求部分详解"><a href="#3、请求部分详解" class="headerlink" title="3、请求部分详解"></a>3、请求部分详解</h2><ul>
-<li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
-<pre><code>      username=abc&amp;password=123
-         提交的数据在请求正文中的，相对安全，长度没有限制。
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、简介"><span class="toc-text">一、简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、HttpServletResponse-响应对象"><span class="toc-text">二、HttpServletResponse 响应对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、字节流向客户端输出中文数据"><span class="toc-text">1、字节流向客户端输出中文数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、字符流输出中文数据"><span class="toc-text">2、字符流输出中文数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、输出随机验证码图片：CAPTCHA图像"><span class="toc-text">3、输出随机验证码图片：CAPTCHA图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、控制客户端定时刷新"><span class="toc-text">4、控制客户端定时刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、控制缓存的时间"><span class="toc-text">5、控制缓存的时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、请求重定向"><span class="toc-text">6、请求重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、response细节"><span class="toc-text">7、response细节</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、HttpServletRequest-请求对象"><span class="toc-text">三、HttpServletRequest 请求对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1常用方法"><span class="toc-text">3.1常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1获得浏览器的信息"><span class="toc-text">3.1.1获得浏览器的信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2获得浏览器的请求头"><span class="toc-text">3.1.2获得浏览器的请求头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3获得浏览器请求参数（即浏览器提交的数据）"><span class="toc-text">3.1.3获得浏览器请求参数（即浏览器提交的数据）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-4请求参数的中文乱码问题"><span class="toc-text">3.1.4请求参数的中文乱码问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求重定向和请求转发的区别："><span class="toc-text">请求重定向和请求转发的区别：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发和包含的小细节："><span class="toc-text">转发和包含的小细节：</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
 
-/app1/1.html ：请求的资源地址。（URI）
-       URL：协议+主机：端口+资源地址
-              http://localhost:8080/app1/1.html
-</code></pre><p>HTTP/1.1:客户端浏览器使用的协议的版本。</p>
-</li>
-</ul>
-<ul>
-<li>3.2请求消息头：（做好笔记，记住常用的头）<ul>
-<li>作用：向服务器端传递附加信息（暗号指令）</li>
-<li>Accept:告知服务器，客户端可以接受的数据类型（MIME类型）</li>
-<li>文件系统：通过文件的扩展名区分不同的文件的。txt jpeg</li>
-<li>MIME类型：大类型/小类型。  txt—&gt;text/plain   html—-&gt;text/html js—-&gt;text/javascript (具体对应关系：Tomcat\conf\web.xml) </li>
-<li>Accept-Encoding：告知服务器，客户端可以接受的压缩编码。比如gzip</li>
-<li>Accept-Language：告知服务器，客户端支持的语言</li>
-<li>Referer：告知服务器，从哪个页面过来的。<ul>
-<li>作用：统计广告的投放效果；防止盗链。</li>
-</ul>
-</li>
-<li>Content-Type：告知服务器，请求正文的MIME类型<ul>
-<li>默认类型：application/x-www-form-urlencoded(表单enctype属性的默认取值)</li>
-<li>具体体现：username=abc&amp;password=123</li>
-<li>其他类型：multipart/form-data(文件上传时用的)</li>
-</ul>
-</li>
-<li>If-Modified-Since：告知服务器，当前访问的资源，缓存中的文件的最后修改时间。</li>
-<li>User-Agent:告知服务器，浏览器的类型</li>
-<li>Content-Length：请求正文的数据长度</li>
-<li>Cookie：（<strong>*</strong>重要）会话管理有关</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
-</ul>
-<h2 id="4、响应部分详解"><a href="#4、响应部分详解" class="headerlink" title="4、响应部分详解"></a>4、响应部分详解</h2><ul>
-<li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
-<ul>
-<li>HTTP/1.1 ：说明服务器端用的协议版本</li>
-<li>200 ：响应状态码</li>
-<li>1XX 2XX 3XX 4XX 5XX</li>
-<li>2XX:处理完毕</li>
-<li>4XX：请求有误</li>
-<li>5XX：服务器有误</li>
-<li>记住常用的响应码：<ul>
-<li>200：一切正常</li>
-<li>302/307:请求重定向</li>
-<li>304：服务器上的资源没有发生改变</li>
-<li>404：访问的地址不存在</li>
-<li>500：服务器端错误</li>
-<li>OK：响应吗描述</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>4.2响应消息头：</p>
-<ul>
-<li>作用：服务器端向客户端传递的附加信息（暗号指令）</li>
-<li>Location：告知客户端，你去访问的地址。<br>和302/307实现请求重定向</li>
-<li>Content-Encoding：告知客户端，响应正文使用的压缩编码（gzip）</li>
-<li>Content-Length:告知客户端，响应正文的长度</li>
-<li>Content-Type：告知客户端，响应文正的MIME类型。默认text/html</li>
-<li>Refresh:告知客户端，定时刷新</li>
-<li>Content-Disposition：告知客户端，用下载的方式打开<br>attachment;filename=23.jpg</li>
-<li><p>Set-Cookie:(<strong>*</strong>)会话有关</p>
-</li>
-<li><p>Expires: -1 控制时间的</p>
-</li>
-<li>Cache-Control: no-cache (1.1) </li>
-<li>Pragma: no-cache   (1.0)<br>三头一块用，用于告知浏览器，不要缓存。</li>
-</ul>
-</li>
-<li><p>4.3响应正文：<br>浏览器解析的正文内容，右键查看源码一样的</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1、HTTP协议概述&quot;&gt;&lt;a href=&quot;#1、HTTP协议概述&quot; class=&quot;headerlink&quot; title=&quot;1、HTTP协议概述&quot;&gt;&lt;/a&gt;1、HTTP协议概述&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;HTTP是什么？超文本传输协议。&lt;br&gt;描述客户端和服务器端的数
-    
-    </summary>
-    
-    
-      <category term="http" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/http/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用JAXP进行SAX解析</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/%E5%88%A9%E7%94%A8JAXP%E8%BF%9B%E8%A1%8CSAX%E8%A7%A3%E6%9E%90/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/</id>
-    <published>2017-03-10T16:03:44.000Z</published>
-    <updated>2017-03-12T10:36:03.332Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。</p>
-<ul>
-<li>SAX：Simple API for XML。来自开源社区。</li>
-<li>原理：<br><img src="http://i.imgur.com/MzzYlaV.png" alt=""><br>SAX解析是读到XML文档的每一部分，就立刻进行解析。调用对应处理器的响应方法。</li>
-</ul>
-<p><strong>//理解SAX解析的原理</strong></p>
-<ul>
-<li>// 得到创建解析器的工厂<br><code>SAXParserFactory spf = SAXParserFactory.newInstance();</code></li>
-<li>// 得到解析器<br><code>SAXParser parser = spf.newSAXParser();</code></li>
-<li>// 得到读取器<br><code>XMLReader reader = parser.getXMLReader();</code></li>
-<li>// 给读取器注册内容处理器（ContentHandler）<br><code>reader.setContentHandler(new MyContentHandler());</code></li>
-<li><p>// 解析文档<br><code>reader.parse(&quot;src/book.xml&quot;);</code></p>
-</li>
-<li><p>内容处理器</p>
-<pre><code>class MyContentHandler implements ContentHandler {
+        <div class="row">
+            <!-- Sidebar Container -->
 
-    public void startDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的开始&quot;);
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jokerliang.cn/">JokerLiang</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'lgrknight';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/ehazon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; knight 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
     }
+</script>
 
-    public void endDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的结束&quot;);
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://github.com/lgrknight/lgrknight.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
     }
+</script>
 
-    public void startElement(String uri, String localName, String qName,
-    Attributes atts) throws SAXException {
-        System.out.println(&quot;读到了元素的开始：&quot;+qName);
-    }
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
 
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
-        System.out.println(&quot;读到了元素的结束：&quot;+qName);
-    }
+<!-- Google Analytics -->
 
-    public void characters(char[] ch, int start, int length)throws SAXException {
-        System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
-    }
 
-    public void setDocumentLocator(Locator locator) {
 
-    }
+<!-- Baidu Tongji -->
 
-    public void startPrefixMapping(String prefix, String uri)
-        throws SAXException {
 
-    }
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-    public void endPrefixMapping(String prefix) throws SAXException {
+  _st('install','null','2.0.0');
+</script>
 
-    }
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    public void ignorableWhitespace(char[] ch, int start, int length)
-        throws SAXException {
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://omhz9w11z.bkt.clouddn.com/icon.jpg">
+</body>
 
-    }
-
-    public void processingInstruction(String target, String data)
-        throws SAXException {
-
-    }
-
-    public void skippedEntity(String name) throws SAXException {
-
-    }
-</code></pre><p>  }</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SAX
-    
-    </summary>
-    
-    
-      <category term="xml" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/xml/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用JAXP开发包：DOM解析</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/09/%E5%88%A9%E7%94%A8JAXP%E5%BC%80%E5%8F%91%E5%8C%85%EF%BC%9ADOM%E8%A7%A3%E6%9E%90/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/09/利用JAXP开发包：DOM解析/</id>
-    <published>2017-03-09T14:31:47.000Z</published>
-    <updated>2017-03-12T10:35:58.110Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>解析方式：（W3C</strong></p>
-<ul>
-<li>DOM：Document Object Model文档对象模型<ul>
-<li>Node：节点<ul>
-<li>Document：代表整棵树</li>
-<li>Element:元素</li>
-<li>Attr：属性（只有元素才有属性）</li>
-<li>Text：文本</li>
-</ul>
-</li>
-<li>有点：增删改查方便，简单</li>
-<li>缺点：需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出。</li>
-</ul>
-</li>
-<li>SAX：Simpl API for Xml</li>
-</ul>
-<p><strong>常用的XML解析器：</strong><br> <code>JAXP</code>、<code>Dom4J</code>、<code>JDom</code></p>
-<p><strong>JAXP:</strong></p>
-<ul>
-<li>存在JDK中，SUN公司提供。</li>
-<li>Java API for XML Processing=JAXP</li>
-<li>由以下包：</li>
-<li>org.w3c.dom:标准和规范（学习规范）</li>
-<li>javax.xml:具体的实现</li>
-</ul>
-<p><strong>演示：JAXP对LocList进行DOM方式的解析</strong></p>
-<ul>
-<li><p>//得到解析器，通过解析器加载XML文件，得到代表这个xml的Document对象<br>  //具体做法</p>
-<ul>
-<li>//得到创建解析器的工厂：DocumentBuilderFactory<br><code>DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</code></li>
-<li>//通过工厂得到解析器：DocumentBuilder<br><code>DocumentBuilder builder = factory.newDocumentBuilder();</code></li>
-<li>//加载xml文件：得到了Document对象<br><code>Document document = builder.parse(&quot;src/LocList.xml&quot;);</code> //向上转型</li>
-</ul>
-</li>
-<li><p>进行一些元素操作之后，会有把内存中的Document写入xml文件的需求<br>//具体做法<br><code>TransformerFactory tf = TransformerFactory.newInstance();</code><br><code>Transformer ts = tf.newTransformer();</code><br><code>ts.transform(new DOMSource(document), new StreamResult(&quot;src/LocList.xml&quot;));</code></p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;解析方式：（W3C&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;DOM：Document Object Model文档对象模型&lt;ul&gt;
-&lt;li&gt;Node：节点&lt;ul&gt;
-&lt;li&gt;Document：代表整棵树&lt;/li&gt;
-&lt;li&gt;Element:元素&lt;/li&gt;
-&lt;
-    
-    </summary>
-    
-    
-      <category term="xml" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/xml/"/>
-    
-  </entry>
-  
-</feed>
+</html>
