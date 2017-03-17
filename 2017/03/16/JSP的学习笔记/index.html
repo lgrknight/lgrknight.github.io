@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="李广儒在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://omhz9w11z.bkt.clouddn.com/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="knight" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        JSP的学习笔记｜knight&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP的学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/flower.JPG')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    knight
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud1.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud1.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>JSP的学习笔记</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2017-03-16
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            JSP的学习笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h3 id="一、JSP简介"><a href="#一、JSP简介" class="headerlink" title="一、JSP简介"></a>一、JSP简介</h3><blockquote>
+<p>也是SUN公司推出的开发动态web资源的技术，属于JavaEE技术之一。由于原理上是Servlet， 所以JSP/Servlet在一起。</p>
+<h3 id="二、HTML、Servlet和JSP"><a href="#二、HTML、Servlet和JSP" class="headerlink" title="二、HTML、Servlet和JSP"></a>二、HTML、Servlet和JSP</h3><ul>
+<li>1、HTML：静态页面，不能包含java代码，只能有HTML有关的标记</li>
+<li>2、Servlet：写java代码，做页面的输出，不是很方便（开发效率很低）</li>
+<li>3、JSP：HTML+java</li>
+</ul>
+</blockquote>
+<h3 id="三、JSP的原理及生命周期"><a href="#三、JSP的原理及生命周期" class="headerlink" title="三、JSP的原理及生命周期"></a>三、JSP的原理及生命周期</h3><ul>
+<li>1、JSP就是Servlet，学习好JSP的关键（语法），时刻想到他对应的Servlet。<br><img src="http://i1.piimg.com/4851/538d9bbbb73148d7.png" alt=""></li>
+<li>时常翻阅JSP对应的Servlet源码<h3 id="四、JSP的语法"><a href="#四、JSP的语法" class="headerlink" title="四、JSP的语法"></a>四、JSP的语法</h3><h4 id="5-1模板元素"><a href="#5-1模板元素" class="headerlink" title="5.1模板元素"></a>5.1模板元素</h4></li>
+<li>指JSP中的那些HTML。开发时先编写模板元素，因为他们决定页面的外观。<h4 id="5-2Java程序片段"><a href="#5-2Java程序片段" class="headerlink" title="5.2Java程序片段"></a>5.2Java程序片段</h4>语法：&lt;%java程序%&gt;<br>出现在JSP对应Servlet的service方法中。<br>&lt;%声明的变量：局部%&gt;</li>
+</ul>
+<h4 id="5-3Java表达式"><a href="#5-3Java表达式" class="headerlink" title="5.3Java表达式"></a>5.3Java表达式</h4><p>语法：&lt;%=表达式%&gt;</p>
+<h4 id="5-4JSP声明"><a href="#5-4JSP声明" class="headerlink" title="5.4JSP声明"></a>5.4JSP声明</h4><p>语法：&lt;%!</p>
+<p>%&gt;<br>作用：定义JSP对应Serlvet的成员（变量和方法、静态方法）</p>
+<p>注意：开发中很少用。面试和考试经常考。</p>
+<h4 id="5-5JSP注释"><a href="#5-5JSP注释" class="headerlink" title="5.5JSP注释"></a>5.5JSP注释</h4><p>语法：&lt;%–这是注释–%&gt;</p>
+<p>作用：注释掉的代码，JSP引擎不会翻译到Servlet源码中。要注意和HTML注释的区别。</p>
+<h4 id="5-6JSP指令："><a href="#5-6JSP指令：" class="headerlink" title="5.6JSP指令："></a>5.6JSP指令：</h4><ul>
+<li><strong>简介：</strong><br>指令是为JSP引擎设计的。而只是告诉引擎如何处理JSP页面中的其余部分（非指令部分）；<br>基本语法格式：&lt;%@指令 属性1=”值1” ….%&gt;.<br>一般把指令放在JSP页面的顶部（不是必须的）<br>指令的属性可以写在一个指令的中，也可以分开写：比如：<br>&lt;%@指令 属性1=”值1” 属性2=”值2”%&gt;.<br>等价于：<br>&lt;%@指令 属性1=”值1” %&gt;.<br>&lt;%@指令 属性2=”值2”%&gt;</li>
+<li><strong>page：</strong></li>
+<li>属性：<br><code>language：</code>告知引擎，脚本用的是java。默认java，支持java。不写也行。<br><code>extends：</code>告知引擎，JSP对应的Servlet的父类是哪个。不需要写，也不要改。<br><code>*import：</code>告知引擎，导入哪些包。<br>注意：引擎自动导入：java.lang.<em>;javax.servlet.</em>;javax.servlet.http.<em>;javax.servlet.jsp.</em>;</li>
+</ul>
+<p>导入的形式：<br>&lt;%@page import=”java.util.Date,java.util.UUID”%&gt;或者：<br>&lt;%@page import=”java.util.Date”%&gt;<br>&lt;%@page import=”java.util.UUID”%&gt;  用Eclipse：Alt+/ 自动导入<br><code>*session:</code>告知引擎是否产生HttpSession对象，即是否在代码中调用request.getSession()。默认值true。<br>buffer：JspWriter用于输出JSP的内容到页面上。告知引擎，设定他的缓存大小。默认8Kb。<br><code>*errorPage：</code>告知引擎，当前页面出现了异常，应该转发到哪个页面上（路径写法：/代表着当前应用）<br>配置全局错误页面：web.xml<br><img src="http://i1.piimg.com/4851/b62efc127800cb3b.png" alt=""><br><code>*isErrorPage:</code>告知引擎，是否抓住异常。如果该属性为true，页面中就可以使用exception隐含对象，打印异常的详细信息。<br><code>*contentType：</code>告知引擎，响应正文的MIME类型。<br>contentType=”text/html;charset=UTF-8”<br>相当于response.setContentType(“&lt;%=exception.getMessage() %&gt;”);<br><code>*pageEncoding:</code>告知引擎，翻译JSP时（要从磁盘上读JSP文件）所用的码表。<br><img src="http://i1.piimg.com/4851/a6c6554e67d40bff.png" alt=""><br>pageEncoding=”UTF-8”:相当于，告知了引擎用UTF-8读jsp，还response.setContentType(“text/html;charset=UTF-8”);<br><code>*isELIgnored:</code>告知引擎，是否忽略EL表达式。默认值是false，不忽略。</p>
+<p>总结：属性众多。一般都用的默认值。用起来很简单，最简单的形式：<br><code>&lt;%@ page  pageEncoding=&quot;UTF-8&quot;%&gt;</code></p>
+<ul>
+<li><p><strong>include：</strong><br>包含<br>属性：file，以”/”开头，就代表着当前应用。</p>
+</li>
+<li><p><strong>taglib:</strong><br>引入外部的标签。<br>&lt;%@ taglib uri=”<a href="http://java.sun.com/jsp/jstl/core" target="_blank" rel="external">http://java.sun.com/jsp/jstl/core</a>“ prefix=”c”%&gt;</p>
+</li>
+</ul>
+<p>uri：外部的标签的uri地址，好比名称空间<br>prefix:前缀。</p>
+<h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
+<li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
+<li>2、参数：不能单独使用<br>向目标传递请求参数</li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x25;&#64;&#x69;&#110;&#x63;&#108;&#x75;&#x64;&#x65;&#37;">&#x25;&#64;&#x69;&#110;&#x63;&#108;&#x75;&#x64;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+</ul>
+<p><strong>总结：用标签可以少些java脚本。</strong></p>
+<h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
+<table>
+<thead>
+<tr>
+<th>JSP隐含对象名称</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>request</td>
+<td style="text-align:center">javax.servlet.http.HttpServletRequest</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>response</td>
+<td style="text-align:center">javax.servlet.http.HttpServletResponse</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>session</td>
+<td style="text-align:center">javax.servlet.http.HttpSession</td>
+<td style="text-align:center">page指令有开关</td>
+</tr>
+<tr>
+<td>application</td>
+<td style="text-align:center">javax.servlet.ServletContext</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>config</td>
+<td style="text-align:center">javax.servlet.ServletConfig</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>page</td>
+<td style="text-align:center">javax.servlet.http.HttpServlet</td>
+<td style="text-align:center">当前jsp对应Servlet的实例引用</td>
+</tr>
+<tr>
+<td>exception</td>
+<td style="text-align:center">java.lang.Throwable</td>
+<td style="text-align:center">page指令有开关</td>
+</tr>
+<tr>
+<td>out</td>
+<td style="text-align:center">javax.servlet.jsp.JspWriter</td>
+<td style="text-align:center">字符输出流。相当于PrintWriter</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td style="text-align:center">javax.servlet.jsp.PageContext</td>
+<td style="text-align:center">很重要</td>
+</tr>
+</tbody>
+</table>
+<h3 id="七、PageContext抽象类（很重要）"><a href="#七、PageContext抽象类（很重要）" class="headerlink" title="七、PageContext抽象类（很重要）"></a>七、PageContext抽象类（很重要）</h3><ul>
+<li><p>本身是一个域（范围）对象，还能操作其他3个域对象中的属性</p>
+<ul>
+<li>页面范围：<br><code>void setAttribute(String name,Object value);</code><br><code>void removeAttribute(String name);</code><br><code>Object getAttribute(String name);</code></li>
+<li>操作其他域对象中的属性：<br><code>void setAttribute(String name,Object value,int scope);</code><br><code>void removeAttribute(String name,int scope);</code><br><code>Object getAttribute(String name,int scope);</code><br><code>int scope:</code>常量，<code>PageContext</code>     <code>PAGE_SCOPE(页面)</code>  <code>REQUEST_SCOPE（请求）</code> <code>SESSION_SCOPE（会话）</code> <code>APPLICATION_SCOPE（应用）</code></li>
+<li>在四个范围中依次查找指定名称对象的方法：<br><code>PAGE(页面)</code>  <code>REQUEST（请求）</code> <code>SESSION（会话）</code> <code>APPLICATION（应用）</code><br><code>Object findAttribute(String name);</code></li>
+</ul>
+</li>
+<li><p>获取其他八个JSP隐含对象(自定义标签时用)<br><code>PageContext.getRequest();</code><br><code>getServletContext();</code><br><code>getServletConfig();</code><br><code>getException();</code><br><code>get...</code></p>
+</li>
+<li>提供转发和包含的简易方法<br><code>pageContext.include(String url);</code></li>
+</ul>
+<h3 id="八、四大域对象"><a href="#八、四大域对象" class="headerlink" title="八、四大域对象"></a>八、四大域对象</h3><p><strong>实际开发中：存放数据的。</strong></p>
+<p><code>PageContext:</code>页面范围。最小。开发中很少用。演示代码。<br><code>ServletRequest:</code>请求范围。不同的资源，只有用转发。<br><code>HttpSession:</code>会话范围。多次请求共享数据，但不同的客户端不能共享。<br><code>ServletContext:</code>应用范围。最大。尽量少用。用时要做同步处理。</p>
+<h3 id="九、JSP开发的最佳实践"><a href="#九、JSP开发的最佳实践" class="headerlink" title="九、JSP开发的最佳实践"></a>九、JSP开发的最佳实践</h3><ul>
+<li>Servlet：擅长写Java代码逻辑，不擅长输出html的内容。<br>开发中作为：控制器。</li>
+<li>JSP：不擅长写Java代码逻辑，擅长显示结果。<br>开发中作为：视图（显示结果）<br><img src="http://i1.piimg.com/4851/7319051e910de6ff.png" alt=""></li>
+</ul>
+<h3 id="十、JavaBean的概念"><a href="#十、JavaBean的概念" class="headerlink" title="十、JavaBean的概念"></a>十、JavaBean的概念</h3><ul>
+<li>1、JavaBean又称之为POJO（Plain Old Java Object）、VO（Value Object）、DO（Data Object）</li>
+<li><strong>2、JavaBean的书写规范</strong><br>a、必须是public的<br>b、提供默认的构造方法<br>c、字段都是私有的： private String username;<br>d、提供公有的getter或setter方法：属性。<br>getUsername():读属性，属性名：username.<br>setUsername(String username):写属性，属性名：username。<br>e、一般需要实现java.io.Serializable接口。</li>
+</ul>
+<p><strong>注意：</strong> private boolean married;   getMarried()===isMarried()</p>
+<p><strong>结论：</strong> JavaBean在JavaEE开发中，主要担当封装数据用的。</p>
+<h3 id="十一、JSP中使用JavaBean"><a href="#十一、JSP中使用JavaBean" class="headerlink" title="十一、JSP中使用JavaBean"></a>十一、JSP中使用JavaBean</h3><ul>
+<li>1、导入JavaBean：用page指令的import</li>
+<li>2、声明JavaBean：<br><img src="http://i1.piimg.com/4851/853084b703212266.png" alt=""></li>
+<li>3、获取属性：<br><img src="http://i1.piimg.com/4851/0fed44f6eeabb820.png" alt=""><br>如果属性是null，那么界面就显示null。</li>
+<li>4、设置属性：<br>注意：类型的转换问题<br><img src="http://i1.piimg.com/4851/b62efc127800cb3b.png" alt=""><br>可以使用请求参数设置JavaBean的属性。<br><img src="http://i1.piimg.com/4851/476cb28dd59eeec9.png" alt=""></li>
+<li>5、JavaBean的存活范围：<br>声明JavaBean时，指定scope属性。默认值page，当前页面范围。<br>可选值：page|request|session|application</li>
+</ul>
+<p>总结：JSP+JavaBean，开发模型，Model1（模型1）</p>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/03/16/JSP的学习笔记/"
+                     data-title="JSP的学习笔记"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP的学习笔记/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP的学习笔记/backgroud1.jpg"
+                     data-content="一、JSP简介
+也是SUN公司推出的开发动态web资源的技术，属于JavaEE技术之一。由于原... | knight&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/15/速读：从0到1/" data-toggle="tooltip" data-placement="top"
+                           title="速读：从0到1">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/03/16/JSP的学习笔记/"
+                         data-title="JSP的学习笔记"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP的学习笔记/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、JSP简介"><span class="toc-text">一、JSP简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、HTML、Servlet和JSP"><span class="toc-text">二、HTML、Servlet和JSP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、JSP的原理及生命周期"><span class="toc-text">三、JSP的原理及生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、JSP的语法"><span class="toc-text">四、JSP的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1模板元素"><span class="toc-text">5.1模板元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2Java程序片段"><span class="toc-text">5.2Java程序片段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3Java表达式"><span class="toc-text">5.3Java表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4JSP声明"><span class="toc-text">5.4JSP声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5JSP注释"><span class="toc-text">5.5JSP注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-6JSP指令："><span class="toc-text">5.6JSP指令：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、JSP中的转发和包含"><span class="toc-text">五、JSP中的转发和包含</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、JSP的九个隐含对象：（面试题）"><span class="toc-text">六、JSP的九个隐含对象：（面试题）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、PageContext抽象类（很重要）"><span class="toc-text">七、PageContext抽象类（很重要）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、四大域对象"><span class="toc-text">八、四大域对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、JSP开发的最佳实践"><span class="toc-text">九、JSP开发的最佳实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、JavaBean的概念"><span class="toc-text">十、JavaBean的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一、JSP中使用JavaBean"><span class="toc-text">十一、JSP中使用JavaBean</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jokerliang.cn/">JokerLiang</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'lgrknight';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/ehazon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; knight 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://github.com/lgrknight/lgrknight.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://omhz9w11z.bkt.clouddn.com/icon.jpg">
+</body>
+
+</html>
