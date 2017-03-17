@@ -147,7 +147,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/15/Cookie%E5%92%8CHttpSession%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/15/Cookie和HttpSession的学习笔记/</id>
     <published>2017-03-15T12:05:15.000Z</published>
-    <updated>2017-03-15T14:24:46.645Z</updated>
+    <updated>2017-03-17T12:24:57.658Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.典型的场景比如购物车，当你点击下单按钮时，由于HTTP协议无状态，所以并不知道是哪个用户操作的，所以服务端要为特定的用户创建了特定的Session，用用于标识这个用户，并且跟踪用户，这样才知道购物车里面有几本书。这个Session是保存在服务端的，有一个唯一标识。在服务端保存Session的方法很多，内存、数据库、文件都有。集群的时候也要考虑Session的转移，在大型的网站，一般会有专门的Session服务器集群，用来保存用户会话，这个时候 Session 信息都是放在内存的，使用一些缓存服务比如Memcached之类的来放 Session。</p>
@@ -261,7 +261,28 @@ public class LoginUIServlet extends HttpServlet {
     }
 
 }
-</code></pre><h2 id="服务器端技术：HttpSession"><a href="#服务器端技术：HttpSession" class="headerlink" title="服务器端技术：HttpSession"></a>服务器端技术：HttpSession</h2>]]></content>
+</code></pre><h2 id="服务器端技术：HttpSession"><a href="#服务器端技术：HttpSession" class="headerlink" title="服务器端技术：HttpSession"></a>服务器端技术：HttpSession</h2><h3 id="HttpSession-用途"><a href="#HttpSession-用途" class="headerlink" title="HttpSession 用途"></a>HttpSession 用途</h3><ul>
+<li>它也是一个域对象：session servletContext request</li>
+<li>同一个会话下，可以使一个应用的多个资源共享数据</li>
+<li>cookie 客户端技术，只能存字符串。HttpSession服务器端的技术，它可以存对象</li>
+</ul>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p><strong>把数据保存在HttpSession对象中，该对象也是一个域对象</strong></p>
+<ul>
+<li><code>setAttribute(String name,Object value)</code> 存对象</li>
+<li><code>getAttribute(String name)</code>    取对象</li>
+<li><code>remvoeArrtibute(String name)</code></li>
+<li><code>getId()</code></li>
+<li><code>setMaxInactiveInterval(int interval)</code> 设置session的存活时间 单位秒</li>
+<li><code>invalidate()</code> 销毁session</li>
+</ul>
+<h3 id="getSession-内部执行原理"><a href="#getSession-内部执行原理" class="headerlink" title="getSession() 内部执行原理"></a>getSession() 内部执行原理</h3><ul>
+<li>1,获取名称为JSESSIONID的cookie的值</li>
+<li>2，没有这样的cookie，创建一个新的HttpSession对象，分配一个唯一的SessionId,并且向客户端写了一个名为JSESSIONID=sessionId的cookie</li>
+<li>3,有这样的Cookie，获取cookie的值（即HttpSession对象的值），从服务器的内存中根据Id找那个HttpSession对象<br>找到了：取出继续为你服务<br>找不到：从2开始<br><img src="http://i1.piimg.com/4851/c6ef3c69c9d9ffc7.png" alt=""><br>HttpSession request.getSession(boolean b):<br>b如果为true，和getSession()完全一样的<br>b为false，服务器只是查找，找不到不会创建新的，返回null。<br>HttpSession.invalidate();使HttpSession对象立即失效。</li>
+</ul>
+<h3 id="客户端禁用Cookie后的会话数据的保持"><a href="#客户端禁用Cookie后的会话数据的保持" class="headerlink" title="客户端禁用Cookie后的会话数据的保持"></a>客户端禁用Cookie后的会话数据的保持</h3><p>客户端永远不会向服务器端带任何cookie。<br>解决办法：<br>方式一：（乌龙）文字提示：请不要禁用您的Cookie<br>方式二：在访问的地址后面加上JSESSIONID=session的id。<br><a href="http://localhost:8080/servlet/ServletDemo1" target="_blank" rel="external">http://localhost:8080/servlet/ServletDemo1</a>   URL重写，必须对网站的所有地址都重写<br><a href="http://localhost:8080/servlet/ServletDemo1;JSESSIONID=123" target="_blank" rel="external">http://localhost:8080/servlet/ServletDemo1;JSESSIONID=123</a></p>
+<p>response.encodeUrl(String url);自动重写。</p>
+]]></content>
     
     <summary type="html">
     
