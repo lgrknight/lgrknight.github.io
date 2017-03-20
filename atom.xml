@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-17T12:37:31.980Z</updated>
+  <updated>2017-03-20T03:47:33.758Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -20,28 +20,31 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/16/JSP的学习笔记/</id>
     <published>2017-03-16T13:02:00.000Z</published>
-    <updated>2017-03-17T12:37:31.980Z</updated>
+    <updated>2017-03-20T03:47:33.758Z</updated>
     
     <content type="html"><![CDATA[<h3 id="一、JSP简介"><a href="#一、JSP简介" class="headerlink" title="一、JSP简介"></a>一、JSP简介</h3><blockquote>
 <p>也是SUN公司推出的开发动态web资源的技术，属于JavaEE技术之一。由于原理上是Servlet， 所以JSP/Servlet在一起。</p>
+</blockquote>
 <h3 id="二、HTML、Servlet和JSP"><a href="#二、HTML、Servlet和JSP" class="headerlink" title="二、HTML、Servlet和JSP"></a>二、HTML、Servlet和JSP</h3><ul>
 <li>1、HTML：静态页面，不能包含java代码，只能有HTML有关的标记</li>
 <li>2、Servlet：写java代码，做页面的输出，不是很方便（开发效率很低）</li>
 <li>3、JSP：HTML+java</li>
 </ul>
-</blockquote>
 <h3 id="三、JSP的原理及生命周期"><a href="#三、JSP的原理及生命周期" class="headerlink" title="三、JSP的原理及生命周期"></a>三、JSP的原理及生命周期</h3><ul>
 <li>1、JSP就是Servlet，学习好JSP的关键（语法），时刻想到他对应的Servlet。<br><img src="http://i1.piimg.com/4851/538d9bbbb73148d7.png" alt=""></li>
-<li>时常翻阅JSP对应的Servlet源码<h3 id="四、JSP的语法"><a href="#四、JSP的语法" class="headerlink" title="四、JSP的语法"></a>四、JSP的语法</h3><h4 id="5-1模板元素"><a href="#5-1模板元素" class="headerlink" title="5.1模板元素"></a>5.1模板元素</h4></li>
-<li>指JSP中的那些HTML。开发时先编写模板元素，因为他们决定页面的外观。<h4 id="5-2Java程序片段"><a href="#5-2Java程序片段" class="headerlink" title="5.2Java程序片段"></a>5.2Java程序片段</h4>语法：&lt;%java程序%&gt;<br>出现在JSP对应Servlet的service方法中。<br>&lt;%声明的变量：局部%&gt;</li>
+<li>时常翻阅JSP对应的Servlet源码<h3 id="四、JSP的语法"><a href="#四、JSP的语法" class="headerlink" title="四、JSP的语法"></a>四、JSP的语法</h3></li>
 </ul>
-<h4 id="5-3Java表达式"><a href="#5-3Java表达式" class="headerlink" title="5.3Java表达式"></a>5.3Java表达式</h4><p>语法：&lt;%=表达式%&gt;</p>
-<h4 id="5-4JSP声明"><a href="#5-4JSP声明" class="headerlink" title="5.4JSP声明"></a>5.4JSP声明</h4><p>语法：&lt;%!</p>
+<h4 id="4-1模板元素"><a href="#4-1模板元素" class="headerlink" title="4.1模板元素"></a>4.1模板元素</h4><ul>
+<li>指JSP中的那些HTML。开发时先编写模板元素，因为他们决定页面的外观。</li>
+</ul>
+<h4 id="4-2Java程序片段"><a href="#4-2Java程序片段" class="headerlink" title="4.2Java程序片段"></a>4.2Java程序片段</h4><p>语法：&lt;%java程序%&gt;<br>出现在JSP对应Servlet的service方法中。<br>&lt;%声明的变量：局部%&gt;</p>
+<h4 id="4-3Java表达式"><a href="#4-3Java表达式" class="headerlink" title="4.3Java表达式"></a>4.3Java表达式</h4><p>语法：&lt;%=表达式%&gt;</p>
+<h4 id="4-4JSP声明"><a href="#4-4JSP声明" class="headerlink" title="4.4JSP声明"></a>4.4JSP声明</h4><p>语法：&lt;%!</p>
 <p>%&gt;<br>作用：定义JSP对应Serlvet的成员（变量和方法、静态方法）</p>
 <p>注意：开发中很少用。面试和考试经常考。</p>
-<h4 id="5-5JSP注释"><a href="#5-5JSP注释" class="headerlink" title="5.5JSP注释"></a>5.5JSP注释</h4><p>语法：&lt;%–这是注释–%&gt;</p>
+<h4 id="4-5JSP注释"><a href="#4-5JSP注释" class="headerlink" title="4.5JSP注释"></a>4.5JSP注释</h4><p>语法：&lt;%–这是注释–%&gt;</p>
 <p>作用：注释掉的代码，JSP引擎不会翻译到Servlet源码中。要注意和HTML注释的区别。</p>
-<h4 id="5-6JSP指令："><a href="#5-6JSP指令：" class="headerlink" title="5.6JSP指令："></a>5.6JSP指令：</h4><ul>
+<h4 id="4-6JSP指令："><a href="#4-6JSP指令：" class="headerlink" title="4.6JSP指令："></a>4.6JSP指令：</h4><ul>
 <li><strong>简介：</strong><br>指令是为JSP引擎设计的。而只是告诉引擎如何处理JSP页面中的其余部分（非指令部分）；<br>基本语法格式：&lt;%@指令 属性1=”值1” ….%&gt;.<br>一般把指令放在JSP页面的顶部（不是必须的）<br>指令的属性可以写在一个指令的中，也可以分开写：比如：<br>&lt;%@指令 属性1=”值1” 属性2=”值2”%&gt;.<br>等价于：<br>&lt;%@指令 属性1=”值1” %&gt;.<br>&lt;%@指令 属性2=”值2”%&gt;</li>
 <li><strong>page：</strong></li>
 <li>属性：<br><code>language：</code>告知引擎，脚本用的是java。默认java，支持java。不写也行。<br><code>extends：</code>告知引擎，JSP对应的Servlet的父类是哪个。不需要写，也不要改。<br><code>*import：</code>告知引擎，导入哪些包。<br>注意：引擎自动导入：java.lang.<em>;javax.servlet.</em>;javax.servlet.http.<em>;javax.servlet.jsp.</em>;</li>
@@ -58,7 +61,7 @@
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#x25;&#64;&#105;&#x6e;&#99;&#x6c;&#117;&#x64;&#101;&#x25;">&#x25;&#64;&#105;&#x6e;&#99;&#x6c;&#117;&#x64;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x25;&#x40;&#x69;&#x6e;&#99;&#108;&#x75;&#x64;&#101;&#37;">&#x25;&#x40;&#x69;&#x6e;&#99;&#108;&#x75;&#x64;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
