@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="李广儒在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://omhz9w11z.bkt.clouddn.com/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="knight" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        canvas绘图｜knight&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/flower.JPG')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    knight
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>canvas绘图</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2017-03-27
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            canvas绘图
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫切的想使用一下吧。但是过后心里更多的是负罪感而不是新鲜的快感吧。这次比赛应该会是场很棒的经历吧，不管是为了虚荣还使命感，我都应该好好的完成 它吧。</p>
+</blockquote>
+<h3 id="如何得到1个Canvas对象"><a href="#如何得到1个Canvas对象" class="headerlink" title="如何得到1个Canvas对象"></a>如何得到1个Canvas对象</h3><ul>
+<li>之前提到的onDraw方法的入口参数就是Canvas，我们用变量承载它，就可以使用，而我们操作这个Canvas最终的效果会直接反应在这个View上。</li>
+<li>SurfaceView是View的继承了，其内部有专门的线程来完成画图的工作，而不用像View一样需要等待刷新，主要用在游戏和高品质动画方面。既然是View的继承类，SurfaceView自然可以获取到Canvas的对象，方式是通过调用SurfaceView的好基友SurfaceHolder的lockCanvas()方法。</li>
+<li>当然，除了获取View或SurfaceView自带的现成的Canvas对象，我们还可以自己创建。从4大基本要素我们就可以知道，1个Canvas对象一定要结合1个Bitmap对象。所以一定要为新建的Canvas对象设置1个Bitmap对象。</li>
+</ul>
+<h3 id="Canvas能画些什么"><a href="#Canvas能画些什么" class="headerlink" title="Canvas能画些什么"></a>Canvas能画些什么</h3><h4 id="填充"><a href="#填充" class="headerlink" title="填充"></a>填充</h4><p>Canvas内部维持了一个mutable Bitmap，所以我们可以用颜色来填充整个Bitmap。而填充的范围受限于clip的范围。</p>
+<ul>
+<li>drawRGB(int r, int g, int b) ： r-红色要素（0~255），g-绿色要素（0~255），b-蓝色要素（0~255）。</li>
+<li>drawARGB(int a, int r, int g, int b)：a-透明度（0~255），r-红色要素（0~255），g-绿色要素（0~255），b-蓝色要素（0~255）。</li>
+<li>drawColor(int color)：这里的color要为16进制的颜色号，例如：0xFF000000，共8位，两位一组从左到右分别为ARGB，具体含义同上。若要使用“#FF000000”这样的色号，可以调用Color.parseColor(String colorString)方法来进行转换。</li>
+<li>drawColor(int color, PorterDuff.Mode mode)：color同上，PorterDuff.Mode比较有意思，有很多种模式，每一种模式都会有特定的效果，感兴趣的朋友可以自行了解一下。</li>
+<li><p>drawPaint(Paint paint)：Canvas同样可以用画笔来填充Bitmap，当然也受限于clip的范围。</p>
+<h4 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h4><p><code>canvas.drawArc</code>（扇形）<br><code>canvas.drawCircle</code>（圆）<br><code>canvas.drawOval</code>（椭圆）<br><code>canvas.drawLine</code>（线）<br><code>canvas.drawPoint</code>（点）<br><code>canvas.drawRect</code>（矩形）<br><code>canvas.drawRoundRect</code>（圆角矩形）<br><code>canvas.drawVertices</code>（顶点）<br><code>cnavas.drawPath</code>（路径）</p>
+<h4 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h4><p><code>canvas.drawBitmap</code>（位图）<br><code>canvas.drawPicture</code>（图片）</p>
+<h4 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h4><p><code>canvas.drawText</code></p>
+<h4 id="小案例（折线图）"><a href="#小案例（折线图）" class="headerlink" title="小案例（折线图）"></a>小案例（折线图）</h4><pre><code>class MyView extends View {
+
+    //主曲线图的名称
+    private String majorName;
+    //主曲线图的点集合
+    private LinkedList&lt;Integer&gt; majorValueList;
+    //主曲线图y轴最小值
+    private int majorMin;
+    //主曲线图y轴最大值
+    private int majorMax;
+    private int marginBottom;
+    private int marginLeft;
+
+    public MyView(Context context,ChartPagerBean chartPagerBean) {
+        super(context);
+        this.majorName = chartPagerBean.majorName;
+        this.majorValueList = chartPagerBean.majorValueList;
+        this.majorMin = chartPagerBean.majorMin;
+        this.majorMax = chartPagerBean.majorMax;
+
+    }
+</code></pre></li>
+</ul>
+<pre><code>    @Override
+    protected void onDraw(Canvas canvas) {
+        majorValueList.add(37);
+        majorValueList.add(84);
+        majorValueList.add(94);
+        majorValueList.add(6);
+        majorValueList.add(64);
+        majorValueList.add(74);
+        majorValueList.add(85);
+        majorValueList.add(95);
+        majorValueList.add(59);
+
+        marginBottom = this.getBottom() - 100;
+        marginLeft = 100;
+
+        Paint mPaint = new Paint();
+        //初始化y轴
+        mPaint.setColor(Color.BLACK);
+        mPaint.setStrokeWidth(6);
+        canvas.drawLine(marginLeft, marginLeft, marginLeft, marginBottom,mPaint);
+        //初始化x轴
+        canvas.drawLine(marginLeft, marginBottom, this.getRight() - 20, marginBottom, mPaint);
+
+        for(int i=0;i&lt;5;i++){
+            mPaint.setTextSize(40);
+            mPaint.setColor(Color.WHITE);
+            String[] y={&quot;800&quot;,&quot;600&quot;,&quot;400&quot;,&quot;200&quot;,&quot;0&quot;};
+            canvas.drawText(y[i], marginLeft -30, marginLeft +(200*i),mPaint);
+        }
+
+        for(int i=0;i&lt;5;i++){
+            mPaint.setTextSize(40);
+            mPaint.setColor(Color.WHITE);
+            String[] y={&quot;&quot;,&quot;2&quot;,&quot;4&quot;,&quot;6&quot;,&quot;8&quot;};
+            canvas.drawText(y[i],marginLeft+(i*400), marginBottom +40,mPaint);
+        }
+
+
+
+        drawPint(mPaint,canvas,majorValueList);
+
+    }
+
+    private void drawPint(Paint mPaint, Canvas canvas, LinkedList&lt;Integer&gt; majorValueList) {
+        for (int i=0;i&lt;majorValueList.size();i++){
+            int value = majorValueList.get(i);
+            //majorMin=10;
+            mPaint.setColor(Color.RED);
+            if (value&lt;majorMin){
+                mPaint.setColor(Color.GREEN);
+            }
+
+            canvas.drawCircle(marginLeft+(i*200), marginLeft+800-value, 18,mPaint);// 小圆
+            canvas.drawText(value+&quot;&quot;,marginLeft+(i*200),marginLeft+800-value-40,mPaint);
+            if (i&gt;0){
+                mPaint.setColor(Color.BLUE);
+                int lastValue = majorValueList.get(i-1);
+                canvas.drawLine(marginLeft+((i-1)*200), marginLeft+800-lastValue,marginLeft+(i*200), marginLeft+800-value,mPaint);
+            }
+        }
+
+    }
+
+
+}
+</code></pre><h3 id="Canvas的保存和回滚"><a href="#Canvas的保存和回滚" class="headerlink" title="Canvas的保存和回滚"></a>Canvas的保存和回滚</h3><p>为了配合Canvas本身的变换操作，Canvas提供了保持当前状态和回滚的方法。来个小例子。<br>我们准备画一个表盘，那么我们就有两种实现的思路：</p>
+<ul>
+<li><p>表盘上有60个刻度，每个刻度之间间隔6°，这是有规律的，那么我们就可以利用三角函数的知识来把刻度的两个坐标求出来，再利用drawLine画到Canvas上。考验你逻辑思维和数学功底的时候到了，不用仔细想就能知道这个方法有点麻烦。</p>
+</li>
+<li><p>如果不喜欢第一种方法，那么我们可以尝试一下这一种。Canvas提供了旋转操作的方法，也提供了保存和回复状态的方法，那么我们就用这些搭配起来。首先我在（100，0）和（100，10）两个坐标之间画一条竖线，很简单，整点的刻度就出来了。之后先将Canvas的状态保存起来，在（100，0）和（100，10）两个坐标之间画一条竖线，回复Canvas的状态，一分钟的刻度就出来了。以此类推，思路是不是很简单。</p>
+<pre><code>@Override
+protected void onDraw(Canvas canvas) {
+     super.onDraw(canvas);
+
+     for (int i = 0; i &lt; 360; i = i + 6) {
+        canvas.save();
+         canvas.rotate(i, 100, 100);
+         canvas.drawLine(100, 0, 100, 10, new Paint());
+         canvas.restore();
+     }
+}
+</code></pre></li>
+</ul>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/03/27/canvas绘图/"
+                     data-title="canvas绘图"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/backgroud2.jpg"
+                     data-content="
+今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫... | knight&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/16/JSP的学习笔记/" data-toggle="tooltip" data-placement="top"
+                           title="JSP的学习笔记">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/03/27/canvas绘图/"
+                         data-title="canvas绘图"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何得到1个Canvas对象"><span class="toc-text">如何得到1个Canvas对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas能画些什么"><span class="toc-text">Canvas能画些什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#填充"><span class="toc-text">填充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#绘制图形"><span class="toc-text">绘制图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#绘制图片"><span class="toc-text">绘制图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文本"><span class="toc-text">文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小案例（折线图）"><span class="toc-text">小案例（折线图）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas的保存和回滚"><span class="toc-text">Canvas的保存和回滚</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jokerliang.cn/">JokerLiang</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'lgrknight';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/ehazon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; knight 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://github.com/lgrknight/lgrknight.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://omhz9w11z.bkt.clouddn.com/icon.jpg">
+</body>
+
+</html>
