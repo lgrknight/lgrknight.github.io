@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-27T14:40:18.363Z</updated>
+  <updated>2017-03-28T14:30:05.270Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,112 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AChartEngine绘画框架</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine%E7%BB%98%E7%94%BB%E6%A1%86%E6%9E%B6/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine绘画框架/</id>
+    <published>2017-03-28T13:47:00.000Z</published>
+    <updated>2017-03-28T14:30:05.270Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>今天是比赛准备的第二天，这几天主要在学习绘图方面的知识，今天学习了一个框架。这个是Android系统上用于绘图的框架，支持绘制折线图、面积图、散点图、时间图、进度表、条状图、饼图、圆环图等等。不过这个框架现在不在更新了，但比赛用到的还是这个框架，在学习过程中也发现了一个更好绘图框架MPAndroidChart，后续找时间学习并更新资料到博客。</p>
+</blockquote>
+<h3 id="AChartEngine的概述与分析"><a href="#AChartEngine的概述与分析" class="headerlink" title="AChartEngine的概述与分析"></a>AChartEngine的概述与分析</h3><p><strong>类之间的关系</strong><br><img src="http://i.imgur.com/oNSMJNx.jpg" alt=""></p>
+<ul>
+<li><p><strong>1. ChartDemo这个类是整个应用程序的入口,运行之后的效果显示一个list.</strong></p>
+</li>
+<li><p><strong>2. IDemoChart接口,这个接口定义了三个方法。</strong></p>
+<ul>
+<li><p>getName()返回值是listitem上显示的标题;</p>
+</li>
+<li><p>getDesc()返回值是listitem上显示的描述内容.</p>
+</li>
+<li><p>excute(context)返回值是一个Intent,当点击listitem后跳转到此Intent.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>3. AbstractDemoChart类是一个抽象类,实现接口IDemoChart接口,这个类中封装了构建DataSet和renderer的方法,目的快速构建我们的dataset和renderer.这个类具体提供了哪些方法呢?见下图.至于为什么要进行这样的封装看完4中ChartFactory.get…Intent()方法的参数类型后您就明白了.</strong><br><img src="http://i.imgur.com/wCEAM0Z.jpg" alt=""></p>
+</li>
+<li><p><strong>4.  其他的以*Chat结尾的类大都继承自AbstractDemoChart这个类实现了接口IDemoChart.我们可以重点看一下execute(context)方法,分析之后发现这个方法中构建Intent的步骤大同小异,第一步构建dataset,第二步构建renderer,第三步调用ChartFactory.get…Intent()方法或ChartFactory.get…View()方法,二者的区别在于一个返回Intent,这个intent可以启动一个特定的activity,另一个返回GraphicalView,对这个GraphicalView可以灵活设置也可以仅作为一部分显示在任何activity上.对于ChartFactory.get…Intent()上的参数activityTitle是指设置显示在activity上的标题.</strong></p>
+</li>
+</ul>
+<h3 id="小案例"><a href="#小案例" class="headerlink" title="小案例"></a>小案例</h3><pre><code>private void showChart(Context context,LinearLayout layout) {
+    XYMultipleSeriesDataset mDataset = getDataset();
+    XYMultipleSeriesRenderer mRenderer = getRenderer();
+    GraphicalView view = ChartFactory.getLineChartView(context, mDataset, mRenderer);
+    layout.addView(view);
+}
+
+public XYMultipleSeriesDataset getDataset() {
+    XYMultipleSeriesDataset seriesDataset = new XYMultipleSeriesDataset();
+    XYSeries xySeries = new XYSeries(&quot;&quot;);
+    xySeries.add(1, 36);
+    xySeries.add(2, 30);
+    xySeries.add(3, 27);
+    xySeries.add(4, 29);
+    xySeries.add(5, 34);
+    xySeries.add(6, 28);
+    xySeries.add(7, 33);
+    seriesDataset.addSeries(xySeries);
+    return seriesDataset;
+}
+
+public XYMultipleSeriesRenderer getRenderer() {
+    /*描绘器，设置图表整体效果，比如x,y轴效果，缩放比例，颜色设置*/
+    XYMultipleSeriesRenderer seriesRenderer = new XYMultipleSeriesRenderer();
+
+    seriesRenderer.setMargins(new int[]{100,100,marginBottom,0});//设置外边距，顺序为：上左下右
+    //坐标轴设置
+    seriesRenderer.setAxisTitleTextSize(16);
+    seriesRenderer.setXAxisMax(8);
+    seriesRenderer.setXAxisMin(0);
+    seriesRenderer.setYAxisMax(800);
+    seriesRenderer.setYAxisMin(0);
+    seriesRenderer.setAxesColor(Color.BLACK);
+    //颜色设置
+    seriesRenderer.setMarginsColor(Color.argb(0x00,0x01,0x01,0x01));
+    //缩放设置
+    seriesRenderer.setZoomButtonsVisible(true);//设置缩放按钮是否可见
+    seriesRenderer.setZoomEnabled(true); //图表是否可以缩放设置
+    seriesRenderer.setZoomInLimitX(7);
+    seriesRenderer.setZoomRate(1);
+    //图表移动设置
+    seriesRenderer.setPanEnabled(false);
+    //坐标轴标签设置
+    seriesRenderer.setLabelsTextSize(44);//设置标签字体大小
+    seriesRenderer.setXLabelsAlign(Paint.Align.CENTER);
+    seriesRenderer.setYLabelsAlign(Paint.Align.LEFT);
+    seriesRenderer.setXLabels(0);//显示的x轴标签的个数
+    seriesRenderer.addXTextLabel(1,&quot;2&quot;);
+    seriesRenderer.addXTextLabel(2,&quot;4&quot;);
+    seriesRenderer.addXTextLabel(3,&quot;6&quot;);
+    seriesRenderer.addXTextLabel(4,&quot;8&quot;);
+    seriesRenderer.setPointSize(13);//设置坐标点大小
+
+    /*某一组数据的描绘器，描绘该组数据的个性化显示效果，主要是字体跟颜色的效果*/
+    XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
+    xySeriesRenderer.setPointStrokeWidth(40);
+    xySeriesRenderer.setColor(Color.GREEN);
+    xySeriesRenderer.setDisplayChartValues(true);
+    xySeriesRenderer.setChartValuesTextSize(42);
+
+    seriesRenderer.addSeriesRenderer(xySeriesRenderer);
+    return seriesRenderer;
+}
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;今天是比赛准备的第二天，这几天主要在学习绘图方面的知识，今天学习了一个框架。这个是Android系统上用于绘图的框架，支持绘制折线图、面积图、散点图、时间图、进度表、条状图、饼图、圆环图等等。不过这个框架现在不在更新了，但比赛用到的还是这个框架，在
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>canvas绘图</title>
@@ -207,7 +313,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#100;&#x65;&#x25;">&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#100;&#x65;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#x64;&#101;&#x25;">&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#x64;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>

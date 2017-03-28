@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        canvas绘图｜knight&#39;s blog
+        AChartEngine绘画框架｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine绘画框架/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>canvas绘图</h1>
+                    <h1>AChartEngine绘画框架</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-03-27
+                          日期 2017-03-28
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            canvas绘图
+            AChartEngine绘画框架
         </span>
     </div>
 </header>
@@ -177,141 +177,102 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫切的想使用一下吧。但是过后心里更多的是负罪感而不是新鲜的快感吧。这次比赛应该会是场很棒的经历吧，不管是为了虚荣还使命感，我都应该好好的完成 它吧。</p>
+<p>今天是比赛准备的第二天，这几天主要在学习绘图方面的知识，今天学习了一个框架。这个是Android系统上用于绘图的框架，支持绘制折线图、面积图、散点图、时间图、进度表、条状图、饼图、圆环图等等。不过这个框架现在不在更新了，但比赛用到的还是这个框架，在学习过程中也发现了一个更好绘图框架MPAndroidChart，后续找时间学习并更新资料到博客。</p>
 </blockquote>
-<h3 id="如何得到1个Canvas对象"><a href="#如何得到1个Canvas对象" class="headerlink" title="如何得到1个Canvas对象"></a>如何得到1个Canvas对象</h3><ul>
-<li>之前提到的onDraw方法的入口参数就是Canvas，我们用变量承载它，就可以使用，而我们操作这个Canvas最终的效果会直接反应在这个View上。</li>
-<li>SurfaceView是View的继承了，其内部有专门的线程来完成画图的工作，而不用像View一样需要等待刷新，主要用在游戏和高品质动画方面。既然是View的继承类，SurfaceView自然可以获取到Canvas的对象，方式是通过调用SurfaceView的好基友SurfaceHolder的lockCanvas()方法。</li>
-<li>当然，除了获取View或SurfaceView自带的现成的Canvas对象，我们还可以自己创建。从4大基本要素我们就可以知道，1个Canvas对象一定要结合1个Bitmap对象。所以一定要为新建的Canvas对象设置1个Bitmap对象。</li>
-</ul>
-<h3 id="Canvas能画些什么"><a href="#Canvas能画些什么" class="headerlink" title="Canvas能画些什么"></a>Canvas能画些什么</h3><h4 id="填充"><a href="#填充" class="headerlink" title="填充"></a>填充</h4><p>Canvas内部维持了一个mutable Bitmap，所以我们可以用颜色来填充整个Bitmap。而填充的范围受限于clip的范围。</p>
+<h3 id="AChartEngine的概述与分析"><a href="#AChartEngine的概述与分析" class="headerlink" title="AChartEngine的概述与分析"></a>AChartEngine的概述与分析</h3><p><strong>类之间的关系</strong><br><img src="http://i.imgur.com/oNSMJNx.jpg" alt=""></p>
 <ul>
-<li>drawRGB(int r, int g, int b) ： r-红色要素（0~255），g-绿色要素（0~255），b-蓝色要素（0~255）。</li>
-<li>drawARGB(int a, int r, int g, int b)：a-透明度（0~255），r-红色要素（0~255），g-绿色要素（0~255），b-蓝色要素（0~255）。</li>
-<li>drawColor(int color)：这里的color要为16进制的颜色号，例如：0xFF000000，共8位，两位一组从左到右分别为ARGB，具体含义同上。若要使用“#FF000000”这样的色号，可以调用Color.parseColor(String colorString)方法来进行转换。</li>
-<li>drawColor(int color, PorterDuff.Mode mode)：color同上，PorterDuff.Mode比较有意思，有很多种模式，每一种模式都会有特定的效果，感兴趣的朋友可以自行了解一下。</li>
-<li><p>drawPaint(Paint paint)：Canvas同样可以用画笔来填充Bitmap，当然也受限于clip的范围。</p>
-<h4 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h4><p><code>canvas.drawArc</code>（扇形）<br><code>canvas.drawCircle</code>（圆）<br><code>canvas.drawOval</code>（椭圆）<br><code>canvas.drawLine</code>（线）<br><code>canvas.drawPoint</code>（点）<br><code>canvas.drawRect</code>（矩形）<br><code>canvas.drawRoundRect</code>（圆角矩形）<br><code>canvas.drawVertices</code>（顶点）<br><code>cnavas.drawPath</code>（路径）</p>
-<h4 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h4><p><code>canvas.drawBitmap</code>（位图）<br><code>canvas.drawPicture</code>（图片）</p>
-<h4 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h4><p><code>canvas.drawText</code></p>
-<h4 id="小案例（折线图）"><a href="#小案例（折线图）" class="headerlink" title="小案例（折线图）"></a>小案例（折线图）</h4><pre><code>class MyView extends View {
-
-    //主曲线图的名称
-    private String majorName;
-    //主曲线图的点集合
-    private LinkedList&lt;Integer&gt; majorValueList;
-    //主曲线图y轴最小值
-    private int majorMin;
-    //主曲线图y轴最大值
-    private int majorMax;
-    private int marginBottom;
-    private int marginLeft;
-
-    public MyView(Context context,ChartPagerBean chartPagerBean) {
-        super(context);
-        this.majorName = chartPagerBean.majorName;
-        this.majorValueList = chartPagerBean.majorValueList;
-        this.majorMin = chartPagerBean.majorMin;
-        this.majorMax = chartPagerBean.majorMax;
-
-    }
-</code></pre></li>
-</ul>
-<pre><code>    @Override
-    protected void onDraw(Canvas canvas) {
-        majorValueList.add(37);
-        majorValueList.add(84);
-        majorValueList.add(94);
-        majorValueList.add(6);
-        majorValueList.add(64);
-        majorValueList.add(74);
-        majorValueList.add(85);
-        majorValueList.add(95);
-        majorValueList.add(59);
-
-        marginBottom = this.getBottom() - 100;
-        marginLeft = 100;
-
-        Paint mPaint = new Paint();
-        //初始化y轴
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeWidth(6);
-        canvas.drawLine(marginLeft, marginLeft, marginLeft, marginBottom,mPaint);
-        //初始化x轴
-        canvas.drawLine(marginLeft, marginBottom, this.getRight() - 20, marginBottom, mPaint);
-
-        for(int i=0;i&lt;5;i++){
-            mPaint.setTextSize(40);
-            mPaint.setColor(Color.WHITE);
-            String[] y={&quot;800&quot;,&quot;600&quot;,&quot;400&quot;,&quot;200&quot;,&quot;0&quot;};
-            canvas.drawText(y[i], marginLeft -30, marginLeft +(200*i),mPaint);
-        }
-
-        for(int i=0;i&lt;5;i++){
-            mPaint.setTextSize(40);
-            mPaint.setColor(Color.WHITE);
-            String[] y={&quot;&quot;,&quot;2&quot;,&quot;4&quot;,&quot;6&quot;,&quot;8&quot;};
-            canvas.drawText(y[i],marginLeft+(i*400), marginBottom +40,mPaint);
-        }
-
-
-
-        drawPint(mPaint,canvas,majorValueList);
-
-    }
-
-    private void drawPint(Paint mPaint, Canvas canvas, LinkedList&lt;Integer&gt; majorValueList) {
-        for (int i=0;i&lt;majorValueList.size();i++){
-            int value = majorValueList.get(i);
-            //majorMin=10;
-            mPaint.setColor(Color.RED);
-            if (value&lt;majorMin){
-                mPaint.setColor(Color.GREEN);
-            }
-
-            canvas.drawCircle(marginLeft+(i*200), marginLeft+800-value, 18,mPaint);// 小圆
-            canvas.drawText(value+&quot;&quot;,marginLeft+(i*200),marginLeft+800-value-40,mPaint);
-            if (i&gt;0){
-                mPaint.setColor(Color.BLUE);
-                int lastValue = majorValueList.get(i-1);
-                canvas.drawLine(marginLeft+((i-1)*200), marginLeft+800-lastValue,marginLeft+(i*200), marginLeft+800-value,mPaint);
-            }
-        }
-
-    }
-
-
-}
-</code></pre><h3 id="Canvas的保存和回滚"><a href="#Canvas的保存和回滚" class="headerlink" title="Canvas的保存和回滚"></a>Canvas的保存和回滚</h3><p>为了配合Canvas本身的变换操作，Canvas提供了保持当前状态和回滚的方法。来个小例子。<br>我们准备画一个表盘，那么我们就有两种实现的思路：</p>
-<ul>
-<li><p>表盘上有60个刻度，每个刻度之间间隔6°，这是有规律的，那么我们就可以利用三角函数的知识来把刻度的两个坐标求出来，再利用drawLine画到Canvas上。考验你逻辑思维和数学功底的时候到了，不用仔细想就能知道这个方法有点麻烦。</p>
+<li><p><strong>1. ChartDemo这个类是整个应用程序的入口,运行之后的效果显示一个list.</strong></p>
 </li>
-<li><p>如果不喜欢第一种方法，那么我们可以尝试一下这一种。Canvas提供了旋转操作的方法，也提供了保存和回复状态的方法，那么我们就用这些搭配起来。首先我在（100，0）和（100，10）两个坐标之间画一条竖线，很简单，整点的刻度就出来了。之后先将Canvas的状态保存起来，在（100，0）和（100，10）两个坐标之间画一条竖线，回复Canvas的状态，一分钟的刻度就出来了。以此类推，思路是不是很简单。</p>
-<pre><code>@Override
-protected void onDraw(Canvas canvas) {
-     super.onDraw(canvas);
-
-     for (int i = 0; i &lt; 360; i = i + 6) {
-        canvas.save();
-         canvas.rotate(i, 100, 100);
-         canvas.drawLine(100, 0, 100, 10, new Paint());
-         canvas.restore();
-     }
-}
-</code></pre></li>
+<li><p><strong>2. IDemoChart接口,这个接口定义了三个方法。</strong></p>
+<ul>
+<li><p>getName()返回值是listitem上显示的标题;</p>
+</li>
+<li><p>getDesc()返回值是listitem上显示的描述内容.</p>
+</li>
+<li><p>excute(context)返回值是一个Intent,当点击listitem后跳转到此Intent.</p>
+</li>
 </ul>
+</li>
+<li><p><strong>3. AbstractDemoChart类是一个抽象类,实现接口IDemoChart接口,这个类中封装了构建DataSet和renderer的方法,目的快速构建我们的dataset和renderer.这个类具体提供了哪些方法呢?见下图.至于为什么要进行这样的封装看完4中ChartFactory.get…Intent()方法的参数类型后您就明白了.</strong><br><img src="http://i.imgur.com/wCEAM0Z.jpg" alt=""></p>
+</li>
+<li><p><strong>4.  其他的以*Chat结尾的类大都继承自AbstractDemoChart这个类实现了接口IDemoChart.我们可以重点看一下execute(context)方法,分析之后发现这个方法中构建Intent的步骤大同小异,第一步构建dataset,第二步构建renderer,第三步调用ChartFactory.get…Intent()方法或ChartFactory.get…View()方法,二者的区别在于一个返回Intent,这个intent可以启动一个特定的activity,另一个返回GraphicalView,对这个GraphicalView可以灵活设置也可以仅作为一部分显示在任何activity上.对于ChartFactory.get…Intent()上的参数activityTitle是指设置显示在activity上的标题.</strong></p>
+</li>
+</ul>
+<h3 id="小案例"><a href="#小案例" class="headerlink" title="小案例"></a>小案例</h3><pre><code>private void showChart(Context context,LinearLayout layout) {
+    XYMultipleSeriesDataset mDataset = getDataset();
+    XYMultipleSeriesRenderer mRenderer = getRenderer();
+    GraphicalView view = ChartFactory.getLineChartView(context, mDataset, mRenderer);
+    layout.addView(view);
+}
 
+public XYMultipleSeriesDataset getDataset() {
+    XYMultipleSeriesDataset seriesDataset = new XYMultipleSeriesDataset();
+    XYSeries xySeries = new XYSeries(&quot;&quot;);
+    xySeries.add(1, 36);
+    xySeries.add(2, 30);
+    xySeries.add(3, 27);
+    xySeries.add(4, 29);
+    xySeries.add(5, 34);
+    xySeries.add(6, 28);
+    xySeries.add(7, 33);
+    seriesDataset.addSeries(xySeries);
+    return seriesDataset;
+}
+
+public XYMultipleSeriesRenderer getRenderer() {
+    /*描绘器，设置图表整体效果，比如x,y轴效果，缩放比例，颜色设置*/
+    XYMultipleSeriesRenderer seriesRenderer = new XYMultipleSeriesRenderer();
+
+    seriesRenderer.setMargins(new int[]{100,100,marginBottom,0});//设置外边距，顺序为：上左下右
+    //坐标轴设置
+    seriesRenderer.setAxisTitleTextSize(16);
+    seriesRenderer.setXAxisMax(8);
+    seriesRenderer.setXAxisMin(0);
+    seriesRenderer.setYAxisMax(800);
+    seriesRenderer.setYAxisMin(0);
+    seriesRenderer.setAxesColor(Color.BLACK);
+    //颜色设置
+    seriesRenderer.setMarginsColor(Color.argb(0x00,0x01,0x01,0x01));
+    //缩放设置
+    seriesRenderer.setZoomButtonsVisible(true);//设置缩放按钮是否可见
+    seriesRenderer.setZoomEnabled(true); //图表是否可以缩放设置
+    seriesRenderer.setZoomInLimitX(7);
+    seriesRenderer.setZoomRate(1);
+    //图表移动设置
+    seriesRenderer.setPanEnabled(false);
+    //坐标轴标签设置
+    seriesRenderer.setLabelsTextSize(44);//设置标签字体大小
+    seriesRenderer.setXLabelsAlign(Paint.Align.CENTER);
+    seriesRenderer.setYLabelsAlign(Paint.Align.LEFT);
+    seriesRenderer.setXLabels(0);//显示的x轴标签的个数
+    seriesRenderer.addXTextLabel(1,&quot;2&quot;);
+    seriesRenderer.addXTextLabel(2,&quot;4&quot;);
+    seriesRenderer.addXTextLabel(3,&quot;6&quot;);
+    seriesRenderer.addXTextLabel(4,&quot;8&quot;);
+    seriesRenderer.setPointSize(13);//设置坐标点大小
+
+    /*某一组数据的描绘器，描绘该组数据的个性化显示效果，主要是字体跟颜色的效果*/
+    XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
+    xySeriesRenderer.setPointStrokeWidth(40);
+    xySeriesRenderer.setColor(Color.GREEN);
+    xySeriesRenderer.setDisplayChartValues(true);
+    xySeriesRenderer.setChartValuesTextSize(42);
+
+    seriesRenderer.addSeriesRenderer(xySeriesRenderer);
+    return seriesRenderer;
+}
+</code></pre>
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/27/canvas绘图/"
-                     data-title="canvas绘图"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/backgroud2.jpg"
+                     data-thread-key="2017/03/28/AChartEngine绘画框架/"
+                     data-title="AChartEngine绘画框架"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine绘画框架/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine绘画框架/backgroud3.jpg"
                      data-content="
-今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫... | knight&#39;s blog ">
+今天是比赛准备的第二天，这几天主要在学习绘图方面的知识，今天学习了一个框架。这个是Andro... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -329,15 +290,10 @@ protected void onDraw(Canvas canvas) {
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/28/AChartEngine绘画框架/" data-toggle="tooltip" data-placement="top"
-                           title="AChartEngine绘画框架">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/16/JSP的学习笔记/" data-toggle="tooltip" data-placement="top"
-                           title="JSP的学习笔记">Next Post &rarr;</a>
+                        <a href="/2017/03/27/canvas绘图/" data-toggle="tooltip" data-placement="top"
+                           title="canvas绘图">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -346,9 +302,9 @@ protected void onDraw(Canvas canvas) {
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/27/canvas绘图/"
-                         data-title="canvas绘图"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/">
+                         data-thread-key="2017/03/28/AChartEngine绘画框架/"
+                         data-title="AChartEngine绘画框架"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/28/AChartEngine绘画框架/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -360,7 +316,7 @@ protected void onDraw(Canvas canvas) {
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何得到1个Canvas对象"><span class="toc-text">如何得到1个Canvas对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas能画些什么"><span class="toc-text">Canvas能画些什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#填充"><span class="toc-text">填充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#绘制图形"><span class="toc-text">绘制图形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#绘制图片"><span class="toc-text">绘制图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文本"><span class="toc-text">文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小案例（折线图）"><span class="toc-text">小案例（折线图）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas的保存和回滚"><span class="toc-text">Canvas的保存和回滚</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#AChartEngine的概述与分析"><span class="toc-text">AChartEngine的概述与分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小案例"><span class="toc-text">小案例</span></a></li></ol>
                 </div>
             </div>
         </div>
