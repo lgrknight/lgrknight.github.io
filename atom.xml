@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-03-28T14:30:05.270Z</updated>
+  <updated>2017-04-19T02:56:58.616Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>人生所有的路，都是必经之路</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/04/02/%E4%BA%BA%E7%94%9F%E6%89%80%E6%9C%89%E7%9A%84%E8%B7%AF%EF%BC%8C%E9%83%BD%E6%98%AF%E5%BF%85%E7%BB%8F%E4%B9%8B%E8%B7%AF/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/04/02/人生所有的路，都是必经之路/</id>
+    <published>2017-04-02T07:05:15.000Z</published>
+    <updated>2017-04-19T02:56:58.616Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>这段时间在缘分之下，得到了鬼脚七的这本《人生所有的路，都是必经之路》。然后通过观看书籍以及自己生活中的所遇内心有比较多复杂、自认为比较有意义的想法吧。我也怕自己会在随后的生活中淡忘，因为普通人是没办法一开始就从想法到行动吧，至少现如今我还处于这个状态吧。本来我也打算分篇去记录我的那些感悟，但是想着我的那些逻辑想法可能也比较随性，所以就统一在着在这一篇博客下持续更新吧。</p>
+</blockquote>
+<h3 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h3><p><code>2017-04-02 15:05:15</code></p>
+<p>好不易盼来了一个假期吧，开始是兴奋，兴奋过后是烦恼，烦恼这几天的假期如何度过，心中的第一想法就是不想和放假之前一样的度过。因为觉得自己放假前过的这日子还是太单调了，三点一线想来点不一样的元素，其实更直白贴近内心的原因或许就是放假了大家应该都去玩，自己不想一个人显的太孤单吧。是我害怕别人发现我那种状态吧，毕竟以前的假期是繁忙的希望有分身之术吧，既要想着陪女朋友，又要计划陪兄弟哥们。所以我在当晚就赶到我星沙那边的朋友那边去了，但是当我坐在过那边的车上我又是感觉对学校是那样的不舍，我又开始怀念学校这种固定的生活吧，我估计是被这个套子给套住了。总结：我以后做事情应该干脆果断点，在做一方面的事情，别在枯燥难受的时候又想着原先的快乐，出发点应该想清楚是不是自己真的喜欢，如果喜欢这一路都痛快的去追逐，过往不恋，记住第一性初衷。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;这段时间在缘分之下，得到了鬼脚七的这本《人生所有的路，都是必经之路》。然后通过观看书籍以及自己生活中的所遇内心有比较多复杂、自认为比较有意义的想法吧。我也怕自己会在随后的生活中淡忘，因为普通人是没办法一开始就从想法到行动吧，至少现如今我还处于这个状
+    
+    </summary>
+    
+    
+      <category term="观看与感悟" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/%E8%A7%82%E7%9C%8B%E4%B8%8E%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>AChartEngine绘画框架</title>
@@ -126,7 +152,7 @@ public XYMultipleSeriesRenderer getRenderer() {
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas%E7%BB%98%E5%9B%BE/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/27/canvas绘图/</id>
     <published>2017-03-27T13:55:50.000Z</published>
-    <updated>2017-03-27T14:40:18.363Z</updated>
+    <updated>2017-04-12T07:33:37.735Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫切的想使用一下吧。但是过后心里更多的是负罪感而不是新鲜的快感吧。这次比赛应该会是场很棒的经历吧，不管是为了虚荣还使命感，我都应该好好的完成 它吧。</p>
@@ -142,99 +168,10 @@ public XYMultipleSeriesRenderer getRenderer() {
 <li>drawARGB(int a, int r, int g, int b)：a-透明度（0~255），r-红色要素（0~255），g-绿色要素（0~255），b-蓝色要素（0~255）。</li>
 <li>drawColor(int color)：这里的color要为16进制的颜色号，例如：0xFF000000，共8位，两位一组从左到右分别为ARGB，具体含义同上。若要使用“#FF000000”这样的色号，可以调用Color.parseColor(String colorString)方法来进行转换。</li>
 <li>drawColor(int color, PorterDuff.Mode mode)：color同上，PorterDuff.Mode比较有意思，有很多种模式，每一种模式都会有特定的效果，感兴趣的朋友可以自行了解一下。</li>
-<li><p>drawPaint(Paint paint)：Canvas同样可以用画笔来填充Bitmap，当然也受限于clip的范围。</p>
-<h4 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h4><p><code>canvas.drawArc</code>（扇形）<br><code>canvas.drawCircle</code>（圆）<br><code>canvas.drawOval</code>（椭圆）<br><code>canvas.drawLine</code>（线）<br><code>canvas.drawPoint</code>（点）<br><code>canvas.drawRect</code>（矩形）<br><code>canvas.drawRoundRect</code>（圆角矩形）<br><code>canvas.drawVertices</code>（顶点）<br><code>cnavas.drawPath</code>（路径）</p>
-<h4 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h4><p><code>canvas.drawBitmap</code>（位图）<br><code>canvas.drawPicture</code>（图片）</p>
-<h4 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h4><p><code>canvas.drawText</code></p>
-<h4 id="小案例（折线图）"><a href="#小案例（折线图）" class="headerlink" title="小案例（折线图）"></a>小案例（折线图）</h4><pre><code>class MyView extends View {
-
-    //主曲线图的名称
-    private String majorName;
-    //主曲线图的点集合
-    private LinkedList&lt;Integer&gt; majorValueList;
-    //主曲线图y轴最小值
-    private int majorMin;
-    //主曲线图y轴最大值
-    private int majorMax;
-    private int marginBottom;
-    private int marginLeft;
-
-    public MyView(Context context,ChartPagerBean chartPagerBean) {
-        super(context);
-        this.majorName = chartPagerBean.majorName;
-        this.majorValueList = chartPagerBean.majorValueList;
-        this.majorMin = chartPagerBean.majorMin;
-        this.majorMax = chartPagerBean.majorMax;
-
-    }
-</code></pre></li>
+<li>drawPaint(Paint paint)：Canvas同样可以用画笔来填充Bitmap，当然也受限于clip的范围。<h4 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h4><code>canvas.drawArc</code>（扇形）<br><code>canvas.drawCircle</code>（圆）<br><code>canvas.drawOval</code>（椭圆）<br><code>canvas.drawLine</code>（线）<br><code>canvas.drawPoint</code>（点）<br><code>canvas.drawRect</code>（矩形）<br><code>canvas.drawRoundRect</code>（圆角矩形）<br><code>canvas.drawVertices</code>（顶点）<br><code>cnavas.drawPath</code>（路径）<h4 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h4><code>canvas.drawBitmap</code>（位图）<br><code>canvas.drawPicture</code>（图片）<h4 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h4><code>canvas.drawText</code><h4 id="小案例（折线图）"><a href="#小案例（折线图）" class="headerlink" title="小案例（折线图）"></a>小案例（折线图）</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">//主曲线图的名称</span></div><div class="line">	<span class="keyword">private</span> String majorName;</div><div class="line">	<span class="comment">//主曲线图的点集合</span></div><div class="line">	<span class="keyword">private</span> LinkedList&lt;Integer&gt; majorValueList;</div><div class="line">	<span class="comment">//主曲线图y轴最小值</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> majorMin;</div><div class="line">	<span class="comment">//主曲线图y轴最大值</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> majorMax;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> marginBottom;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> marginLeft;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyView</span><span class="params">(Context context,ChartPagerBean chartPagerBean)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(context);</div><div class="line">		<span class="keyword">this</span>.majorName = chartPagerBean.majorName;</div><div class="line">		<span class="keyword">this</span>.majorValueList = chartPagerBean.majorValueList;</div><div class="line">		<span class="keyword">this</span>.majorMin = chartPagerBean.majorMin;</div><div class="line">		<span class="keyword">this</span>.majorMax = chartPagerBean.majorMax;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">		majorValueList.add(<span class="number">37</span>);</div><div class="line">		majorValueList.add(<span class="number">84</span>);</div><div class="line">		majorValueList.add(<span class="number">94</span>);</div><div class="line">		majorValueList.add(<span class="number">6</span>);</div><div class="line">		majorValueList.add(<span class="number">64</span>);</div><div class="line">		majorValueList.add(<span class="number">74</span>);</div><div class="line">		majorValueList.add(<span class="number">85</span>);</div><div class="line">		majorValueList.add(<span class="number">95</span>);</div><div class="line">		majorValueList.add(<span class="number">59</span>);</div><div class="line"></div><div class="line">		marginBottom = <span class="keyword">this</span>.getBottom() - <span class="number">100</span>;</div><div class="line">		marginLeft = <span class="number">100</span>;</div><div class="line"></div><div class="line">		Paint mPaint = <span class="keyword">new</span> Paint();</div><div class="line">		<span class="comment">//初始化y轴</span></div><div class="line">		mPaint.setColor(Color.BLACK);</div><div class="line">		mPaint.setStrokeWidth(<span class="number">6</span>);</div><div class="line">		canvas.drawLine(marginLeft, marginLeft, marginLeft, marginBottom,mPaint);</div><div class="line">		<span class="comment">//初始化x轴</span></div><div class="line">		canvas.drawLine(marginLeft, marginBottom, <span class="keyword">this</span>.getRight() - <span class="number">20</span>, marginBottom, mPaint);</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</div><div class="line">			mPaint.setTextSize(<span class="number">40</span>);</div><div class="line">			mPaint.setColor(Color.WHITE);</div><div class="line">			String[] y=&#123;<span class="string">"800"</span>,<span class="string">"600"</span>,<span class="string">"400"</span>,<span class="string">"200"</span>,<span class="string">"0"</span>&#125;;</div><div class="line">			canvas.drawText(y[i], marginLeft -<span class="number">30</span>, marginLeft +(<span class="number">200</span>*i),mPaint);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</div><div class="line">			mPaint.setTextSize(<span class="number">40</span>);</div><div class="line">			mPaint.setColor(Color.WHITE);</div><div class="line">			String[] y=&#123;<span class="string">""</span>,<span class="string">"2"</span>,<span class="string">"4"</span>,<span class="string">"6"</span>,<span class="string">"8"</span>&#125;;</div><div class="line">			canvas.drawText(y[i],marginLeft+(i*<span class="number">400</span>), marginBottom +<span class="number">40</span>,mPaint);</div><div class="line">		&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">		drawPint(mPaint,canvas,majorValueList);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPint</span><span class="params">(Paint mPaint, Canvas canvas, LinkedList&lt;Integer&gt; majorValueList)</span> </span>&#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;majorValueList.size();i++)&#123;</div><div class="line">			<span class="keyword">int</span> value = majorValueList.get(i);</div><div class="line">			<span class="comment">//majorMin=10;</span></div><div class="line">			mPaint.setColor(Color.RED);</div><div class="line">			<span class="keyword">if</span> (value&lt;majorMin)&#123;</div><div class="line">				mPaint.setColor(Color.GREEN);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			canvas.drawCircle(marginLeft+(i*<span class="number">200</span>), marginLeft+<span class="number">800</span>-value, <span class="number">18</span>,mPaint);<span class="comment">// 小圆</span></div><div class="line">			canvas.drawText(value+<span class="string">""</span>,marginLeft+(i*<span class="number">200</span>),marginLeft+<span class="number">800</span>-value-<span class="number">40</span>,mPaint);</div><div class="line">			<span class="keyword">if</span> (i&gt;<span class="number">0</span>)&#123;</div><div class="line">				mPaint.setColor(Color.BLUE);</div><div class="line">				<span class="keyword">int</span> lastValue = majorValueList.get(i-<span class="number">1</span>);</div><div class="line">				canvas.drawLine(marginLeft+((i-<span class="number">1</span>)*<span class="number">200</span>), marginLeft+<span class="number">800</span>-lastValue,marginLeft+(i*<span class="number">200</span>), marginLeft+<span class="number">800</span>-value,mPaint);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<pre><code>    @Override
-    protected void onDraw(Canvas canvas) {
-        majorValueList.add(37);
-        majorValueList.add(84);
-        majorValueList.add(94);
-        majorValueList.add(6);
-        majorValueList.add(64);
-        majorValueList.add(74);
-        majorValueList.add(85);
-        majorValueList.add(95);
-        majorValueList.add(59);
-
-        marginBottom = this.getBottom() - 100;
-        marginLeft = 100;
-
-        Paint mPaint = new Paint();
-        //初始化y轴
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeWidth(6);
-        canvas.drawLine(marginLeft, marginLeft, marginLeft, marginBottom,mPaint);
-        //初始化x轴
-        canvas.drawLine(marginLeft, marginBottom, this.getRight() - 20, marginBottom, mPaint);
-
-        for(int i=0;i&lt;5;i++){
-            mPaint.setTextSize(40);
-            mPaint.setColor(Color.WHITE);
-            String[] y={&quot;800&quot;,&quot;600&quot;,&quot;400&quot;,&quot;200&quot;,&quot;0&quot;};
-            canvas.drawText(y[i], marginLeft -30, marginLeft +(200*i),mPaint);
-        }
-
-        for(int i=0;i&lt;5;i++){
-            mPaint.setTextSize(40);
-            mPaint.setColor(Color.WHITE);
-            String[] y={&quot;&quot;,&quot;2&quot;,&quot;4&quot;,&quot;6&quot;,&quot;8&quot;};
-            canvas.drawText(y[i],marginLeft+(i*400), marginBottom +40,mPaint);
-        }
-
-
-
-        drawPint(mPaint,canvas,majorValueList);
-
-    }
-
-    private void drawPint(Paint mPaint, Canvas canvas, LinkedList&lt;Integer&gt; majorValueList) {
-        for (int i=0;i&lt;majorValueList.size();i++){
-            int value = majorValueList.get(i);
-            //majorMin=10;
-            mPaint.setColor(Color.RED);
-            if (value&lt;majorMin){
-                mPaint.setColor(Color.GREEN);
-            }
-
-            canvas.drawCircle(marginLeft+(i*200), marginLeft+800-value, 18,mPaint);// 小圆
-            canvas.drawText(value+&quot;&quot;,marginLeft+(i*200),marginLeft+800-value-40,mPaint);
-            if (i&gt;0){
-                mPaint.setColor(Color.BLUE);
-                int lastValue = majorValueList.get(i-1);
-                canvas.drawLine(marginLeft+((i-1)*200), marginLeft+800-lastValue,marginLeft+(i*200), marginLeft+800-value,mPaint);
-            }
-        }
-
-    }
-
-
-}
-</code></pre><h3 id="Canvas的保存和回滚"><a href="#Canvas的保存和回滚" class="headerlink" title="Canvas的保存和回滚"></a>Canvas的保存和回滚</h3><p>为了配合Canvas本身的变换操作，Canvas提供了保持当前状态和回滚的方法。来个小例子。<br>我们准备画一个表盘，那么我们就有两种实现的思路：</p>
+<h3 id="Canvas的保存和回滚"><a href="#Canvas的保存和回滚" class="headerlink" title="Canvas的保存和回滚"></a>Canvas的保存和回滚</h3><p>为了配合Canvas本身的变换操作，Canvas提供了保持当前状态和回滚的方法。来个小例子。<br>我们准备画一个表盘，那么我们就有两种实现的思路：</p>
 <ul>
 <li><p>表盘上有60个刻度，每个刻度之间间隔6°，这是有规律的，那么我们就可以利用三角函数的知识来把刻度的两个坐标求出来，再利用drawLine画到Canvas上。考验你逻辑思维和数学功底的时候到了，不用仔细想就能知道这个方法有点麻烦。</p>
 </li>
@@ -313,7 +250,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#x64;&#101;&#x25;">&#x25;&#x40;&#x69;&#110;&#99;&#x6c;&#x75;&#x64;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x25;&#64;&#x69;&#110;&#x63;&#108;&#117;&#100;&#101;&#x25;">&#x25;&#64;&#x69;&#110;&#x63;&#108;&#117;&#100;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
