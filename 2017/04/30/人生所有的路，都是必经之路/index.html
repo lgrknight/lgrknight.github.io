@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Servlet学习笔记｜knight&#39;s blog
+        人生所有的路，都是必经之路｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/04/30/人生所有的路，都是必经之路/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud4.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud4.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Servlet学习笔记</h1>
+                    <h1>人生所有的路，都是必经之路</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-03-13
+                          日期 2017-04-30
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java web"
-                           title="java web">java web</a>
+                        <a class="tag" href="/tags/#观看与感悟"
+                           title="观看与感悟">观看与感悟</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Servlet学习笔记
+            人生所有的路，都是必经之路
         </span>
     </div>
 </header>
@@ -176,153 +176,26 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
-<h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
-<li>Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） </li>
-<li>Servlet中的方法<br><code>public void service(ServletRequest req,ServletResponse res)
-throws ServletException,java.io.IOException</code><br><code>ServletRequest req:</code>代表着请求对象，该对象中有HTTP协议的请求部分的所有内容。它的实现类由服务器提供的，封装数据也是服务器来做的。<br><code>ServletResponse res：</code>代表着响应对象，该对象中由我们写数据（HTTP协议的响应部分）进去。它的实现类也是由服务器提供的。</li>
-<li>执行过程<br><img src="http://i.imgur.com/7aMDTvN.png" alt=""></li>
-</ul>
-<h2 id="2、关于Servlet的一些类"><a href="#2、关于Servlet的一些类" class="headerlink" title="2、关于Servlet的一些类"></a>2、关于Servlet的一些类</h2><ul>
-<li><p>Servlet接口</p>
-<ul>
-<li>定义了所有Servlet需要实现的方法</li>
-<li>它定义了init destory service等方法</li>
-<li>为了解决基于请求-响应模型的数据处理（没有涉及与HTTP协议相关的API）</li>
-</ul>
-</li>
-<li><p>GenericServlet抽象类</p>
-<ul>
-<li>它是Servlet接口的实现类</li>
-<li>它扩展了一些方法</li>
-<li>也没有涉及与HTTP协议相关的API</li>
-</ul>
-</li>
-<li><p>HttpServlet抽象类</p>
-<ul>
-<li>它继承于GenericServlet</li>
-<li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
-<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。<br><img src="http://i.imgur.com/5Dy9rMH.png" alt=""></li>
-</ul>
-</li>
-<li>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</li>
-</ul>
-<h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
-<li>生命周期<ol>
-<li>实例化：Servlet 容器创建 Servlet 的实例</li>
-<li>初始化 ：该容器调用 init 方法</li>
-<li>请求处理：如果请求 Servlet，则容器调用 service 方法</li>
-<li>服务终止：销毁实例之前调用 destroy 方法</li>
-</ol>
-</li>
-</ul>
-<blockquote>
-<p>其中，init方法只有在Servlet第一次被请求加载时被调用一次，当有客户再请求Servlet服务时，web服务器将启动一个新的线程，在该线程中，调用service方法响应客户的请求。<br><strong>一个Servlet可以配置多个url-pattern</strong></p>
-<ul>
-<li>URL 配置格式 三种：<ol>
-<li>完全路径匹配 (以/开始 ) 例如：/hello/init </li>
-<li>目录匹配 (以/开始) 例如：/<em> 、 /abc/</em><br><code>/</code> 代表网站根目录<br><code>/*</code>表示任何路径都可以匹配到这个Servlet<br><code>/abc/*</code>表示abc目录下的任何路径都可以匹配到这个Servlet</li>
-<li>扩展名 (不能以/开始) 例如：<em>.do、 </em>.action</li>
-</ol>
-</li>
-</ul>
+                <blockquote>
+<p>这段时间在缘分之下，得到了鬼脚七的这本《人生所有的路，都是必经之路》。然后通过观看书籍以及自己生活中的所遇内心有比较多复杂、自认为比较有意义的想法吧。我也怕自己会在随后的生活中淡忘，因为普通人是没办法一开始就从想法到行动吧，至少现如今我还处于这个状态吧。本来我也打算分篇去记录我的那些感悟，但是想着我的那些逻辑想法可能也比较随性，所以就统一在着在这一篇博客下持续更新吧。</p>
 </blockquote>
-<ul>
-<li>优先级：完全匹配&gt;目录匹配 &gt; 扩展名匹配 </li>
-</ul>
-<h2 id="4、ServletConfig获得初始化参数"><a href="#4、ServletConfig获得初始化参数" class="headerlink" title="4、ServletConfig获得初始化参数"></a>4、ServletConfig获得初始化参数</h2><ul>
-<li>init方法中的ServletConfig对象<ul>
-<li>getInitParameter（String)—— 通过name获得value</li>
-<li>getInitParameterNames() —– 获得所有name </li>
-</ul>
-</li>
-<li>结论：子类Servlet不需要覆写init(ServletConfig), 只需要通过GenericServlet中 getServletConfig()方法来获得ServletConfig对象。<blockquote>
-<p>ServletConfig 配置初始化数据，只能在配置Servlet获得，其它Servlet无法获得 —– 每个Servlet程序都对应一个ServletConfig对象 </p>
-</blockquote>
-</li>
-</ul>
-<h2 id="5、web引用对象——ServletContext"><a href="#5、web引用对象——ServletContext" class="headerlink" title="5、web引用对象——ServletContext"></a>5、web引用对象——ServletContext</h2><ul>
-<li>web容器在启动时，它会为每一个web应用创建一个ServletContext对象，这个对象代表当前web应用。</li>
-<li>操作ServletContext必须通过ServletConfig获得对象。可以通过ServletConfig.getServletContext方法来获得ServletContext对象。</li>
-<li><p>由于一个web应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。<br><strong>应用：</strong></p>
-<ol>
-<li>获得整个web应用初始化参数</li>
-</ol>
-<ul>
-<li>和ServletConfig对象有什么不同？<br>如果用ServletConfig对象配置参数，只对配置的Servlet有效，如果通过ServletContext对象配置参数，所有的Servlet都可以访问。</li>
-<li>配置方法，在web.xml中添加如下格式的代码：</li>
-<li>获得 hobby 全局参数：<br>  // 通过ServletConfig 获得 ServletContext<pre><code>`ServletContext context = getServletConfig().getServletContext();`
-// 上面写法可以简化一下
-`ServletContext context = getServletContext();`
-// 读取全局初始化参数
-`System.out.println(context.getInitParameter(&quot;hobby&quot;));`
-</code></pre></li>
-</ul>
-<ol>
-<li>实现全局数据共享</li>
-</ol>
-<ul>
-<li>预期效果：在ServletContext中 保存站点访问次数 ，每当一个用户访问站点，将访问次数+1。所有Servlet都可以获得该数据</li>
-<li>在CountServlet 初始化过程中，向ServletContext 保存访问次数为0。<br>利用<code>ServletContext.setAttribute(&quot;KEY&quot;,&quot;VALUE&quot;);</code></li>
-<li><p>代码实现(只显示init方法和doGet方法：</p>
-<pre><code>public void init() throws ServletException {
-    // 向ServletContext 保存访问次数 0
-    // 获得ServletContext对象
-    ServletContext context = getServletContext();
-    // 保存数据 setAttribute
-    context.setAttribute(&quot;visittimes&quot;, 0);
-
-}
-
-public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-    // 每次访问 执行 doGet --- 将visittimes 次数 +1
-
-    // 1、从ServletContext中获得 访问次数
-    ServletContext context = getServletContext();
-    int times = (Integer) context.getAttribute(&quot;visittimes&quot;);
-
-    // 2、访问次数 +1
-    times++;
-
-    // 3、将访问次数更新回去 ServletContext
-    context.setAttribute(&quot;visittimes&quot;, times);
-
-    System.out.println(&quot;网站被访问了一次！&quot;);
-}
-</code></pre></li>
-</ul>
-<ol>
-<li>实现服务器端转发功能（少见，现在多用request、response）</li>
-<li>读取web工程资源文件（必须使用绝对磁盘路径）<ul>
-<li>使用java application 读取文件，读取当前工程下所有文件 —– 使用相对路径读取文件。</li>
-<li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
-<li>如何获得绝对磁盘路径？<ul>
-<li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
-<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
-<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
-<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
-<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
-<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
-</ul>
+<h3 id="（一）2017-04-02-15-05"><a href="#（一）2017-04-02-15-05" class="headerlink" title="（一）2017-04-02 15:05"></a>（一）2017-04-02 15:05</h3><p>好不易盼来了一个假期吧，开始是兴奋，兴奋过后是烦恼，烦恼这几天的假期如何度过，心中的第一想法就是不想和放假之前一样的度过。因为觉得自己放假前过的这日子还是太单调了，三点一线想来点不一样的元素，其实更直白贴近内心的原因或许就是放假了大家应该都去玩，自己不想一个人显的太孤单吧。是我害怕别人发现我那种状态吧，毕竟以前的假期是繁忙的希望有分身之术吧，既要想着陪女朋友，又要计划陪兄弟哥们。所以我在当晚就赶到我星沙那边的朋友那边去了，但是当我坐在过那边的车上我又是感觉对学校是那样的不舍，我又开始怀念学校这种固定的生活吧，我估计是被这个套子给套住了。总结：我以后做事情应该干脆果断点，在做一方面的事情，别在枯燥难受的时候又想着原先的快乐，出发点应该想清楚是不是自己真的喜欢，如果喜欢这一路都痛快的去追逐，过往不恋，记住第一性初衷。</p>
+<h3 id="（二）2017-04-19-22-31"><a href="#（二）2017-04-19-22-31" class="headerlink" title="（二）2017-04-19 22:31"></a>（二）2017-04-19 22:31</h3><p>这段时间是真的比较急躁吧，越想做好一些事情越不知道如何下手，越想安静下来越浮动，每天极像充实又感觉什么没做，感觉不会在乎的事情又老是在眼前浮现，我似乎在等待着什么蓄势待发，可是现在流失的还比较多吧。讲真我也不懂对错，但是我也不会走退路的吧。有太多的未知就让他未来慢慢来吧。我近期也是用鬼脚七那句话反复对自己说，不知道不能解决的就交给佛陀吧，佛会解决的。其实是吧，不管你们质疑的佛陀是否存在，但我是有了寄托，让我内心没那么沉重，佛陀就帮我渡了些苦，何必又去为佛陀的是否存在平添苦恼呢，而且我也相信又佛陀菩萨，我们每个人都是佛陀吧，只是你没有去发现。我也真的得自律自己，一味的想着去模范佛陀做过的事，却忘却了心境的同步。从身边开始吧，做自己的佛陀。</p>
+<p>###（二）2017-04-30 22:16 ###</p>
+<p>时间真是让人触不及防的东西吧。一转眼一个月的赛前培训结束，比赛也比完了。先不管收获或者留下多少遗憾，还是理性的分析总结和纪念下这段时光吧，也如标题所说。人生所有的路都是必经之路。</p>
+<p>环顾着一个月其实可能最紧张的可能就是比赛的前一天了，比赛前一天把能想到能顾及的知识点都过了一遍，甚至挑了一些选择性背下来，但这样并不是想说我准备的多么充分，而是到了那个时候才感觉自己浪费了太多的时间，当然我转念一想其实这一辈子做的所有事其实在时间的资源上大家都是公平的，但是每个人能抓住的时间却出入特别大，大多比赛都会喜欢说“赛出风格，赛出水平”我觉得我们这次也赛出了风格、赛出了我们的水平吧，平时我们付出了多少，在比赛上就回馈了多少。赛后也一直在幻想如果侥幸进了国赛那应该多美好。。。。但转念一想也不好吧，如果真的让我们这样侥幸进了国赛，我们心里也只会觉得对手太垃圾，而不是我们有多么厉害，哈哈 ，大实话。这样也挺好，不及第一名的一半，这个现实真的很残酷好嘛，但没错这也告诫我们，在同龄同一件事上有人比我们做的更加的优秀这么多。这次要好好接受这个教训吧，也留下了遗憾，其实我还是感觉我们其实挺棒的，但还需要更加努力，一起更精进点。其实这个地方上次我也留了个遗憾在这里，上次坐了几个小时车跑到望城为了去靖港古镇，结果住了一天，靖港古镇没有去成。后面回到这个地方就有点物是人非的感觉，而且可能永远也不会去完成这个事情了。但也有感动的，上次去莫名的巧，除了在那学校的小贵，老熊和发卵在，小文和火鸟也在那里，上次热热闹闹的喝了一场（我被套路灌醉。。。），这次去小贵还是赛场负责人，俩人比完赛叫上老熊又去喝了一场。老感觉。大家这么就没见面都没变。哈哈戒了这么久的烟，我知道他们这要破了，我当时也担心估计到学校也会忍不住继续抽起来吧，但是是我多虑了，人还是该随性点的时候久随性点。其实也真的在我不同的时期能交到这些朋友，每个时期的朋友都像我人生的一次还原点，为什么这么说呢，和真正的朋友吧。我希望以前怎么玩怎么开心的过，当我们见面时，就像曾经一样的过。谁也不要让大家感觉自己变了。老铁们，我们一起记住我们的这段回忆，记住我们这些简单的快乐，我希望不管过去多久，以后再次见面我多么沧桑，记住你陪我走过那段时光，当我们再次见面时我依旧会那么年轻</p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/13/Servlet学习笔记/"
-                     data-title="Servlet学习笔记"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/backgroud5.jpg"
-                     data-content="这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的... | knight&#39;s blog ">
+                     data-thread-key="2017/04/30/人生所有的路，都是必经之路/"
+                     data-title="人生所有的路，都是必经之路"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/04/30/人生所有的路，都是必经之路/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/04/30/人生所有的路，都是必经之路/backgroud4.jpg"
+                     data-content="
+这段时间在缘分之下，得到了鬼脚七的这本《人生所有的路，都是必经之路》。然后通过观看书籍以及自... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -340,15 +213,10 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/14/Request和Response的学习笔记/" data-toggle="tooltip" data-placement="top"
-                           title="Request和Response的学习笔记">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/11/HTTP协议/" data-toggle="tooltip" data-placement="top"
-                           title="HTTP协议">Next Post &rarr;</a>
+                        <a href="/2017/03/28/AChartEngine绘画框架/" data-toggle="tooltip" data-placement="top"
+                           title="AChartEngine绘画框架">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -357,9 +225,9 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/13/Servlet学习笔记/"
-                         data-title="Servlet学习笔记"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/">
+                         data-thread-key="2017/04/30/人生所有的路，都是必经之路/"
+                         data-title="人生所有的路，都是必经之路"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/04/30/人生所有的路，都是必经之路/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -371,7 +239,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、Servlet简介"><span class="toc-text">1、Servlet简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、关于Servlet的一些类"><span class="toc-text">2、关于Servlet的一些类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Servlet生命周期"><span class="toc-text">3、Servlet生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、ServletConfig获得初始化参数"><span class="toc-text">4、ServletConfig获得初始化参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、web引用对象——ServletContext"><span class="toc-text">5、web引用对象——ServletContext</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、缺省Servlet"><span class="toc-text">6、缺省Servlet</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#（一）2017-04-02-15-05"><span class="toc-text">（一）2017-04-02 15:05</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（二）2017-04-19-22-31"><span class="toc-text">（二）2017-04-19 22:31</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -393,8 +261,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#java web"
-                           title="java web">java web</a>
+                        <a class="tag" href="/tags/#观看与感悟"
+                           title="观看与感悟">观看与感悟</a>
                         
                     </div>
                 </section>
