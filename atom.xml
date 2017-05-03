@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-04-30T16:14:06.106Z</updated>
+  <updated>2017-05-03T15:26:44.200Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,98 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jdbc学习笔记</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/</id>
+    <published>2017-05-03T13:43:55.000Z</published>
+    <updated>2017-05-03T15:26:44.200Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>内心存在的东西，就是“因”，外界给予的东西，就是“缘”。<br>因上努力，果上随缘。</p>
+</blockquote>
+<h3 id="一、JDBC简介"><a href="#一、JDBC简介" class="headerlink" title="一、JDBC简介"></a>一、JDBC简介</h3><ul>
+<li>1、JDBC是SUN公司为了简化操作数据推出一套规范。数据库厂商的驱动就是对JDBC的实现。</li>
+<li>2、Java Data Base Connectivity（java数据库连接），它主要由接口组成。<br>java.sql.<em>    javax.sql.</em>   JDK中<br>数据库的驱动jar包</li>
+</ul>
+<h3 id="二、JDBC的编码步骤"><a href="#二、JDBC的编码步骤" class="headerlink" title="二、JDBC的编码步骤"></a>二、JDBC的编码步骤</h3><ul>
+<li>0、前提：拷贝数据库的驱动到构建路径中（classpath）</li>
+<li>1、注册驱动</li>
+<li>2、获取与数据库的链接</li>
+<li>3、创建代表SQL语句的对象</li>
+<li>4、执行SQL语句</li>
+<li>5、如果是查询语句，需要遍历结果集</li>
+<li>6、释放占用的资源</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/9c73f966a51950fe.png" alt=""></p>
+<h3 id="三、事务入门（重点）"><a href="#三、事务入门（重点）" class="headerlink" title="三、事务入门（重点）"></a>三、事务入门（重点）</h3><ul>
+<li>1、MySQL：每一条语句都属于独立事务,默认自动管理的。</li>
+<li>2、开启事务：start transaction;   日后的语句都会处于同一个事务之中。<br>提交事务：commit;<br>回滚事务：rollback;</li>
+<li>3、JDBC如何控制事务</li>
+</ul>
+<figure class="highlight java"><figcaption><span>conn.setAutoCommit(0);//修改系统非自动提交。</span></figcaption><table><tr><td class="code"><pre><div class="line">conn.commit();<span class="comment">//事务提交</span></div><div class="line">conn.rollback();<span class="comment">//事务回滚</span></div><div class="line">SavePoint sp=con.setSavePoint();<span class="comment">//设置保存点</span></div><div class="line">conn.rollback(sp);<span class="comment">//返回保存点</span></div><div class="line">conn.setTransactionIsolation();<span class="comment">//设置隔离级别</span></div><div class="line">conn.getTransactionIsolation();<span class="comment">//获取隔离级别</span></div></pre></td></tr></table></figure>
+<ul>
+<li>其中隔离级别的设置如下：<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">设定事务的隔离级别：con.setTransactionIsolation(Connection.isolationLevel);</div><div class="line">四种隔离级别： </div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);<span class="comment">//最底级别：只保证不会读到非法数据，上述3个问题有可能发生 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); <span class="comment">//默认级别：可以防止脏读 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);<span class="comment">//可以防止脏读和不可重复读取 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); <span class="comment">//最高级别：防止上述3种情况，事务串行执行</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="四、事务的特性（重点。面试）"><a href="#四、事务的特性（重点。面试）" class="headerlink" title="四、事务的特性（重点。面试）"></a>四、事务的特性（重点。面试）</h3><ul>
+<li>1、事务的特性：<br>原子性：处于事务中的多条语句是不可分割的。<br>一致性：事务必须使数据库从一个一致性状态变换到另外一个一致性状态。比如：转账，转账前A+B=2000，转账后A+B=2000<br>隔离性：多线程并发。一个事务不能被其他线程中的事务所打扰。<br>持久性：事务一旦提交，永久保存起来。</li>
+<li>2、事务的隔离级别：属于事务的。都已开启了事务为前提。</li>
+<li><p>不考虑事务的隔离级别，会出现以下情况（是错的）</p>
+<ul>
+<li>脏读：一个线程中的事务读到了另外一个线程中未提交的数据。</li>
+<li>不可重复读：一个线程中的事务读到了另外一个线程中已经提交的update的数据。</li>
+<li>虚读：一个线程中的事务读到了另外一个线程中已经提交的insert的数据。</li>
+</ul>
+</li>
+<li><p>要想避免以上现象，通过更改事务的隔离级别来避免：</p>
+<ul>
+<li>READ UNCOMMITTED 脏读、不可重复读、虚读有可能发生。</li>
+<li>READ COMMITTED 避免脏读的发生，不可重复读、虚读有可能发生。</li>
+<li>REPEATABLE READ 避免脏读、不可重复读的发生，虚读有可能发生。</li>
+<li>SERIALIZABLE 避免脏读、不可重复读、虚读的发生。</li>
+</ul>
+</li>
+</ul>
+<p>级别依次升高，效率依次降低。<br>MySQL：默认REPEATABLE READ<br>ORACLE：默认READ COMMITTED</p>
+<p>MySQL：<br>select @@tx_isolation;//查看当前的隔离级别<br>set transaction isolation level 级别;// 设置当前的事务隔离级别</p>
+<h3 id="五、数据库连接池原理：（理解）"><a href="#五、数据库连接池原理：（理解）" class="headerlink" title="五、数据库连接池原理：（理解）"></a>五、数据库连接池原理：（理解）</h3><p><img src="http://i4.buimg.com/567571/1f88728dcfd4cbbd.png" alt=""></p>
+<h3 id="六、编程的难点：（设计模式）"><a href="#六、编程的难点：（设计模式）" class="headerlink" title="六、编程的难点：（设计模式）"></a>六、编程的难点：（设计模式）</h3><p>难点：用一个实现了javax.sql.DataSource类的实例时，用户如果调用Connection.close()方法，会把链接关闭，失去了连接池的意义。<br>明确一个问题：用户得到Connection的实现是：数据库驱动对Connection接口的实现。因此，调用的close方法都是数据库驱动的，它会把链接给关闭。（这不是我们要的，我们要把该链接换回池中）。</p>
+<p>解决方案：改写驱动原有的close方法。对已知类的某个/某些方法进行功能上的改变，有以下几种编码方案：</p>
+<ul>
+<li>a、继承：此处行不通。<br>到底针对哪个驱动的实现写子类（很多）<br>数据库驱动对Connection接口的实现类，不允许被继承<br>丢失了原有对象的信息。捡了芝麻丢了西瓜。</li>
+<li><p>b、装饰（包装）设计模式：（基础IO）<br>保持被包装对象的原有信息，又可以对某个/某些方法进行改写。<br>口诀：<br>1、编写一个类，实现与被包装类（数据库驱动对Connection的实现）相同的接口。（使这个类和数据库的驱动实现有着相同的行为）<br>2、定义一个变量，引用被包装类的实例。<br>3、定义构造方法，传入被包装类的实例。<br>4、对于要改写的方法，编写自己的代码即可。<br>5、对于不需要改写的方法，调用原有对象的对应方法。</p>
+</li>
+<li><p>c、默认适配器：（为了后来做准备）<br><img src="http://i1.piimg.com/567571/6bdaa625e79af855.png" alt=""><br><img src="http://i2.muimg.com/567571/0d525673562314e6.png" alt=""></p>
+</li>
+<li><p>d、动态代理：（很重要 AOP–Aspect-Oriented Programming 核心技术）<br>    基于接口的动态代理：Proxy<br>如果一个类没有实现任何的接口，此种代理就不能使用了。<br>    基于子类的动态代理：CGLIB<br>前提：被代理类的要求<br>1、不能是final的<br>2、必须是public的<br>比如普通的JavaBean就可能没有实现任何的接口。代理类是被代理类的子类。<br><img src="http://i2.muimg.com/567571/fb6e253d772a61c1.png" alt=""></p>
+</li>
+</ul>
+<h3 id="七、数据库操作框架"><a href="#七、数据库操作框架" class="headerlink" title="七、数据库操作框架"></a>七、数据库操作框架</h3><ul>
+<li>1、ORM：Object Relation Mapping<br>Hibernate：非常流行<br>JPA：Java Persistent API.ORM标准<br>MyBatis：2010年开始。之前叫做iBatis（重视）</li>
+<li>2、JDBC封装框架<br>DBUtils<br>Spring JDBC Template</li>
+</ul>
+<h3 id="八、实际开发中事务如何管理-非常好"><a href="#八、实际开发中事务如何管理-非常好" class="headerlink" title="八、实际开发中事务如何管理(非常好)"></a>八、实际开发中事务如何管理(非常好)</h3><ul>
+<li>1、写4个版本的代码：AOP</li>
+<li>2、ThreadLocal（很重要）<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//模拟</div><div class="line">public class ThreadLocal&#123;</div><div class="line">	//类似Map的结构</div><div class="line">	private Map&lt;Runnable,Object&gt; map = new HashMap&lt;Runnable,Object&gt;();</div><div class="line">	public void set(Object obj)&#123;</div><div class="line">		map.put(Thread.currentThread(),obj);</div><div class="line">	&#125;</div><div class="line">	public void remove()&#123;</div><div class="line">		map.remove(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">	public Object get()&#123;</div><div class="line">		map.get(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;内心存在的东西，就是“因”，外界给予的东西，就是“缘”。&lt;br&gt;因上努力，果上随缘。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;一、JDBC简介&quot;&gt;&lt;a href=&quot;#一、JDBC简介&quot; class=&quot;headerlink&quot; title=
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
   
   <entry>
     <title>人生所有的路，都是必经之路</title>
@@ -252,7 +344,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#x25;&#x40;&#105;&#110;&#99;&#108;&#x75;&#x64;&#x65;&#37;">&#x25;&#x40;&#105;&#110;&#99;&#108;&#x75;&#x64;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#37;&#64;&#105;&#110;&#x63;&#108;&#117;&#100;&#x65;&#37;">&#37;&#64;&#105;&#110;&#x63;&#108;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
