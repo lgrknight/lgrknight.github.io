@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-05-03T15:26:44.200Z</updated>
+  <updated>2017-05-03T15:29:03.161Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/</id>
     <published>2017-05-03T13:43:55.000Z</published>
-    <updated>2017-05-03T15:26:44.200Z</updated>
+    <updated>2017-05-03T15:29:03.161Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>内心存在的东西，就是“因”，外界给予的东西，就是“缘”。<br>因上努力，果上随缘。</p>
@@ -88,7 +88,7 @@
 </ul>
 <h3 id="八、实际开发中事务如何管理-非常好"><a href="#八、实际开发中事务如何管理-非常好" class="headerlink" title="八、实际开发中事务如何管理(非常好)"></a>八、实际开发中事务如何管理(非常好)</h3><ul>
 <li>1、写4个版本的代码：AOP</li>
-<li>2、ThreadLocal（很重要）<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//模拟</div><div class="line">public class ThreadLocal&#123;</div><div class="line">	//类似Map的结构</div><div class="line">	private Map&lt;Runnable,Object&gt; map = new HashMap&lt;Runnable,Object&gt;();</div><div class="line">	public void set(Object obj)&#123;</div><div class="line">		map.put(Thread.currentThread(),obj);</div><div class="line">	&#125;</div><div class="line">	public void remove()&#123;</div><div class="line">		map.remove(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">	public Object get()&#123;</div><div class="line">		map.get(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>2、ThreadLocal（很重要）<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//特点：一个线程存的东西，只有该线程才能取出来。线程局部变量。</span></div><div class="line"><span class="comment">//模拟</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocal</span></span>&#123;</div><div class="line">	<span class="comment">//类似Map的结构</span></div><div class="line">	<span class="keyword">private</span> Map&lt;Runnable,Object&gt; map = <span class="keyword">new</span> HashMap&lt;Runnable,Object&gt;();</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(Object obj)</span></span>&#123;</div><div class="line">		map.put(Thread.currentThread(),obj);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span></span>&#123;</div><div class="line">		map.remove(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">()</span></span>&#123;</div><div class="line">		map.get(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 ]]></content>
@@ -344,7 +344,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#37;&#64;&#105;&#110;&#x63;&#108;&#117;&#100;&#x65;&#37;">&#37;&#64;&#105;&#110;&#x63;&#108;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x25;&#64;&#x69;&#x6e;&#99;&#108;&#117;&#100;&#x65;&#37;">&#x25;&#64;&#x69;&#x6e;&#99;&#108;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
