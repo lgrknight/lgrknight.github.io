@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-05-03T15:29:03.161Z</updated>
+  <updated>2017-05-07T13:41:28.682Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -16,11 +16,86 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>过滤器</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/07/%E8%BF%87%E6%BB%A4%E5%99%A8/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/07/过滤器/</id>
+    <published>2017-05-07T13:17:44.000Z</published>
+    <updated>2017-05-07T13:41:28.682Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>有了希望，你会产生拒绝; 没有希望，你会接受一切。</p>
+</blockquote>
+<h3 id="一、过滤器是什么？有什么？"><a href="#一、过滤器是什么？有什么？" class="headerlink" title="一、过滤器是什么？有什么？"></a>一、过滤器是什么？有什么？</h3><ul>
+<li>1、过滤器属于Servlet规范，从2.3版本就开始有了。</li>
+<li>2、过滤器就是对访问的内容进行筛选（拦截）。利用过滤器对请求和响应进行过滤<br><img src="http://i.imgur.com/tphTCRE.png" alt=""></li>
+</ul>
+<h3 id="二、编写步骤和执行过程"><a href="#二、编写步骤和执行过程" class="headerlink" title="二、编写步骤和执行过程"></a>二、编写步骤和执行过程</h3><ul>
+<li><p>1、编码步骤：</p>
+<ul>
+<li><p>a、编写一个类：实现javax.servlet.Filter接口<br><img src="http://i.imgur.com/DHpgddE.png" alt=""></p>
+</li>
+<li><p>b、配置web.xml，指定需要过滤的资源。（和Servlet的配置相当类似）<br><img src="http://i.imgur.com/F56CJi2.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>2、过滤器的执行过程（生命周期）<br>  <img src="http://i.imgur.com/9r0ivIE.png" alt=""></p>
+</li>
+<li><p>生命周期：</p>
+<ul>
+<li>诞生：过滤器的实例是在应用被加载时就完成的实例化，并初始化的。</li>
+<li>存活：和应用的生命周期一致的。在内存中是单例的。针对拦截范围内的资源访问，每次访问都会调用void doFIlter(request,response.chain)进行拦截。</li>
+<li>死亡：应用被卸载。</li>
+</ul>
+</li>
+<li><p>执行过程：<br><img src="http://i.imgur.com/CCogcDR.png" alt=""></p>
+</li>
+</ul>
+<h3 id="三、串联过滤器"><a href="#三、串联过滤器" class="headerlink" title="三、串联过滤器"></a>三、串联过滤器</h3><p>一个过滤器接着另外一个过滤器。执行的顺序<br><img src="http://i.imgur.com/tgw81wN.png" alt=""></p>
+<h3 id="四、案例："><a href="#四、案例：" class="headerlink" title="四、案例："></a>四、案例：</h3><ul>
+<li>1、解决请求参数（POST）和响应输出的乱码过滤器</li>
+<li>2、动态资源不要缓存的过滤器<br>Servlet/JSP：动态资源不要缓存。</li>
+<li>3、静态资源控制缓存时间的过滤器</li>
+<li>4、用户自动登录过滤器：<br>Base64编码：很重要<br><img src="http://i.imgur.com/P6s0CrO.png" alt=""><h3 id="五、过滤器配置的细节"><a href="#五、过滤器配置的细节" class="headerlink" title="五、过滤器配置的细节"></a>五、过滤器配置的细节</h3><img src="http://i.imgur.com/4BC83KZ.png" alt=""><br><img src="http://i.imgur.com/3Cv7RVb.png" alt=""></li>
+</ul>
+<h3 id="六、巩固装饰设计模式"><a href="#六、巩固装饰设计模式" class="headerlink" title="六、巩固装饰设计模式"></a>六、巩固装饰设计模式</h3><ul>
+<li>一、装饰<ul>
+<li>1、编写一个类，实现与被包装类（数据库驱动对Connection的实现）相同的接口。（使这个类和数据库的驱动实现有着相同的行为）</li>
+<li>2、定义一个变量，引用被包装类的实例。</li>
+<li>3、定义构造方法，传入被包装类的实例。</li>
+<li>4、对于要改写的方法，编写自己的代码即可。</li>
+<li>5、对于不需要改写的方法，调用原有对象的对应方法。</li>
+</ul>
+</li>
+<li>二、装饰变体（BufferedReader本身就是包装类，对Reader的包装。LineNumberReader，对BufferedReader的包装，还是他的子类）<ul>
+<li>1、编写一个类，继承已经是包装类的类。</li>
+<li>2、定义一个变量，引用被包装类的实例。</li>
+<li>3、定义构造方法，传入被包装类的实例。</li>
+<li>4、覆盖掉需要改写的方法</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;有了希望，你会产生拒绝; 没有希望，你会接受一切。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;一、过滤器是什么？有什么？&quot;&gt;&lt;a href=&quot;#一、过滤器是什么？有什么？&quot; class=&quot;headerlink&quot; title=&quot;一、过滤器是
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
+  
+  <entry>
     <title>jdbc学习笔记</title>
     <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/</id>
     <published>2017-05-03T13:43:55.000Z</published>
-    <updated>2017-05-03T15:29:03.161Z</updated>
+    <updated>2017-05-03T15:31:09.936Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>内心存在的东西，就是“因”，外界给予的东西，就是“缘”。<br>因上努力，果上随缘。</p>
@@ -44,7 +119,7 @@
 <li>2、开启事务：start transaction;   日后的语句都会处于同一个事务之中。<br>提交事务：commit;<br>回滚事务：rollback;</li>
 <li>3、JDBC如何控制事务</li>
 </ul>
-<figure class="highlight java"><figcaption><span>conn.setAutoCommit(0);//修改系统非自动提交。</span></figcaption><table><tr><td class="code"><pre><div class="line">conn.commit();<span class="comment">//事务提交</span></div><div class="line">conn.rollback();<span class="comment">//事务回滚</span></div><div class="line">SavePoint sp=con.setSavePoint();<span class="comment">//设置保存点</span></div><div class="line">conn.rollback(sp);<span class="comment">//返回保存点</span></div><div class="line">conn.setTransactionIsolation();<span class="comment">//设置隔离级别</span></div><div class="line">conn.getTransactionIsolation();<span class="comment">//获取隔离级别</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">conn.setAutoCommit(<span class="number">0</span>);<span class="comment">//修改系统非自动提交。</span></div><div class="line">conn.commit();<span class="comment">//事务提交</span></div><div class="line">conn.rollback();<span class="comment">//事务回滚</span></div><div class="line">SavePoint sp=con.setSavePoint();<span class="comment">//设置保存点</span></div><div class="line">conn.rollback(sp);<span class="comment">//返回保存点</span></div><div class="line">conn.setTransactionIsolation();<span class="comment">//设置隔离级别</span></div><div class="line">conn.getTransactionIsolation();<span class="comment">//获取隔离级别</span></div></pre></td></tr></table></figure>
 <ul>
 <li>其中隔离级别的设置如下：<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">设定事务的隔离级别：con.setTransactionIsolation(Connection.isolationLevel);</div><div class="line">四种隔离级别： </div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);<span class="comment">//最底级别：只保证不会读到非法数据，上述3个问题有可能发生 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); <span class="comment">//默认级别：可以防止脏读 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);<span class="comment">//可以防止脏读和不可重复读取 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); <span class="comment">//最高级别：防止上述3种情况，事务串行执行</span></div></pre></td></tr></table></figure>
 </li>
@@ -344,7 +419,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x25;&#64;&#x69;&#x6e;&#99;&#108;&#117;&#100;&#x65;&#37;">&#x25;&#64;&#x69;&#x6e;&#99;&#108;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#x25;&#x40;&#105;&#x6e;&#x63;&#108;&#x75;&#x64;&#101;&#37;">&#x25;&#x40;&#105;&#x6e;&#x63;&#108;&#x75;&#x64;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>

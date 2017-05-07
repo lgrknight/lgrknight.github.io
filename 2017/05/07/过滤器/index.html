@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        jdbc学习笔记｜knight&#39;s blog
+        过滤器｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/07/过滤器/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>jdbc学习笔记</h1>
+                    <h1>过滤器</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-05-03
+                          日期 2017-05-07
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            jdbc学习笔记
+            过滤器
         </span>
     </div>
 </header>
@@ -177,72 +177,55 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>内心存在的东西，就是“因”，外界给予的东西，就是“缘”。<br>因上努力，果上随缘。</p>
+<p>有了希望，你会产生拒绝; 没有希望，你会接受一切。</p>
 </blockquote>
-<h3 id="一、JDBC简介"><a href="#一、JDBC简介" class="headerlink" title="一、JDBC简介"></a>一、JDBC简介</h3><ul>
-<li>1、JDBC是SUN公司为了简化操作数据推出一套规范。数据库厂商的驱动就是对JDBC的实现。</li>
-<li>2、Java Data Base Connectivity（java数据库连接），它主要由接口组成。<br>java.sql.<em>    javax.sql.</em>   JDK中<br>数据库的驱动jar包</li>
+<h3 id="一、过滤器是什么？有什么？"><a href="#一、过滤器是什么？有什么？" class="headerlink" title="一、过滤器是什么？有什么？"></a>一、过滤器是什么？有什么？</h3><ul>
+<li>1、过滤器属于Servlet规范，从2.3版本就开始有了。</li>
+<li>2、过滤器就是对访问的内容进行筛选（拦截）。利用过滤器对请求和响应进行过滤<br><img src="http://i.imgur.com/tphTCRE.png" alt=""></li>
 </ul>
-<h3 id="二、JDBC的编码步骤"><a href="#二、JDBC的编码步骤" class="headerlink" title="二、JDBC的编码步骤"></a>二、JDBC的编码步骤</h3><ul>
-<li>0、前提：拷贝数据库的驱动到构建路径中（classpath）</li>
-<li>1、注册驱动</li>
-<li>2、获取与数据库的链接</li>
-<li>3、创建代表SQL语句的对象</li>
-<li>4、执行SQL语句</li>
-<li>5、如果是查询语句，需要遍历结果集</li>
-<li>6、释放占用的资源</li>
-</ul>
-<p><img src="http://i1.piimg.com/567571/9c73f966a51950fe.png" alt=""></p>
-<h3 id="三、事务入门（重点）"><a href="#三、事务入门（重点）" class="headerlink" title="三、事务入门（重点）"></a>三、事务入门（重点）</h3><ul>
-<li>1、MySQL：每一条语句都属于独立事务,默认自动管理的。</li>
-<li>2、开启事务：start transaction;   日后的语句都会处于同一个事务之中。<br>提交事务：commit;<br>回滚事务：rollback;</li>
-<li>3、JDBC如何控制事务</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">conn.setAutoCommit(<span class="number">0</span>);<span class="comment">//修改系统非自动提交。</span></div><div class="line">conn.commit();<span class="comment">//事务提交</span></div><div class="line">conn.rollback();<span class="comment">//事务回滚</span></div><div class="line">SavePoint sp=con.setSavePoint();<span class="comment">//设置保存点</span></div><div class="line">conn.rollback(sp);<span class="comment">//返回保存点</span></div><div class="line">conn.setTransactionIsolation();<span class="comment">//设置隔离级别</span></div><div class="line">conn.getTransactionIsolation();<span class="comment">//获取隔离级别</span></div></pre></td></tr></table></figure>
+<h3 id="二、编写步骤和执行过程"><a href="#二、编写步骤和执行过程" class="headerlink" title="二、编写步骤和执行过程"></a>二、编写步骤和执行过程</h3><ul>
+<li><p>1、编码步骤：</p>
 <ul>
-<li>其中隔离级别的设置如下：<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">设定事务的隔离级别：con.setTransactionIsolation(Connection.isolationLevel);</div><div class="line">四种隔离级别： </div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);<span class="comment">//最底级别：只保证不会读到非法数据，上述3个问题有可能发生 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); <span class="comment">//默认级别：可以防止脏读 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);<span class="comment">//可以防止脏读和不可重复读取 </span></div><div class="line">con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); <span class="comment">//最高级别：防止上述3种情况，事务串行执行</span></div></pre></td></tr></table></figure>
+<li><p>a、编写一个类：实现javax.servlet.Filter接口<br><img src="http://i.imgur.com/DHpgddE.png" alt=""></p>
+</li>
+<li><p>b、配置web.xml，指定需要过滤的资源。（和Servlet的配置相当类似）<br><img src="http://i.imgur.com/F56CJi2.png" alt=""></p>
 </li>
 </ul>
-<h3 id="四、事务的特性（重点。面试）"><a href="#四、事务的特性（重点。面试）" class="headerlink" title="四、事务的特性（重点。面试）"></a>四、事务的特性（重点。面试）</h3><ul>
-<li>1、事务的特性：<br>原子性：处于事务中的多条语句是不可分割的。<br>一致性：事务必须使数据库从一个一致性状态变换到另外一个一致性状态。比如：转账，转账前A+B=2000，转账后A+B=2000<br>隔离性：多线程并发。一个事务不能被其他线程中的事务所打扰。<br>持久性：事务一旦提交，永久保存起来。</li>
-<li>2、事务的隔离级别：属于事务的。都已开启了事务为前提。</li>
-<li><p>不考虑事务的隔离级别，会出现以下情况（是错的）</p>
+</li>
+<li><p>2、过滤器的执行过程（生命周期）<br>  <img src="http://i.imgur.com/9r0ivIE.png" alt=""></p>
+</li>
+<li><p>生命周期：</p>
 <ul>
-<li>脏读：一个线程中的事务读到了另外一个线程中未提交的数据。</li>
-<li>不可重复读：一个线程中的事务读到了另外一个线程中已经提交的update的数据。</li>
-<li>虚读：一个线程中的事务读到了另外一个线程中已经提交的insert的数据。</li>
+<li>诞生：过滤器的实例是在应用被加载时就完成的实例化，并初始化的。</li>
+<li>存活：和应用的生命周期一致的。在内存中是单例的。针对拦截范围内的资源访问，每次访问都会调用void doFIlter(request,response.chain)进行拦截。</li>
+<li>死亡：应用被卸载。</li>
 </ul>
 </li>
-<li><p>要想避免以上现象，通过更改事务的隔离级别来避免：</p>
-<ul>
-<li>READ UNCOMMITTED 脏读、不可重复读、虚读有可能发生。</li>
-<li>READ COMMITTED 避免脏读的发生，不可重复读、虚读有可能发生。</li>
-<li>REPEATABLE READ 避免脏读、不可重复读的发生，虚读有可能发生。</li>
-<li>SERIALIZABLE 避免脏读、不可重复读、虚读的发生。</li>
-</ul>
+<li><p>执行过程：<br><img src="http://i.imgur.com/CCogcDR.png" alt=""></p>
 </li>
 </ul>
-<p>级别依次升高，效率依次降低。<br>MySQL：默认REPEATABLE READ<br>ORACLE：默认READ COMMITTED</p>
-<p>MySQL：<br>select @@tx_isolation;//查看当前的隔离级别<br>set transaction isolation level 级别;// 设置当前的事务隔离级别</p>
-<h3 id="五、数据库连接池原理：（理解）"><a href="#五、数据库连接池原理：（理解）" class="headerlink" title="五、数据库连接池原理：（理解）"></a>五、数据库连接池原理：（理解）</h3><p><img src="http://i4.buimg.com/567571/1f88728dcfd4cbbd.png" alt=""></p>
-<h3 id="六、编程的难点：（设计模式）"><a href="#六、编程的难点：（设计模式）" class="headerlink" title="六、编程的难点：（设计模式）"></a>六、编程的难点：（设计模式）</h3><p>难点：用一个实现了javax.sql.DataSource类的实例时，用户如果调用Connection.close()方法，会把链接关闭，失去了连接池的意义。<br>明确一个问题：用户得到Connection的实现是：数据库驱动对Connection接口的实现。因此，调用的close方法都是数据库驱动的，它会把链接给关闭。（这不是我们要的，我们要把该链接换回池中）。</p>
-<p>解决方案：改写驱动原有的close方法。对已知类的某个/某些方法进行功能上的改变，有以下几种编码方案：</p>
-<ul>
-<li>a、继承：此处行不通。<br>到底针对哪个驱动的实现写子类（很多）<br>数据库驱动对Connection接口的实现类，不允许被继承<br>丢失了原有对象的信息。捡了芝麻丢了西瓜。</li>
-<li><p>b、装饰（包装）设计模式：（基础IO）<br>保持被包装对象的原有信息，又可以对某个/某些方法进行改写。<br>口诀：<br>1、编写一个类，实现与被包装类（数据库驱动对Connection的实现）相同的接口。（使这个类和数据库的驱动实现有着相同的行为）<br>2、定义一个变量，引用被包装类的实例。<br>3、定义构造方法，传入被包装类的实例。<br>4、对于要改写的方法，编写自己的代码即可。<br>5、对于不需要改写的方法，调用原有对象的对应方法。</p>
-</li>
-<li><p>c、默认适配器：（为了后来做准备）<br><img src="http://i1.piimg.com/567571/6bdaa625e79af855.png" alt=""><br><img src="http://i2.muimg.com/567571/0d525673562314e6.png" alt=""></p>
-</li>
-<li><p>d、动态代理：（很重要 AOP–Aspect-Oriented Programming 核心技术）<br>    基于接口的动态代理：Proxy<br>如果一个类没有实现任何的接口，此种代理就不能使用了。<br>    基于子类的动态代理：CGLIB<br>前提：被代理类的要求<br>1、不能是final的<br>2、必须是public的<br>比如普通的JavaBean就可能没有实现任何的接口。代理类是被代理类的子类。<br><img src="http://i2.muimg.com/567571/fb6e253d772a61c1.png" alt=""></p>
-</li>
+<h3 id="三、串联过滤器"><a href="#三、串联过滤器" class="headerlink" title="三、串联过滤器"></a>三、串联过滤器</h3><p>一个过滤器接着另外一个过滤器。执行的顺序<br><img src="http://i.imgur.com/tgw81wN.png" alt=""></p>
+<h3 id="四、案例："><a href="#四、案例：" class="headerlink" title="四、案例："></a>四、案例：</h3><ul>
+<li>1、解决请求参数（POST）和响应输出的乱码过滤器</li>
+<li>2、动态资源不要缓存的过滤器<br>Servlet/JSP：动态资源不要缓存。</li>
+<li>3、静态资源控制缓存时间的过滤器</li>
+<li>4、用户自动登录过滤器：<br>Base64编码：很重要<br><img src="http://i.imgur.com/P6s0CrO.png" alt=""><h3 id="五、过滤器配置的细节"><a href="#五、过滤器配置的细节" class="headerlink" title="五、过滤器配置的细节"></a>五、过滤器配置的细节</h3><img src="http://i.imgur.com/4BC83KZ.png" alt=""><br><img src="http://i.imgur.com/3Cv7RVb.png" alt=""></li>
 </ul>
-<h3 id="七、数据库操作框架"><a href="#七、数据库操作框架" class="headerlink" title="七、数据库操作框架"></a>七、数据库操作框架</h3><ul>
-<li>1、ORM：Object Relation Mapping<br>Hibernate：非常流行<br>JPA：Java Persistent API.ORM标准<br>MyBatis：2010年开始。之前叫做iBatis（重视）</li>
-<li>2、JDBC封装框架<br>DBUtils<br>Spring JDBC Template</li>
+<h3 id="六、巩固装饰设计模式"><a href="#六、巩固装饰设计模式" class="headerlink" title="六、巩固装饰设计模式"></a>六、巩固装饰设计模式</h3><ul>
+<li>一、装饰<ul>
+<li>1、编写一个类，实现与被包装类（数据库驱动对Connection的实现）相同的接口。（使这个类和数据库的驱动实现有着相同的行为）</li>
+<li>2、定义一个变量，引用被包装类的实例。</li>
+<li>3、定义构造方法，传入被包装类的实例。</li>
+<li>4、对于要改写的方法，编写自己的代码即可。</li>
+<li>5、对于不需要改写的方法，调用原有对象的对应方法。</li>
 </ul>
-<h3 id="八、实际开发中事务如何管理-非常好"><a href="#八、实际开发中事务如何管理-非常好" class="headerlink" title="八、实际开发中事务如何管理(非常好)"></a>八、实际开发中事务如何管理(非常好)</h3><ul>
-<li>1、写4个版本的代码：AOP</li>
-<li>2、ThreadLocal（很重要）<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//特点：一个线程存的东西，只有该线程才能取出来。线程局部变量。</span></div><div class="line"><span class="comment">//模拟</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocal</span></span>&#123;</div><div class="line">	<span class="comment">//类似Map的结构</span></div><div class="line">	<span class="keyword">private</span> Map&lt;Runnable,Object&gt; map = <span class="keyword">new</span> HashMap&lt;Runnable,Object&gt;();</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(Object obj)</span></span>&#123;</div><div class="line">		map.put(Thread.currentThread(),obj);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span></span>&#123;</div><div class="line">		map.remove(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">()</span></span>&#123;</div><div class="line">		map.get(Thread.currentThread());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li>二、装饰变体（BufferedReader本身就是包装类，对Reader的包装。LineNumberReader，对BufferedReader的包装，还是他的子类）<ul>
+<li>1、编写一个类，继承已经是包装类的类。</li>
+<li>2、定义一个变量，引用被包装类的实例。</li>
+<li>3、定义构造方法，传入被包装类的实例。</li>
+<li>4、覆盖掉需要改写的方法</li>
+</ul>
 </li>
 </ul>
 
@@ -251,14 +234,15 @@
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/05/03/jdbc学习笔记/"
-                     data-title="jdbc学习笔记"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/backgroud2.jpg"
+                     data-thread-key="2017/05/07/过滤器/"
+                     data-title="过滤器"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/07/过滤器/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/07/过滤器/backgroud5.jpg"
                      data-content="
-内心存在的东西，就是“因”，外界给予的东西，就是“缘”。因上努力，果上随缘。
+有了希望，你会产生拒绝; 没有希望，你会接受一切。
 
-一、JDBC... | knight&#39;s blog ">
+一、过滤器是什么？有什么？
+1、过滤器... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -276,15 +260,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/05/07/过滤器/" data-toggle="tooltip" data-placement="top"
-                           title="过滤器">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/04/30/人生所有的路，都是必经之路/" data-toggle="tooltip" data-placement="top"
-                           title="人生所有的路，都是必经之路">Next Post &rarr;</a>
+                        <a href="/2017/05/03/jdbc学习笔记/" data-toggle="tooltip" data-placement="top"
+                           title="jdbc学习笔记">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -293,9 +272,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/05/03/jdbc学习笔记/"
-                         data-title="jdbc学习笔记"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/03/jdbc学习笔记/">
+                         data-thread-key="2017/05/07/过滤器/"
+                         data-title="过滤器"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/07/过滤器/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -307,7 +286,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、JDBC简介"><span class="toc-text">一、JDBC简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、JDBC的编码步骤"><span class="toc-text">二、JDBC的编码步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、事务入门（重点）"><span class="toc-text">三、事务入门（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、事务的特性（重点。面试）"><span class="toc-text">四、事务的特性（重点。面试）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、数据库连接池原理：（理解）"><span class="toc-text">五、数据库连接池原理：（理解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、编程的难点：（设计模式）"><span class="toc-text">六、编程的难点：（设计模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、数据库操作框架"><span class="toc-text">七、数据库操作框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、实际开发中事务如何管理-非常好"><span class="toc-text">八、实际开发中事务如何管理(非常好)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、过滤器是什么？有什么？"><span class="toc-text">一、过滤器是什么？有什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、编写步骤和执行过程"><span class="toc-text">二、编写步骤和执行过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、串联过滤器"><span class="toc-text">三、串联过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、案例："><span class="toc-text">四、案例：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、过滤器配置的细节"><span class="toc-text">五、过滤器配置的细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、巩固装饰设计模式"><span class="toc-text">六、巩固装饰设计模式</span></a></li></ol>
                 </div>
             </div>
         </div>
