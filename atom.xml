@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2017-05-10T13:29:15.346Z</updated>
+  <updated>2017-05-17T15:44:44.639Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,111 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>注解</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/17/%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/17/注解/</id>
+    <published>2017-05-17T15:40:31.000Z</published>
+    <updated>2017-05-17T15:44:44.639Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="注解：（重点）"><a href="#注解：（重点）" class="headerlink" title="注解：（重点）"></a>注解：（重点）</h2><h3 id="1使用三个基本的注解"><a href="#1使用三个基本的注解" class="headerlink" title="1使用三个基本的注解"></a>1使用三个基本的注解</h3><p><code>@Deprecated</code><br><code>@SuppressWarnings</code><br><code>@Override</code></p>
+<h3 id="2自定义注解：外形"><a href="#2自定义注解：外形" class="headerlink" title="2自定义注解：外形"></a>2自定义注解：外形</h3><p>a、定义注解的语法：<br><code>public @interface MyAnn{}</code>   父类：<code>Annotation</code><br>b、定义注解的属性<br>属性的类型 属性名() [default 默认值];（默认为public）</p>
+<p><strong>属性的类型必须是：基本类型、String、Class、注解、枚举及以上类型的一维数组。</strong></p>
+<p>注：value是一个特殊属性，赋值时不必给定属性名称。<br>注：给数组类型的属性，可以指定一个值。</p>
+<p>不仅要会定义，而且还得会用。</p>
+<h3 id="3注解的反射：注入了灵魂"><a href="#3注解的反射：注入了灵魂" class="headerlink" title="3注解的反射：注入了灵魂"></a>3注解的反射：注入了灵魂</h3><h4 id="a、反射注解"><a href="#a、反射注解" class="headerlink" title="a、反射注解"></a>a、反射注解</h4><p>java.lang.reflect.AnnotatedElement:<br><code>&lt;t extends Annotation&gt; getAnnotation(Class&lt;T&gt; annotation):</code>得到指定的注解<br><code>Annotation[] getAnnotations():</code>得到所有的注解<br><code>Annotation[] getDeclareAnnotations():</code>得到直接存在上面的注解<br><code>boolean isAnnotationPresent(Class&lt;T&gt; annotation):</code>判断有没有指定的注解<br>没有指定主语：<br>Class、Method、Field、Constructor、Package实现了该接口。</p>
+<h4 id="b、元注解"><a href="#b、元注解" class="headerlink" title="b、元注解"></a>b、元注解</h4><p>元注解：服务于注解的注解。<br><code>@Retention：</code>用于改变注解的生命周期。<br><code>RetentionPolicy：</code><br><code>SOURCE:</code>源代码级别<br><code>CLASS：</code>字节码级别（磁盘上的）<br><code>RUNTIME：</code>字节码级别（运行时，虚拟机内存中的）<br><code>@Target：</code>用于给定注解使用的位置。<br><code>ElementType：</code><br><code>TYPE\METHOD等</code><br><code>@Documented：</code>用于标识使用了注解的类的javadoc文档中出现注解的身影。<br><code>@Inherited：</code>使用了注解的类的子类是否可以继承父类使用的注解。</p>
+<p>今后：XML——————&gt;注解</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;注解：（重点）&quot;&gt;&lt;a href=&quot;#注解：（重点）&quot; class=&quot;headerlink&quot; title=&quot;注解：（重点）&quot;&gt;&lt;/a&gt;注解：（重点）&lt;/h2&gt;&lt;h3 id=&quot;1使用三个基本的注解&quot;&gt;&lt;a href=&quot;#1使用三个基本的注解&quot; class=&quot;head
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AJAX和国际化</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX%E5%92%8C%E5%9B%BD%E9%99%85%E5%8C%96/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX和国际化/</id>
+    <published>2017-05-16T08:45:00.000Z</published>
+    <updated>2017-05-16T09:18:02.564Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、AJAX简介"><a href="#一、AJAX简介" class="headerlink" title="一、AJAX简介"></a>一、AJAX简介</h3><p>1、Asynchronous JavaScript And XML指异步 JavaScript 及 XML<br>2、老技术新用法。是基于JavaScript、XML、HTML、CSS新用法</p>
+<h3 id="二、同步和异步（理解）"><a href="#二、同步和异步（理解）" class="headerlink" title="二、同步和异步（理解）"></a>二、同步和异步（理解）</h3><h3 id="三、第一个异步请求案例（熟悉编码步骤）"><a href="#三、第一个异步请求案例（熟悉编码步骤）" class="headerlink" title="三、第一个异步请求案例（熟悉编码步骤）"></a>三、第一个异步请求案例（熟悉编码步骤）</h3><p><img src="http://i.imgur.com/XnjqLJY.png" alt=""></p>
+<h3 id="四、XmlHttpRequest（JS）对象详解（重点）"><a href="#四、XmlHttpRequest（JS）对象详解（重点）" class="headerlink" title="四、XmlHttpRequest（JS）对象详解（重点）"></a>四、XmlHttpRequest（JS）对象详解（重点）</h3><ul>
+<li>1、创建XmlHttpRequest对象<br>不同浏览器，设置相同浏览器的版本，创建该对象的方式是不同的。<br>解决办法：<ul>
+<li>a、从w3cshool的文档中拷贝。</li>
+<li>b、将来：用jQuery等框架</li>
+</ul>
+</li>
+<li><p>2、XmlHttpRequest对象的属性</p>
+<ul>
+<li>a、readyState：short只读<br>标识着当前的请求状态<br><img src="http://i.imgur.com/Ta2HBk1.png" alt=""><br>0：XmlHttpRequest对象被创建了。此时为0<br>1：建立与服务器的链接，但是请求还没有发出去。此时为1。open(),send()还没有执行。<br>2：发出了请求，但是服务器没有任何响应。此时为2<br>3：接收到了服务器的响应，接收到了服务器发出的响应消息头时，此时3.<br>4：接收到了服务器发送的响应正文，响应结束。此时为4<br><img src="http://i.imgur.com/20dCrmp.png" alt=""><br>b、status：代表着响应状态码<br>c、statusText：响应码描述<br>d、responseText：字符串类型。代表着响应正文内容，把他当做文本对待<br>e、responseXML：Document。代表着响应正文内容，把他当做一个Document对象。（DOM）</li>
+</ul>
+</li>
+<li><p>3、XmlHttpRequest的方法</p>
+<ul>
+<li>a、getAllResponseHeaders():返回的是所有的响应消息头。是一个字符串。</li>
+<li>b、getResponseHeader(var headerName):返回指定响应消息头的值。是一个字符串。</li>
+<li>c、open(var method,var url,boolean isAnsy):建立连接。<br>method，请求方式<br>url，请求的地址<br>isAnsy，同步还是异步。默认是true，就是异步。</li>
+<li>d、send(var data):向服务器发送请求正文。如果是get请求，请求传入null.<br>如果是post请求：data =”username=abc&amp;password=123”</li>
+<li>e、setRequestHeader(var headerName,var headerValue):向服务器发送请求消息头。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>4、XmlHttpRequest的状态监听器<br>onreadystatechange，指向是一个函数。回调函数。<br>何时触发执行，每次XHR对象的readyState发生变化都会触发。</li>
+</ul>
+<p>一般写法：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">xhr.onreadystatechange=function()&#123;</div><div class="line">	<span class="keyword">if</span>(xhr.readyState==<span class="number">4</span>)&#123;</div><div class="line">		<span class="keyword">if</span>(xhr.status==<span class="number">200</span>)&#123;</div><div class="line">			<span class="comment">//JS之DOM、BOM编程</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="五、案例"><a href="#五、案例" class="headerlink" title="五、案例"></a>五、案例</h3><h3 id="六、JSON-lib、Xstream简介"><a href="#六、JSON-lib、Xstream简介" class="headerlink" title="六、JSON-lib、Xstream简介"></a>六、JSON-lib、Xstream简介</h3><h3 id="七、二级联动（异步请求）"><a href="#七、二级联动（异步请求）" class="headerlink" title="七、二级联动（异步请求）"></a>七、二级联动（异步请求）</h3><h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2><h3 id="一、固定文本的国际化"><a href="#一、固定文本的国际化" class="headerlink" title="一、固定文本的国际化:"></a>一、固定文本的国际化:</h3><p><strong>一个消息资源包，由多个properties文件组成的(基名和扩展名一致的)。</strong></p>
+<p>这些文件有着以下特点：</p>
+<ul>
+<li><p><code>基名_语言代码(ISO)_国家区域代码(ISO).properties</code></p>
+</li>
+<li><p><code>message_zh_CN.properties</code></p>
+</li>
+<li><code>message_en_US.properties</code></li>
+<li><code>message.properties(默认的)</code><ul>
+<li><code>ResourceBundle</code></li>
+<li><code>Locale</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="二、日期时间的格式化："><a href="#二、日期时间的格式化：" class="headerlink" title="二、日期时间的格式化："></a>二、日期时间的格式化：</h3><ul>
+<li><p><code>DateFormat: SimpleDateFormat</code></p>
+</li>
+<li><p>用户输入：String————-&gt;java.util.Date<br><code>Date parse(String)</code></p>
+</li>
+<li><p>显示数据：java.util.Date————-&gt;String<br><code>String format(Date)</code></p>
+</li>
+</ul>
+<h3 id="三、数字的格式化（货币）："><a href="#三、数字的格式化（货币）：" class="headerlink" title="三、数字的格式化（货币）："></a>三、数字的格式化（货币）：</h3><ul>
+<li><p><code>NumberFormat:</code></p>
+</li>
+<li><p>用户输入：String————-&gt;java.lang.Number<br><code>Number parse(String)</code></p>
+</li>
+<li><p>显示数据：java.util.Number————-&gt;String<br><code>String format(Number)</code></p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一、AJAX简介&quot;&gt;&lt;a href=&quot;#一、AJAX简介&quot; class=&quot;headerlink&quot; title=&quot;一、AJAX简介&quot;&gt;&lt;/a&gt;一、AJAX简介&lt;/h3&gt;&lt;p&gt;1、Asynchronous JavaScript And XML指异步 JavaScrip
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
   
   <entry>
     <title>文件上传下载和监听器</title>
@@ -506,7 +611,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#37;&#x40;&#x69;&#110;&#x63;&#x6c;&#x75;&#x64;&#101;&#37;">&#37;&#x40;&#x69;&#110;&#x63;&#x6c;&#x75;&#x64;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#37;&#x40;&#105;&#x6e;&#x63;&#x6c;&#117;&#x64;&#101;&#37;">&#37;&#x40;&#105;&#x6e;&#x63;&#x6c;&#117;&#x64;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>

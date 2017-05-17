@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        文件上传下载和监听器｜knight&#39;s blog
+        注解｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/17/注解/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>文件上传下载和监听器</h1>
+                    <h1>注解</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-05-10
+                          日期 2017-05-17
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            文件上传下载和监听器
+            注解
         </span>
     </div>
 </header>
@@ -176,82 +176,25 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <blockquote>
-<p>真正让你失望和绝望的，并不是你的希望，而是你对希望的执着。<br>有了希望，你会产生拒绝；没有希望，你才会接受一切。</p>
-</blockquote>
-<h3 id="一、文件上传"><a href="#一、文件上传" class="headerlink" title="一、文件上传"></a>一、文件上传</h3><h4 id="1、文件上传的原理分析"><a href="#1、文件上传的原理分析" class="headerlink" title="1、文件上传的原理分析"></a>1、文件上传的原理分析</h4><ul>
-<li><p>1.1文件上传的必要前提：</p>
-<ul>
-<li>a、表单的method必须是post</li>
-<li><p>b、表单的enctype属性必须是multipart/form-data类型的。<br>enctype默认值：application/x-www-form-urlencoded<br>作用：告知服务器，请求正文的MIME类型</p>
-</li>
-<li><p>application/x-www-form-urlencoded   ：   username=abc&amp;password=123</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>ServletRequest.getParameter(String name);该方法是专门读取该类型的方法</p>
-<pre><code>* multipart/form-data:
-</code></pre><p><img src="http://i.imgur.com/8NiPrmo.png" alt=""></p>
-<ul>
-<li>1.2文件上传<br>原理：解析请求正文中的内容。</li>
-</ul>
-<h4 id="2、借助第三方组件实现文件上传"><a href="#2、借助第三方组件实现文件上传" class="headerlink" title="2、借助第三方组件实现文件上传"></a>2、借助第三方组件实现文件上传</h4><ul>
-<li>2.1、commons-fileupload组件：<br>拷贝jar包：commons-fileupload.jar   commons-io.jar 具体参考<br><a href="http://commons.apache.org/proper/commons-fileupload/using.html" target="_blank" rel="external">http://commons.apache.org/proper/commons-fileupload/using.html</a></li>
-<li>2.2How it works<br><img src="http://i.imgur.com/SHkRomC.png" alt=""></li>
-</ul>
-<h4 id="3、文件上传详解"><a href="#3、文件上传详解" class="headerlink" title="3、文件上传详解"></a>3、文件上传详解</h4><ul>
-<li><p>3.1DiskFileItemFactory<br><img src="http://i.imgur.com/gtqxJTE.png" alt=""><br>public void setRepository(File repository)：设置临时文件的存放目录<br>public void setSizeThreshold(int sizeThreshold)：设置缓存的大小</p>
-</li>
-<li><p><strong>专题：关于临时文件</strong><br><img src="http://i.imgur.com/g2bN00i.png" alt=""><br>文件上传时，自己用IO流处理，一定要在流关闭后删除临时文件。FileItem.delete()<br>建议使用：FileItem.writer(File f).会自动删除临时文件。</p>
-</li>
-<li><p>3.2乱码问题</p>
-<ul>
-<li>a、普通字段的乱码<br>FileItem.getString(String charset);编码要和客户端一致。</li>
-<li>b、上传的中文文件名乱码<br>解决办法：request.setCharacterEncoding(“UTF-8”);编码要和客户端一致。</li>
-</ul>
-</li>
-<li>3.3文件重名问题<br>解决办法：a.txt 多次上传会被覆盖<br>UUID_a.txt<br><img src="http://i.imgur.com/cq2pcw7.png" alt=""></li>
-<li><p>3.4保证服务器的安全<br>把存放文件的目录，放到用户直接访问不到的地方。</p>
-</li>
-<li><p>3.5避免一个文件夹中的文件过多<br>解决方案：分目录存储<br>参考实现：</p>
-<ul>
-<li>按照日期分目录存储</li>
-<li>按照文件名的hashCode计算存储目录</li>
-</ul>
-</li>
-</ul>
-<p><img src="http://i.imgur.com/hzUHfuZ.png" alt=""></p>
-<ul>
-<li><p>3.6限制上传文件的大小，并给出友好提示<br>web方式下不适合传输较大的文件。</p>
-<ul>
-<li><p>单文件大小：<br><code>ServletFileUpload.setFileSizeMax(3*1024*1024);</code>//设置单个文件上传的大小</p>
-</li>
-<li><p>总文件大小：（多文件上传）<br><code>ServletFileUpload.setSizeMax(6*1024*1024);</code>//多文件上传时总大小限制</p>
-</li>
-</ul>
-</li>
-<li>3.7限制上传文件的类型<br>扩展名+文件的MIME类型：<br>100%防止住：图片的。判断字节的前几位。</li>
-</ul>
-<h4 id="4、文件的下载"><a href="#4、文件的下载" class="headerlink" title="4、文件的下载"></a>4、文件的下载</h4><p>代码实现：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">String uuidfilename = request.getParameter(<span class="string">"filename"</span>);<span class="comment">//get方式提交的</span></div><div class="line">uuidfilename = <span class="keyword">new</span> String(uuidfilename.getBytes(<span class="string">"ISO-8859-1"</span>),<span class="string">"UTF-8"</span>);<span class="comment">//UUID的文件名</span></div><div class="line">		</div><div class="line">String storeDirectory = getServletContext().getRealPath(<span class="string">"/WEB-INF/files"</span>);</div><div class="line"><span class="comment">//得到存放的子目录</span></div><div class="line">String childDirecotry = makeChildDirectory(storeDirectory, uuidfilename);</div><div class="line">		</div><div class="line"><span class="comment">//构建输入流</span></div><div class="line">InputStream in = <span class="keyword">new</span> FileInputStream(storeDirectory+File.separator+childDirecotry+File.separator+uuidfilename);</div><div class="line"><span class="comment">//下载</span></div><div class="line">String oldfilename = uuidfilename.substring(uuidfilename.indexOf(<span class="string">"_"</span>)+<span class="number">1</span>);</div><div class="line"><span class="comment">//通知客户端以下载的方式打开</span></div><div class="line">response.setHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment;filename="</span>+URLEncoder.encode(oldfilename, <span class="string">"UTF-8"</span>));</div><div class="line">		</div><div class="line">OutputStream out = response.getOutputStream();</div><div class="line">		</div><div class="line"><span class="keyword">int</span> len = -<span class="number">1</span>;</div><div class="line"><span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line"><span class="keyword">while</span>((len=in.read(b))!=-<span class="number">1</span>)&#123;</div><div class="line">	out.write(b,<span class="number">0</span>,len);</div><div class="line">&#125;</div><div class="line">in.close();</div><div class="line">out.close();</div><div class="line"></div><div class="line"><span class="comment">//计算存放的子目录</span></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">makeChildDirectory</span><span class="params">(String realPath, String fileName)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> hashCode = fileName.hashCode();</div><div class="line">	<span class="keyword">int</span> dir1 = hashCode&amp;<span class="number">0xf</span>;<span class="comment">// 取1~4位</span></div><div class="line">	<span class="keyword">int</span> dir2 = (hashCode&amp;<span class="number">0xf0</span>)&gt;&gt;<span class="number">4</span>;<span class="comment">//取5~8位</span></div><div class="line">	</div><div class="line">	String directory = <span class="string">""</span>+dir1+File.separator+dir2;</div><div class="line">	File file = <span class="keyword">new</span> File(realPath,directory);</div><div class="line">	<span class="keyword">if</span>(!file.exists())</div><div class="line">		file.mkdirs();</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> directory;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="二、Servlet规范中的监听器（回顾）"><a href="#二、Servlet规范中的监听器（回顾）" class="headerlink" title="二、Servlet规范中的监听器（回顾）"></a>二、Servlet规范中的监听器（回顾）</h3><h4 id="1、观察者设计模式："><a href="#1、观察者设计模式：" class="headerlink" title="1、观察者设计模式："></a>1、观察者设计模式：</h4><p>事件源：出发事件的对象。<br>事件：封装了事件源。<br>监听器：一般是一个接口，由使用者来实现。</p>
-<h4 id="2、Servlet规范中提供的八个监听器"><a href="#2、Servlet规范中提供的八个监听器" class="headerlink" title="2、Servlet规范中提供的八个监听器"></a>2、Servlet规范中提供的八个监听器</h4><ul>
-<li>a、监听ServletContext、HttpSession、ServletRequest创建和销毁的监听器<br><code>ServletContextListener:</code><br><code>HttpSessionListener:</code><br><code>ServletRequestListener:</code></li>
-<li>b、监听ServletContext、HttpSession、ServletRequest属性的变化的监听器（attribute）<br>setAttribute() :添加和替换removeAttribute()<br><code>ServletContextAttributeListener:</code><br><code>HttpSessionAttributeListener:</code><br><code>ServletRequestAttributeListener:</code></li>
-<li>c、感知型监听器。这种监听器不需要注册。都与会话有关<br><code>HttpSessionBindingListener:</code>感知自己被放到了HttpSession属性中<br><code>HttpSessionActivationListener：</code>感知自己何时随着HttpSession钝化或激活</li>
-</ul>
-<h4 id="3、监听器案例：查看在线登陆的用户，踢人。"><a href="#3、监听器案例：查看在线登陆的用户，踢人。" class="headerlink" title="3、监听器案例：查看在线登陆的用户，踢人。"></a>3、监听器案例：查看在线登陆的用户，踢人。</h4>
+                <h2 id="注解：（重点）"><a href="#注解：（重点）" class="headerlink" title="注解：（重点）"></a>注解：（重点）</h2><h3 id="1使用三个基本的注解"><a href="#1使用三个基本的注解" class="headerlink" title="1使用三个基本的注解"></a>1使用三个基本的注解</h3><p><code>@Deprecated</code><br><code>@SuppressWarnings</code><br><code>@Override</code></p>
+<h3 id="2自定义注解：外形"><a href="#2自定义注解：外形" class="headerlink" title="2自定义注解：外形"></a>2自定义注解：外形</h3><p>a、定义注解的语法：<br><code>public @interface MyAnn{}</code>   父类：<code>Annotation</code><br>b、定义注解的属性<br>属性的类型 属性名() [default 默认值];（默认为public）</p>
+<p><strong>属性的类型必须是：基本类型、String、Class、注解、枚举及以上类型的一维数组。</strong></p>
+<p>注：value是一个特殊属性，赋值时不必给定属性名称。<br>注：给数组类型的属性，可以指定一个值。</p>
+<p>不仅要会定义，而且还得会用。</p>
+<h3 id="3注解的反射：注入了灵魂"><a href="#3注解的反射：注入了灵魂" class="headerlink" title="3注解的反射：注入了灵魂"></a>3注解的反射：注入了灵魂</h3><h4 id="a、反射注解"><a href="#a、反射注解" class="headerlink" title="a、反射注解"></a>a、反射注解</h4><p>java.lang.reflect.AnnotatedElement:<br><code>&lt;t extends Annotation&gt; getAnnotation(Class&lt;T&gt; annotation):</code>得到指定的注解<br><code>Annotation[] getAnnotations():</code>得到所有的注解<br><code>Annotation[] getDeclareAnnotations():</code>得到直接存在上面的注解<br><code>boolean isAnnotationPresent(Class&lt;T&gt; annotation):</code>判断有没有指定的注解<br>没有指定主语：<br>Class、Method、Field、Constructor、Package实现了该接口。</p>
+<h4 id="b、元注解"><a href="#b、元注解" class="headerlink" title="b、元注解"></a>b、元注解</h4><p>元注解：服务于注解的注解。<br><code>@Retention：</code>用于改变注解的生命周期。<br><code>RetentionPolicy：</code><br><code>SOURCE:</code>源代码级别<br><code>CLASS：</code>字节码级别（磁盘上的）<br><code>RUNTIME：</code>字节码级别（运行时，虚拟机内存中的）<br><code>@Target：</code>用于给定注解使用的位置。<br><code>ElementType：</code><br><code>TYPE\METHOD等</code><br><code>@Documented：</code>用于标识使用了注解的类的javadoc文档中出现注解的身影。<br><code>@Inherited：</code>使用了注解的类的子类是否可以继承父类使用的注解。</p>
+<p>今后：XML——————&gt;注解</p>
+
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/05/10/文件上传下载和监听器/"
-                     data-title="文件上传下载和监听器"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/backgroud2.jpg"
-                     data-content="
-真正让你失望和绝望的，并不是你的希望，而是你对希望的执着。有了希望，你会产生拒绝；没有希望，... | knight&#39;s blog ">
+                     data-thread-key="2017/05/17/注解/"
+                     data-title="注解"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/17/注解/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/17/注解/backgroud6.jpg"
+                     data-content="注解：（重点）1使用三个基本的注解@Deprecated@SuppressWarnings@O... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -269,15 +212,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/05/16/AJAX和国际化/" data-toggle="tooltip" data-placement="top"
-                           title="AJAX和国际化">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/05/07/过滤器/" data-toggle="tooltip" data-placement="top"
-                           title="过滤器">Next Post &rarr;</a>
+                        <a href="/2017/05/16/AJAX和国际化/" data-toggle="tooltip" data-placement="top"
+                           title="AJAX和国际化">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -286,9 +224,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/05/10/文件上传下载和监听器/"
-                         data-title="文件上传下载和监听器"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/">
+                         data-thread-key="2017/05/17/注解/"
+                         data-title="注解"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/17/注解/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -300,7 +238,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、文件上传"><span class="toc-text">一、文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、文件上传的原理分析"><span class="toc-text">1、文件上传的原理分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、借助第三方组件实现文件上传"><span class="toc-text">2、借助第三方组件实现文件上传</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、文件上传详解"><span class="toc-text">3、文件上传详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、文件的下载"><span class="toc-text">4、文件的下载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Servlet规范中的监听器（回顾）"><span class="toc-text">二、Servlet规范中的监听器（回顾）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、观察者设计模式："><span class="toc-text">1、观察者设计模式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、Servlet规范中提供的八个监听器"><span class="toc-text">2、Servlet规范中提供的八个监听器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、监听器案例：查看在线登陆的用户，踢人。"><span class="toc-text">3、监听器案例：查看在线登陆的用户，踢人。</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#注解：（重点）"><span class="toc-text">注解：（重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1使用三个基本的注解"><span class="toc-text">1使用三个基本的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2自定义注解：外形"><span class="toc-text">2自定义注解：外形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3注解的反射：注入了灵魂"><span class="toc-text">3注解的反射：注入了灵魂</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a、反射注解"><span class="toc-text">a、反射注解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b、元注解"><span class="toc-text">b、元注解</span></a></li></ol></li></ol></li></ol>
                 </div>
             </div>
         </div>

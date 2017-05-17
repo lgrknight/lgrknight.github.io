@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        文件上传下载和监听器｜knight&#39;s blog
+        AJAX和国际化｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX和国际化/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>文件上传下载和监听器</h1>
+                    <h1>AJAX和国际化</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2017-05-10
+                          日期 2017-05-16
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            文件上传下载和监听器
+            AJAX和国际化
         </span>
     </div>
 </header>
@@ -176,82 +176,74 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <blockquote>
-<p>真正让你失望和绝望的，并不是你的希望，而是你对希望的执着。<br>有了希望，你会产生拒绝；没有希望，你才会接受一切。</p>
-</blockquote>
-<h3 id="一、文件上传"><a href="#一、文件上传" class="headerlink" title="一、文件上传"></a>一、文件上传</h3><h4 id="1、文件上传的原理分析"><a href="#1、文件上传的原理分析" class="headerlink" title="1、文件上传的原理分析"></a>1、文件上传的原理分析</h4><ul>
-<li><p>1.1文件上传的必要前提：</p>
+                <h3 id="一、AJAX简介"><a href="#一、AJAX简介" class="headerlink" title="一、AJAX简介"></a>一、AJAX简介</h3><p>1、Asynchronous JavaScript And XML指异步 JavaScript 及 XML<br>2、老技术新用法。是基于JavaScript、XML、HTML、CSS新用法</p>
+<h3 id="二、同步和异步（理解）"><a href="#二、同步和异步（理解）" class="headerlink" title="二、同步和异步（理解）"></a>二、同步和异步（理解）</h3><h3 id="三、第一个异步请求案例（熟悉编码步骤）"><a href="#三、第一个异步请求案例（熟悉编码步骤）" class="headerlink" title="三、第一个异步请求案例（熟悉编码步骤）"></a>三、第一个异步请求案例（熟悉编码步骤）</h3><p><img src="http://i.imgur.com/XnjqLJY.png" alt=""></p>
+<h3 id="四、XmlHttpRequest（JS）对象详解（重点）"><a href="#四、XmlHttpRequest（JS）对象详解（重点）" class="headerlink" title="四、XmlHttpRequest（JS）对象详解（重点）"></a>四、XmlHttpRequest（JS）对象详解（重点）</h3><ul>
+<li>1、创建XmlHttpRequest对象<br>不同浏览器，设置相同浏览器的版本，创建该对象的方式是不同的。<br>解决办法：<ul>
+<li>a、从w3cshool的文档中拷贝。</li>
+<li>b、将来：用jQuery等框架</li>
+</ul>
+</li>
+<li><p>2、XmlHttpRequest对象的属性</p>
 <ul>
-<li>a、表单的method必须是post</li>
-<li><p>b、表单的enctype属性必须是multipart/form-data类型的。<br>enctype默认值：application/x-www-form-urlencoded<br>作用：告知服务器，请求正文的MIME类型</p>
-</li>
-<li><p>application/x-www-form-urlencoded   ：   username=abc&amp;password=123</p>
-</li>
+<li>a、readyState：short只读<br>标识着当前的请求状态<br><img src="http://i.imgur.com/Ta2HBk1.png" alt=""><br>0：XmlHttpRequest对象被创建了。此时为0<br>1：建立与服务器的链接，但是请求还没有发出去。此时为1。open(),send()还没有执行。<br>2：发出了请求，但是服务器没有任何响应。此时为2<br>3：接收到了服务器的响应，接收到了服务器发出的响应消息头时，此时3.<br>4：接收到了服务器发送的响应正文，响应结束。此时为4<br><img src="http://i.imgur.com/20dCrmp.png" alt=""><br>b、status：代表着响应状态码<br>c、statusText：响应码描述<br>d、responseText：字符串类型。代表着响应正文内容，把他当做文本对待<br>e、responseXML：Document。代表着响应正文内容，把他当做一个Document对象。（DOM）</li>
 </ul>
 </li>
-</ul>
-<p>ServletRequest.getParameter(String name);该方法是专门读取该类型的方法</p>
-<pre><code>* multipart/form-data:
-</code></pre><p><img src="http://i.imgur.com/8NiPrmo.png" alt=""></p>
+<li><p>3、XmlHttpRequest的方法</p>
 <ul>
-<li>1.2文件上传<br>原理：解析请求正文中的内容。</li>
+<li>a、getAllResponseHeaders():返回的是所有的响应消息头。是一个字符串。</li>
+<li>b、getResponseHeader(var headerName):返回指定响应消息头的值。是一个字符串。</li>
+<li>c、open(var method,var url,boolean isAnsy):建立连接。<br>method，请求方式<br>url，请求的地址<br>isAnsy，同步还是异步。默认是true，就是异步。</li>
+<li>d、send(var data):向服务器发送请求正文。如果是get请求，请求传入null.<br>如果是post请求：data =”username=abc&amp;password=123”</li>
+<li>e、setRequestHeader(var headerName,var headerValue):向服务器发送请求消息头。</li>
 </ul>
-<h4 id="2、借助第三方组件实现文件上传"><a href="#2、借助第三方组件实现文件上传" class="headerlink" title="2、借助第三方组件实现文件上传"></a>2、借助第三方组件实现文件上传</h4><ul>
-<li>2.1、commons-fileupload组件：<br>拷贝jar包：commons-fileupload.jar   commons-io.jar 具体参考<br><a href="http://commons.apache.org/proper/commons-fileupload/using.html" target="_blank" rel="external">http://commons.apache.org/proper/commons-fileupload/using.html</a></li>
-<li>2.2How it works<br><img src="http://i.imgur.com/SHkRomC.png" alt=""></li>
+</li>
 </ul>
-<h4 id="3、文件上传详解"><a href="#3、文件上传详解" class="headerlink" title="3、文件上传详解"></a>3、文件上传详解</h4><ul>
-<li><p>3.1DiskFileItemFactory<br><img src="http://i.imgur.com/gtqxJTE.png" alt=""><br>public void setRepository(File repository)：设置临时文件的存放目录<br>public void setSizeThreshold(int sizeThreshold)：设置缓存的大小</p>
-</li>
-<li><p><strong>专题：关于临时文件</strong><br><img src="http://i.imgur.com/g2bN00i.png" alt=""><br>文件上传时，自己用IO流处理，一定要在流关闭后删除临时文件。FileItem.delete()<br>建议使用：FileItem.writer(File f).会自动删除临时文件。</p>
-</li>
-<li><p>3.2乱码问题</p>
 <ul>
-<li>a、普通字段的乱码<br>FileItem.getString(String charset);编码要和客户端一致。</li>
-<li>b、上传的中文文件名乱码<br>解决办法：request.setCharacterEncoding(“UTF-8”);编码要和客户端一致。</li>
+<li>4、XmlHttpRequest的状态监听器<br>onreadystatechange，指向是一个函数。回调函数。<br>何时触发执行，每次XHR对象的readyState发生变化都会触发。</li>
 </ul>
-</li>
-<li>3.3文件重名问题<br>解决办法：a.txt 多次上传会被覆盖<br>UUID_a.txt<br><img src="http://i.imgur.com/cq2pcw7.png" alt=""></li>
-<li><p>3.4保证服务器的安全<br>把存放文件的目录，放到用户直接访问不到的地方。</p>
-</li>
-<li><p>3.5避免一个文件夹中的文件过多<br>解决方案：分目录存储<br>参考实现：</p>
+<p>一般写法：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">xhr.onreadystatechange=function()&#123;</div><div class="line">	<span class="keyword">if</span>(xhr.readyState==<span class="number">4</span>)&#123;</div><div class="line">		<span class="keyword">if</span>(xhr.status==<span class="number">200</span>)&#123;</div><div class="line">			<span class="comment">//JS之DOM、BOM编程</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="五、案例"><a href="#五、案例" class="headerlink" title="五、案例"></a>五、案例</h3><h3 id="六、JSON-lib、Xstream简介"><a href="#六、JSON-lib、Xstream简介" class="headerlink" title="六、JSON-lib、Xstream简介"></a>六、JSON-lib、Xstream简介</h3><h3 id="七、二级联动（异步请求）"><a href="#七、二级联动（异步请求）" class="headerlink" title="七、二级联动（异步请求）"></a>七、二级联动（异步请求）</h3><h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2><h3 id="一、固定文本的国际化"><a href="#一、固定文本的国际化" class="headerlink" title="一、固定文本的国际化:"></a>一、固定文本的国际化:</h3><p><strong>一个消息资源包，由多个properties文件组成的(基名和扩展名一致的)。</strong></p>
+<p>这些文件有着以下特点：</p>
 <ul>
-<li>按照日期分目录存储</li>
-<li>按照文件名的hashCode计算存储目录</li>
+<li><p><code>基名_语言代码(ISO)_国家区域代码(ISO).properties</code></p>
+</li>
+<li><p><code>message_zh_CN.properties</code></p>
+</li>
+<li><code>message_en_US.properties</code></li>
+<li><code>message.properties(默认的)</code><ul>
+<li><code>ResourceBundle</code></li>
+<li><code>Locale</code></li>
 </ul>
 </li>
 </ul>
-<p><img src="http://i.imgur.com/hzUHfuZ.png" alt=""></p>
-<ul>
-<li><p>3.6限制上传文件的大小，并给出友好提示<br>web方式下不适合传输较大的文件。</p>
-<ul>
-<li><p>单文件大小：<br><code>ServletFileUpload.setFileSizeMax(3*1024*1024);</code>//设置单个文件上传的大小</p>
+<h3 id="二、日期时间的格式化："><a href="#二、日期时间的格式化：" class="headerlink" title="二、日期时间的格式化："></a>二、日期时间的格式化：</h3><ul>
+<li><p><code>DateFormat: SimpleDateFormat</code></p>
 </li>
-<li><p>总文件大小：（多文件上传）<br><code>ServletFileUpload.setSizeMax(6*1024*1024);</code>//多文件上传时总大小限制</p>
+<li><p>用户输入：String————-&gt;java.util.Date<br><code>Date parse(String)</code></p>
+</li>
+<li><p>显示数据：java.util.Date————-&gt;String<br><code>String format(Date)</code></p>
 </li>
 </ul>
+<h3 id="三、数字的格式化（货币）："><a href="#三、数字的格式化（货币）：" class="headerlink" title="三、数字的格式化（货币）："></a>三、数字的格式化（货币）：</h3><ul>
+<li><p><code>NumberFormat:</code></p>
 </li>
-<li>3.7限制上传文件的类型<br>扩展名+文件的MIME类型：<br>100%防止住：图片的。判断字节的前几位。</li>
+<li><p>用户输入：String————-&gt;java.lang.Number<br><code>Number parse(String)</code></p>
+</li>
+<li><p>显示数据：java.util.Number————-&gt;String<br><code>String format(Number)</code></p>
+</li>
 </ul>
-<h4 id="4、文件的下载"><a href="#4、文件的下载" class="headerlink" title="4、文件的下载"></a>4、文件的下载</h4><p>代码实现：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">String uuidfilename = request.getParameter(<span class="string">"filename"</span>);<span class="comment">//get方式提交的</span></div><div class="line">uuidfilename = <span class="keyword">new</span> String(uuidfilename.getBytes(<span class="string">"ISO-8859-1"</span>),<span class="string">"UTF-8"</span>);<span class="comment">//UUID的文件名</span></div><div class="line">		</div><div class="line">String storeDirectory = getServletContext().getRealPath(<span class="string">"/WEB-INF/files"</span>);</div><div class="line"><span class="comment">//得到存放的子目录</span></div><div class="line">String childDirecotry = makeChildDirectory(storeDirectory, uuidfilename);</div><div class="line">		</div><div class="line"><span class="comment">//构建输入流</span></div><div class="line">InputStream in = <span class="keyword">new</span> FileInputStream(storeDirectory+File.separator+childDirecotry+File.separator+uuidfilename);</div><div class="line"><span class="comment">//下载</span></div><div class="line">String oldfilename = uuidfilename.substring(uuidfilename.indexOf(<span class="string">"_"</span>)+<span class="number">1</span>);</div><div class="line"><span class="comment">//通知客户端以下载的方式打开</span></div><div class="line">response.setHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment;filename="</span>+URLEncoder.encode(oldfilename, <span class="string">"UTF-8"</span>));</div><div class="line">		</div><div class="line">OutputStream out = response.getOutputStream();</div><div class="line">		</div><div class="line"><span class="keyword">int</span> len = -<span class="number">1</span>;</div><div class="line"><span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line"><span class="keyword">while</span>((len=in.read(b))!=-<span class="number">1</span>)&#123;</div><div class="line">	out.write(b,<span class="number">0</span>,len);</div><div class="line">&#125;</div><div class="line">in.close();</div><div class="line">out.close();</div><div class="line"></div><div class="line"><span class="comment">//计算存放的子目录</span></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">makeChildDirectory</span><span class="params">(String realPath, String fileName)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> hashCode = fileName.hashCode();</div><div class="line">	<span class="keyword">int</span> dir1 = hashCode&amp;<span class="number">0xf</span>;<span class="comment">// 取1~4位</span></div><div class="line">	<span class="keyword">int</span> dir2 = (hashCode&amp;<span class="number">0xf0</span>)&gt;&gt;<span class="number">4</span>;<span class="comment">//取5~8位</span></div><div class="line">	</div><div class="line">	String directory = <span class="string">""</span>+dir1+File.separator+dir2;</div><div class="line">	File file = <span class="keyword">new</span> File(realPath,directory);</div><div class="line">	<span class="keyword">if</span>(!file.exists())</div><div class="line">		file.mkdirs();</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> directory;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="二、Servlet规范中的监听器（回顾）"><a href="#二、Servlet规范中的监听器（回顾）" class="headerlink" title="二、Servlet规范中的监听器（回顾）"></a>二、Servlet规范中的监听器（回顾）</h3><h4 id="1、观察者设计模式："><a href="#1、观察者设计模式：" class="headerlink" title="1、观察者设计模式："></a>1、观察者设计模式：</h4><p>事件源：出发事件的对象。<br>事件：封装了事件源。<br>监听器：一般是一个接口，由使用者来实现。</p>
-<h4 id="2、Servlet规范中提供的八个监听器"><a href="#2、Servlet规范中提供的八个监听器" class="headerlink" title="2、Servlet规范中提供的八个监听器"></a>2、Servlet规范中提供的八个监听器</h4><ul>
-<li>a、监听ServletContext、HttpSession、ServletRequest创建和销毁的监听器<br><code>ServletContextListener:</code><br><code>HttpSessionListener:</code><br><code>ServletRequestListener:</code></li>
-<li>b、监听ServletContext、HttpSession、ServletRequest属性的变化的监听器（attribute）<br>setAttribute() :添加和替换removeAttribute()<br><code>ServletContextAttributeListener:</code><br><code>HttpSessionAttributeListener:</code><br><code>ServletRequestAttributeListener:</code></li>
-<li>c、感知型监听器。这种监听器不需要注册。都与会话有关<br><code>HttpSessionBindingListener:</code>感知自己被放到了HttpSession属性中<br><code>HttpSessionActivationListener：</code>感知自己何时随着HttpSession钝化或激活</li>
-</ul>
-<h4 id="3、监听器案例：查看在线登陆的用户，踢人。"><a href="#3、监听器案例：查看在线登陆的用户，踢人。" class="headerlink" title="3、监听器案例：查看在线登陆的用户，踢人。"></a>3、监听器案例：查看在线登陆的用户，踢人。</h4>
+
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/05/10/文件上传下载和监听器/"
-                     data-title="文件上传下载和监听器"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/backgroud2.jpg"
-                     data-content="
-真正让你失望和绝望的，并不是你的希望，而是你对希望的执着。有了希望，你会产生拒绝；没有希望，... | knight&#39;s blog ">
+                     data-thread-key="2017/05/16/AJAX和国际化/"
+                     data-title="AJAX和国际化"
+                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX和国际化/"
+                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX和国际化/backgroud3.jpg"
+                     data-content="一、AJAX简介1、Asynchronous JavaScript And XML指异步 Ja... | knight&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -270,14 +262,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/05/16/AJAX和国际化/" data-toggle="tooltip" data-placement="top"
-                           title="AJAX和国际化">&larr; Previous Post</a>
+                        <a href="/2017/05/17/注解/" data-toggle="tooltip" data-placement="top"
+                           title="注解">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/05/07/过滤器/" data-toggle="tooltip" data-placement="top"
-                           title="过滤器">Next Post &rarr;</a>
+                        <a href="/2017/05/10/文件上传下载和监听器/" data-toggle="tooltip" data-placement="top"
+                           title="文件上传下载和监听器">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -286,9 +278,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/05/10/文件上传下载和监听器/"
-                         data-title="文件上传下载和监听器"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/10/文件上传下载和监听器/">
+                         data-thread-key="2017/05/16/AJAX和国际化/"
+                         data-title="AJAX和国际化"
+                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/05/16/AJAX和国际化/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -300,7 +292,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、文件上传"><span class="toc-text">一、文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、文件上传的原理分析"><span class="toc-text">1、文件上传的原理分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、借助第三方组件实现文件上传"><span class="toc-text">2、借助第三方组件实现文件上传</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、文件上传详解"><span class="toc-text">3、文件上传详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、文件的下载"><span class="toc-text">4、文件的下载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Servlet规范中的监听器（回顾）"><span class="toc-text">二、Servlet规范中的监听器（回顾）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、观察者设计模式："><span class="toc-text">1、观察者设计模式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、Servlet规范中提供的八个监听器"><span class="toc-text">2、Servlet规范中提供的八个监听器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、监听器案例：查看在线登陆的用户，踢人。"><span class="toc-text">3、监听器案例：查看在线登陆的用户，踢人。</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、AJAX简介"><span class="toc-text">一、AJAX简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、同步和异步（理解）"><span class="toc-text">二、同步和异步（理解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、第一个异步请求案例（熟悉编码步骤）"><span class="toc-text">三、第一个异步请求案例（熟悉编码步骤）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、XmlHttpRequest（JS）对象详解（重点）"><span class="toc-text">四、XmlHttpRequest（JS）对象详解（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、案例"><span class="toc-text">五、案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、JSON-lib、Xstream简介"><span class="toc-text">六、JSON-lib、Xstream简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、二级联动（异步请求）"><span class="toc-text">七、二级联动（异步请求）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#国际化"><span class="toc-text">国际化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、固定文本的国际化"><span class="toc-text">一、固定文本的国际化:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、日期时间的格式化："><span class="toc-text">二、日期时间的格式化：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、数字的格式化（货币）："><span class="toc-text">三、数字的格式化（货币）：</span></a></li></ol>
                 </div>
             </div>
         </div>
