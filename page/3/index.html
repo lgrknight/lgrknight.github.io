@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/archives/page/2/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -44,7 +44,7 @@
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
-" data-ishome = "false" >
+" data-ishome = "true" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -125,6 +125,126 @@
 <!-- Main Content -->
 
 
+<style>
+
+    .custom-haojen-container .post-preview:nth-of-type(1),
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        text-align: center;
+        background-repeat: no-repeat;
+        border-radius: 3px;
+        background-size: cover;
+        padding: 0;
+        height: 300px;
+        display: table;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+    }
+
+    /*去掉诗歌的背景图片*/
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        background-image: none !important;
+        background-color: rgba(255, 248, 220, 0.5);
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) h2,
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
+    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
+        letter-spacing: 1px;
+        color: #fff;
+        margin-top: 0;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
+        font-size: .9em;
+        font-weight: 300;
+        margin-top: 0;
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
+        letter-spacing: 6px;
+        font-size: 18px;
+        font-family: unset;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .75)
+    }
+
+    /*不显示摘要*/
+    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
+        display: none
+    }
+
+    /*只第一个显示背景图片*/
+    .custom-haojen-container .post-preview:not(:nth-child(1)) {
+        background-image: none !important;
+    }
+
+    /*第一个分界线去掉*/
+    .custom-haojen-container hr:nth-of-type(1) {
+        display: none;
+    }
+
+    /*主题*/
+    .custom-haojen-container .post-preview:nth-of-type(1) > a {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    /*诗词标题*/
+    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+        font-size: 35px;
+        font-family: STKaiti;
+        color: rgba(0, 0, 0, .8);
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
+        color: #0e2231;
+    }
+
+    @media (max-width: 768px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 240px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 28px !important;
+            margin-top: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-of-type(1) > a {
+            padding: 20px
+        }
+    }
+
+    /*手机屏幕*/
+    @media (max-width: 400px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 195px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 20px !important;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 16px;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) a {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
 <!-- Page Header -->
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
     <div class="row">
@@ -152,46 +272,20 @@
 
 
 <div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg')">
-    <a href="/2017/03/28/AChartEngine绘画框架/">
-        <h2 class="post-title">
-            AChartEngine绘画框架
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-28
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-今天是比赛准备的第二天，这几天主要在学习绘图方面的知识，今天学习了一个框架。这个是Android系统上用于绘图的框架，支持绘制折线图、面积图、散点图、时间图、进度表、条状图、饼图、圆环图等等。不过这个框架现在不在更新了，但比赛用到的还是这个框架，在学习过程中也发现了一个更好绘图框架MPAndr..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
      style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg')">
-    <a href="/2017/03/27/canvas绘图/">
+    <a href="/2017/03/11/利用JAXP进行SAX解析/">
         <h2 class="post-title">
-            canvas绘图
+            利用JAXP进行SAX解析
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-27
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-11
         </p>
         
         <div class="post-content-preview">
             <p>
-                
-今天是赛前培训的第一天，也是大学以来第一次上课迟到，可能是因为比赛多了几项特权，所以就特别迫切的想使用一下吧。但是过后心里更多的是负罪感而不是新鲜的快感吧。这次比赛应该会是场很棒的经历吧，不管是为了虚荣还使命感，我都应该好好的完成 它吧。
+                昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。
 
-如何得到1个Canvas对象
-之前提到的onDraw..
+SAX：Simple API for XML。来自开..
             </p>
         </div>
     </a>
@@ -204,151 +298,28 @@
 
 <div class="post-preview "
      style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud1.jpg')">
-    <a href="/2017/03/16/JSP的学习笔记/">
+    <a href="/2017/03/09/利用JAXP开发包：DOM解析/">
         <h2 class="post-title">
-            JSP的学习笔记
+            利用JAXP开发包：DOM解析
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-16
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-09
         </p>
         
         <div class="post-content-preview">
             <p>
-                一、JSP简介
-也是SUN公司推出的开发动态web资源的技术，属于JavaEE技术之一。由于原理上是Servlet， 所以JSP/Servlet在一起。
+                解析方式：（W3C
 
-二、HTML、Servlet和JSP
-1、HTML：静态页面，不能包含java代码，只能有HTML有关的标记
-2、Servlet：写java..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
+DOM：Document Object Model文档对象模型
+Node：节点
+Document：代表整棵树
+Element:元素
+Attr：属性（只有元素才有属性）
+Text：文本
 
 
-
-<div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg')">
-    <a href="/2017/03/15/速读：从0到1/">
-        <h2 class="post-title">
-            速读：从0到1
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                速读：从0到1本书和作者这本书是2015年最成功的商业畅销书。不仅因为它的作者是硅谷投资界的思想家，成功创办了PayPal、投资了Facebook的彼得·蒂尔，更因为这本书揭示了心怀梦想的创业者所需要知道的哲学层面的思想准备。当你知道了这些哲学思考，你才能明白为什么彼得能够继续成功创办了Foun..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg')">
-    <a href="/2017/03/15/Cookie和HttpSession的学习笔记/">
-        <h2 class="post-title">
-            Cookie和HttpSession的学习笔记
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.典型的场景比如购物车，当你点击下单按钮时，由于HTTP协议无状态，所以并不知道是哪个用户操作的，所以服务端要为特定的用户创建了特定的Session，用用于标识这个用户，并..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud4.jpg')">
-    <a href="/2017/03/14/Request和Response的学习笔记/">
-        <h2 class="post-title">
-            Request和Response的学习笔记
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-14
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出的文字时又是满满的感动。
-
-一、简介
-web服..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud5.jpg')">
-    <a href="/2017/03/13/Servlet学习笔记/">
-        <h2 class="post-title">
-            Servlet学习笔记
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-13
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。
-1、Servlet简介
-Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） 
-Servlet中的方..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg')">
-    <a href="/2017/03/11/HTTP协议/">
-        <h2 class="post-title">
-            HTTP协议
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-11
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                1、HTTP协议概述
-HTTP是什么？超文本传输协议。描述客户端和服务器端的数据标准，该协议由W3C维护和管理。版本：
-HTTP1.0:每次发出请求都需要建立网络连接
-HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。
-明确：浏览器遇到以下标记时，会自动发出请求
-
-..
+有点：增删改查方便，简单
+缺点：需要读取整个xml才能构建DOM树。对于比较大的xml..
             </p>
         </div>
     </a>
@@ -365,13 +336,9 @@ HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应�
 <ul class="pager">
     
     <li class="previous">
-        <a href="/archives/">&larr; Newer Posts</a>
+        <a href="/page/2/">&larr; Newer Posts</a>
     </li>
     
-    
-    <li class="next">
-        <a href="/archives/page/3/">Older Posts &rarr;</a>
-    </li>
     
 </ul>
 
