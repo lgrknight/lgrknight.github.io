@@ -694,7 +694,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x25;&#x40;&#105;&#110;&#99;&#x6c;&#117;&#100;&#x65;&#x25;">&#x25;&#x40;&#105;&#110;&#99;&#x6c;&#117;&#100;&#x65;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#37;&#64;&#105;&#110;&#99;&#108;&#117;&#100;&#101;&#x25;">&#37;&#64;&#105;&#110;&#99;&#108;&#117;&#100;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
