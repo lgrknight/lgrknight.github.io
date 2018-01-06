@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        利用JAXP进行SAX解析｜knight&#39;s blog
+        佛偈｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2017/10/13/佛偈/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,237 +123,179 @@
 </script>
 
 <!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg">
-
-
 <style>
-    
-    header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud2.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    .poetry-container {
+        background-color: rgba(255, 248, 220, 0.5);
+        padding-top: 43px;
+        margin-top: -43px;
+        text-align: center;
     }
 
-    
+    .poetry-container .poetry-content {
+        writing-mode: vertical-lr;
+        -ms-writing-mode: tb-lr;
+        margin: 100px auto 0;
+        overflow: auto;
+        max-width: 90%;
+        max-height: 700px;
+        display: inline-block;
+        text-align: left;
+        padding: 5px 15px 30px;
+    }
+
+    .poetry-head {
+        width: 100%;
+        height: 56px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: black;
+    }
+
+    .poetry-container .poetry-content h2 {
+        color: #fff;
+        font-family: STkaiti;
+        font-size: 34px;
+        text-indent: 65px;
+        float: left;
+        margin-top: 0;
+    }
+
+    .poetry-container .poetry-content h2 span {
+        background-color: black;
+        padding: 2px 1px;
+        border-radius: 3px;
+    }
+
+    .poetry-container .poetry-content p {
+        clear: both;
+        font-size: 24px;
+        font-family: STSong;
+        letter-spacing: 8px;
+        text-shadow: 0 0 1px rgba(15, 15, 15, .3);
+        text-indent: 63px;
+        line-height: 40px;
+        margin: 0;
+    }
+
+    /* ipad */
+    @media screen and (max-width: 768px) {
+        .poetry-container .poetry-content {
+            max-height: 480px;
+            max-width: 100%;
+            margin: 80px auto 0;
+            padding-bottom: 10px;
+        }
+
+        .poetry-container .poetry-content p {
+            font-size: 16px;
+            text-indent: 46px;
+            line-height: 33px;
+            letter-spacing: 6px;
+            font-family: unset;
+        }
+
+        .poetry-container .poetry-content h2 {
+            margin-right: 6px;
+            font-size: 22px;
+            text-indent: 24px;
+            font-family: unset;
+        }
+
+        .poetry-container .poetry-content h2 span {
+            padding: 8px 5px;
+        }
+    }
+
+    /*手机屏幕*/
+    @media screen and (max-width: 400px) {
+        .poetry-container .poetry-content {
+            max-height: 410px;
+            padding-bottom: 20px;
+        }
+
+        .poetry-container .poetry-content p {
+            line-height: 30px;
+            letter-spacing: 3px;
+        }
+
+    }
+
+
 </style>
+<div class="poetry-container">
+    <!--导航黑色-->
+    <div class="poetry-head"></div>
+    <!--主内容-->
+    <div class="poetry-content">
+        <h2>
+                <span>
+                    佛偈
+                </span>
+        </h2>
+        <p>来时欢喜去时悲，空在人间走一回，不如不来也不去，也无欢喜也无悲。</p>
 
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>利用JAXP进行SAX解析</h1>
-                    
-                    <span class="meta">
-                         作者 knight
-                        <span>
-                          日期 2017-03-11
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#xml"
-                           title="xml">xml</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            利用JAXP进行SAX解析
-        </span>
-    </div>
-</header>
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。</p>
-<ul>
-<li>SAX：Simple API for XML。来自开源社区。</li>
-<li>原理：<br><img src="http://i.imgur.com/MzzYlaV.png" alt=""><br>SAX解析是读到XML文档的每一部分，就立刻进行解析。调用对应处理器的响应方法。</li>
-</ul>
-<p><strong>//理解SAX解析的原理</strong></p>
-<ul>
-<li>// 得到创建解析器的工厂<br><code>SAXParserFactory spf = SAXParserFactory.newInstance();</code></li>
-<li>// 得到解析器<br><code>SAXParser parser = spf.newSAXParser();</code></li>
-<li>// 得到读取器<br><code>XMLReader reader = parser.getXMLReader();</code></li>
-<li>// 给读取器注册内容处理器（ContentHandler）<br><code>reader.setContentHandler(new MyContentHandler());</code></li>
-<li><p>// 解析文档<br><code>reader.parse(&quot;src/book.xml&quot;);</code></p>
-</li>
-<li><p>内容处理器</p>
-<pre><code>class MyContentHandler implements ContentHandler {
-
-    public void startDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的开始&quot;);
-    }
-
-    public void endDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的结束&quot;);
-    }
-
-    public void startElement(String uri, String localName, String qName,
-    Attributes atts) throws SAXException {
-        System.out.println(&quot;读到了元素的开始：&quot;+qName);
-    }
-
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
-        System.out.println(&quot;读到了元素的结束：&quot;+qName);
-    }
-
-    public void characters(char[] ch, int start, int length)throws SAXException {
-        System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
-    }
-
-    public void setDocumentLocator(Locator locator) {
-
-    }
-
-    public void startPrefixMapping(String prefix, String uri)
-        throws SAXException {
-
-    }
-
-    public void endPrefixMapping(String prefix) throws SAXException {
-
-    }
-
-    public void ignorableWhitespace(char[] ch, int start, int length)
-        throws SAXException {
-
-    }
-
-    public void processingInstruction(String target, String data)
-        throws SAXException {
-
-    }
-
-    public void skippedEntity(String name) throws SAXException {
-
-    }
-</code></pre><p>  }</p>
-</li>
-</ul>
-
-                <hr>
-                
-                <!-- 多说 Share start -->
-                <div class="ds-share"
-                     style="text-align: right"
-                     data-thread-key="2017/03/11/利用JAXP进行SAX解析/"
-                     data-title="利用JAXP进行SAX解析"
-                     data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/"
-                     data-images="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/backgroud2.jpg"
-                     data-content="昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解... | knight&#39;s blog ">
-                    <div class="ds-share-inline">
-                        <ul class="ds-share-icons-16">
-                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
-                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
-                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
-                        </ul>
-                        <div class="ds-share-icons-more">
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <!-- 多说 Share end-->
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2017/03/11/HTTP协议/" data-toggle="tooltip" data-placement="top"
-                           title="HTTP协议">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2017/03/09/利用JAXP开发包：DOM解析/" data-toggle="tooltip" data-placement="top"
-                           title="利用JAXP开发包：DOM解析">Next Post &rarr;</a>
-                    </li>
-                    
+    <!--多说评论-->
+    <div class=" col-lg-6 col-lg-offset-3
+                        col-md-8 col-md-offset-2
+                        col-sm-10 col-sm-offset-1
+                        col-xs-12">
+        <hr>
+        
+        <!-- 多说 Share start -->
+        <div class="ds-share"
+             style="text-align: right"
+             data-thread-key="2017/10/13/佛偈/"
+             data-title="佛偈"
+             data-url="https://github.com/lgrknight/lgrknight.github.io/2017/10/13/佛偈/"
+             data-images="https://github.com/lgrknight/lgrknight.github.io/2017/10/13/佛偈/backgroud6.jpg"
+             data-content="来时欢喜去时悲，空在人间走一回，不如不来也不去，也无欢喜也无悲。
+ | knight&#39;s blog ">
+            <div class="ds-share-inline">
+                <ul class="ds-share-icons-16">
+                    <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                    <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                    <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                    <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
                 </ul>
-
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2017/03/11/利用JAXP进行SAX解析/"
-                         data-title="利用JAXP进行SAX解析"
-                         data-url="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/">
-                    </div>
+                <div class="ds-share-icons-more">
                 </div>
-                <!-- 多说评论框 end -->
-                
-
-                
-
-
-                <!--加入新的评论系统-->
-                
             </div>
+            <hr>
+        </div>
+        <!-- 多说 Share end-->
+        
 
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    
-                </div>
+        <ul class="pager">
+            
+            <li class="previous">
+                <a href="/2017/10/18/struts2总结/" data-toggle="tooltip" data-placement="top"
+                   title="struts2总结">&larr; Previous Post</a>
+            </li>
+            
+            
+            <li class="next">
+                <a href="/2017/09/23/struts2-day01/" data-toggle="tooltip" data-placement="top"
+                   title="struts2_day01">Next Post &rarr;</a>
+            </li>
+            
+        </ul>
+
+        
+        <!-- 多说评论框 start -->
+        <div class="comment">
+            <div class="ds-thread"
+                 data-thread-key="2017/10/13/佛偈/"
+                 data-title="佛偈"
+                 data-url="https://github.com/lgrknight/lgrknight.github.io/2017/10/13/佛偈/">
             </div>
         </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5 class="text-center">
-                        <a href="/tags/">FEATURED TAGS</a>
-                    </h5>
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#xml"
-                           title="xml">xml</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-                <div style="margin-top: 20px;">
-                    <h5 class="text-center">FRIENDS</h5>
-                    <ul class="list-inline text-center">
-                        
-                        <li><a href="http://jokerliang.cn/">JokerLiang</a></li>
-                        
-                        <li><a href="http://lzllzl.cn/">小胖子</a></li>
-                        
-                        <li><a href="http://chen97.com/">老陈</a></li>
-                        
-                    </ul>
-                </div>
-                
-            </div>
-        </div>
-
+        <!-- 多说评论框 end -->
+        
     </div>
-</article>
+
+</div>
 
 
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -374,10 +316,6 @@
     })();
 </script>
 <!-- 多说公共JS代码 end -->
-
-
-
-
 
 
 <!-- Footer -->
