@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2018-01-19T01:31:11.368Z</updated>
+  <updated>2018-01-19T01:52:10.082Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://github.com/lgrknight/lgrknight.github.io/2018/01/18/%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     <id>https://github.com/lgrknight/lgrknight.github.io/2018/01/18/反射机制和单例模式/</id>
     <published>2018-01-18T14:56:12.000Z</published>
-    <updated>2018-01-19T01:31:11.368Z</updated>
+    <updated>2018-01-19T01:52:10.082Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>反射机制和单例模式两个知识点，jokeLiang刚跟我说完要好好了解反射机制在后续的一个文件解析处理项目中用到了，而和单例模式一起写的原因是因为在项目中一种指标又多个文件，为了保证一种指标只有一个最终值，所以我利用单例模式实现。</p>
@@ -111,8 +111,13 @@ public class Singleton {
         return SingletonHolder.INSTANCE;  
     }  
 }  
-</code></pre><h4 id="6、枚举"><a href="#6、枚举" class="headerlink" title="6、枚举"></a>6、枚举</h4><p>JDK 版本：JDK1.5 起<br>是否 Lazy 初始化：否<br>是否多线程安全：是<br>实现难度：易<br>描述：这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。<br>这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。<br>不能通过 reflection attack 来调用私有构造方法。<br>代码实例：<br>    public enum Singleton {<br>        INSTANCE;<br>        public void whateverMethod() {<br>        }<br>    }</p>
-<p>*一般情况下，不建议使用第 1 种和第 2 种懒汉方式，建议使用第 3 种饿汉方式。只有在要明确实现 lazy loading 效果时，才会使用第 5 种登记方式。如果涉及到反序列化创建对象时，可以尝试使用第 6 种枚举方式。如果有其他特殊的需求，可以考虑使用第 4 种双检锁方式。</p>
+</code></pre><h4 id="6、枚举"><a href="#6、枚举" class="headerlink" title="6、枚举"></a>6、枚举</h4><p>JDK 版本：JDK1.5 起<br>是否 Lazy 初始化：否<br>是否多线程安全：是<br>实现难度：易<br>描述：这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。<br>这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。<br>不能通过 reflection attack 来调用私有构造方法。<br>代码实例：</p>
+<pre><code>public enum Singleton {  
+    INSTANCE;  
+    public void whateverMethod() {  
+    }  
+}
+</code></pre><p>*一般情况下，不建议使用第 1 种和第 2 种懒汉方式，建议使用第 3 种饿汉方式。只有在要明确实现 lazy loading 效果时，才会使用第 5 种登记方式。如果涉及到反序列化创建对象时，可以尝试使用第 6 种枚举方式。如果有其他特殊的需求，可以考虑使用第 4 种双检锁方式。</p>
 ]]></content>
     
     <summary type="html">
@@ -935,7 +940,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#x25;&#64;&#105;&#110;&#x63;&#x6c;&#117;&#100;&#x65;&#37;">&#x25;&#64;&#105;&#110;&#x63;&#x6c;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#37;&#x40;&#105;&#110;&#x63;&#108;&#x75;&#100;&#101;&#x25;">&#37;&#x40;&#105;&#110;&#x63;&#108;&#x75;&#100;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
