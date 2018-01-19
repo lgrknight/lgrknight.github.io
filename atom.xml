@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2018-01-06T10:04:32.713Z</updated>
+  <updated>2018-01-19T01:31:11.368Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,119 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>反射机制和单例模式</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2018/01/18/%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2018/01/18/反射机制和单例模式/</id>
+    <published>2018-01-18T14:56:12.000Z</published>
+    <updated>2018-01-19T01:31:11.368Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>反射机制和单例模式两个知识点，jokeLiang刚跟我说完要好好了解反射机制在后续的一个文件解析处理项目中用到了，而和单例模式一起写的原因是因为在项目中一种指标又多个文件，为了保证一种指标只有一个最终值，所以我利用单例模式实现。</p>
+</blockquote>
+<h2 id="Java反射机制"><a href="#Java反射机制" class="headerlink" title="Java反射机制"></a>Java反射机制</h2><h3 id="反射机制介绍"><a href="#反射机制介绍" class="headerlink" title="反射机制介绍"></a>反射机制介绍</h3><p>简单的来说，反射机制指的是程序在运行时能够获取自身的信息。在java中，只要给定类的名字，那么就可以通过反射机制来获得类的所有信息。其实最早接触反射机制应该是在jdbc的学习的时候，Class.forName(“com.mysql.jdbc.Driver.class”).newInstance();<br>这句在当时记住的作用是生成驱动对象实例。后期看到很多开发框架中也用到了反射机制，hibernate、struts都是用反射机制实现的。 </p>
+<h3 id="反射机制的优缺点"><a href="#反射机制的优缺点" class="headerlink" title="反射机制的优缺点"></a>反射机制的优缺点</h3><p>先了解动态编译与静态编译<br>静态编译：在编译时确定类型，绑定对象,即通过。<br>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了java的灵活性，体现了多态的应用，有以降低类之间的藕合性。</p>
+<ol>
+<li>优点： 可以实现动态创建对象和编译，体现出很大的灵活性，特别是在J2EE的开发中它的灵活性就表现的十分明显。比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。 </li>
+<li>缺点是对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。</li>
+</ol>
+<h3 id="反射机制能够进行的操作"><a href="#反射机制能够进行的操作" class="headerlink" title="反射机制能够进行的操作"></a>反射机制能够进行的操作</h3><p> 反射是在知道类名字的情况下，只要你类中有什么信息，就能获得什么信息。</p>
+<ol>
+<li>首先得根据传入的类的全名来创建Class对象。<br><code>Class c=Class.forName(&quot;className&quot;);注明：className必须为全名，也就是得包含包名，比如，com.knight.pojo.UserInfo;</code><br><code>Object obj=c.newInstance();//创建对象的实例</code></li>
+<li>获得构造函数的方法<br><code>Constructor getConstructor(Class[] params)//根据指定参数获得public构造器</code><br><code>Constructor[] getConstructors()//获得public的所有构造器</code><br><code>Constructor getDeclaredConstructor(Class[] params)//根据指定参数获得public和非public的构造器</code><br><code>Constructor[] getDeclaredConstructors()//获得public的所有构造器</code></li>
+<li>获得类方法的方法<br><code>Method getMethod(String name, Class[] params),根据方法名，参数类型获得方法</code><br><code>Method[] getMethods()//获得所有的public方法</code><br><code>Method getDeclaredMethod(String name, Class[] params)//根据方法名和参数类型，获得public和非public的方法</code><br><code>Method[] getDeclaredMethods()//获得所以的public和非public方法</code></li>
+<li>获得类中属性的方法<br><code>Field getField(String name)//根据变量名得到相应的public变量</code><br><code>Field[] getFields()//获得类中所以public的方法</code><br><code>Field getDeclaredField(String name)//根据方法名获得public和非public变量</code><br><code>Field[] getDeclaredFields()//获得类中所有的public和非public方法</code></li>
+</ol>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。<br>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<p>注意：</p>
+<pre><code>1、单例类只能有一个实例。
+2、单例类必须自己创建自己的唯一实例。
+3、单例类必须给所有其他对象提供这一实例。
+</code></pre><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</li>
+<li>主要解决：一个全局使用的类频繁地创建与销毁。</li>
+<li>何时使用：当您想控制实例数目，节省系统资源的时候。</li>
+<li>如何解决：判断系统是否已经有这个单例，如果有则返回，如果没有则创建。</li>
+<li>关键代码：构造函数是私有的。</li>
+<li>应用实例： 1、一个党只能有一个主席。 2、Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。 3、一些设备管理器常常设计为单例模式，比如一个电脑有两台打印机，在输出的时候就要处理不能两台打印机打印同一个文件。</li>
+<li>优点： 1、在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。 2、避免对资源的多重占用（比如写文件操作）。</li>
+<li>缺点：没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。<br>使用场景： 1、要求生产唯一序列号。 2、WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。 3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。</li>
+<li>注意事项：getInstance() 方法中需要使用同步锁 synchronized (Singleton.class) 防止多线程同时进入造成 instance 被多次实例化。</li>
+</ul>
+<h3 id="单例模式的几种实现方式"><a href="#单例模式的几种实现方式" class="headerlink" title="单例模式的几种实现方式"></a>单例模式的几种实现方式</h3><h4 id="1、懒汉式，线程不安全"><a href="#1、懒汉式，线程不安全" class="headerlink" title="1、懒汉式，线程不安全"></a>1、懒汉式，线程不安全</h4><p>是否 Lazy 初始化：是<br>是否多线程安全：否<br>实现难度：易<br>描述：这种方式是最基本的实现方式，这种实现最大的问题就是不支持多线程。因为没有加锁 synchronized，所以严格意义上它并不算单例模式。<br>这种方式 lazy loading 很明显，不要求线程安全，在多线程不能正常工作。</p>
+<pre><code>//懒汉式单例类.在第一次调用的时候实例化自己   
+public class Singleton {  
+    private Singleton() {}  
+    private static Singleton single=null;  
+    //静态工厂方法   
+    public static Singleton getInstance() {  
+         if (single == null) {    
+             single = new Singleton();  
+         }    
+        return single;  
+    }  
+}  
+</code></pre><h4 id="2、懒汉式，线程安全"><a href="#2、懒汉式，线程安全" class="headerlink" title="2、懒汉式，线程安全"></a>2、懒汉式，线程安全</h4><p>是否 Lazy 初始化：是<br>是否多线程安全：是<br>实现难度：易<br>描述：这种方式具备很好的 lazy loading，能够在多线程中很好的工作，但是，效率很低，99% 情况下不需要同步。<br>优点：第一次调用才初始化，避免内存浪费。<br>缺点：必须加锁 synchronized 才能保证单例，但加锁会影响效率。<br>getInstance() 的性能对应用程序不是很关键（该方法使用不太频繁）。<br>代码实例：</p>
+<pre><code>public class Singleton {  
+    private static Singleton instance;  
+    private Singleton (){}  
+    public static synchronized Singleton getInstance() {  
+        if (instance == null) {  
+            instance = new Singleton();  
+        }  
+        return instance;  
+    }  
+} 
+</code></pre><h4 id="3、饿汉式"><a href="#3、饿汉式" class="headerlink" title="3、饿汉式"></a>3、饿汉式</h4><p>是否 Lazy 初始化：否<br>是否多线程安全：是<br>实现难度：易<br>描述：这种方式比较常用，但容易产生垃圾对象。<br>优点：没有加锁，执行效率会提高。<br>缺点：类加载时就初始化，浪费内存。<br>它基于 classloder 机制避免了多线程的同步问题，不过，instance 在类装载时就实例化，虽然导致类装载的原因有很多种，在单例模式中大多数都是调用 getInstance 方法， 但是也不能确定有其他的方式（或者其他的静态方法）导致类装载，这时候初始化 instance 显然没有达到 lazy loading 的效果。<br>代码实例：</p>
+<pre><code>public class Singleton {  
+    private static Singleton instance = new Singleton();  
+    private Singleton (){}  
+    public static Singleton getInstance() {  
+           return instance;  
+    }  
+}   
+</code></pre><h4 id="4、双检锁-双重校验锁（DCL，即-double-checked-locking）"><a href="#4、双检锁-双重校验锁（DCL，即-double-checked-locking）" class="headerlink" title="4、双检锁/双重校验锁（DCL，即 double-checked locking）"></a>4、双检锁/双重校验锁（DCL，即 double-checked locking）</h4><p>JDK 版本：JDK1.5 起<br>是否 Lazy 初始化：是<br>是否多线程安全：是<br>实现难度：较复杂<br>描述：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。<br>getInstance() 的性能对应用程序很关键。<br>代码实例： </p>
+<pre><code>public class Singleton {  
+    private volatile static Singleton singleton;  
+    private Singleton (){}  
+    public static Singleton getSingleton() {  
+    if (singleton == null) {  
+        synchronized (Singleton.class) {  
+            if (singleton == null) {  
+                singleton = new Singleton();  
+            }  
+        }  
+    }  
+    return singleton;  
+    }  
+} 
+</code></pre><h4 id="5、登记式-静态内部类"><a href="#5、登记式-静态内部类" class="headerlink" title="5、登记式/静态内部类"></a>5、登记式/静态内部类</h4><p>是否 Lazy 初始化：是<br>是否多线程安全：是<br>实现难度：一般<br>描述：这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。<br>这种方式同样利用了 classloder 机制来保证初始化 instance 时只有一个线程，它跟第 3 种方式不同的是：第 3 种方式只要 Singleton 类被装载了，那么 instance 就会被实例化（没有达到 lazy loading 效果），而这种方式是 Singleton 类被装载了，instance 不一定被初始化。因为 SingletonHolder 类没有被主动使用，只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance。想象一下，如果实例化 instance 很消耗资源，所以想让它延迟加载，另外一方面，又不希望在 Singleton 类加载时就实例化，因为不能确保 Singleton 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比第 3 种方式就显得很合理。<br>代码实例：</p>
+<pre><code>public class Singleton {  
+    private static class SingletonHolder {  
+        private static final Singleton INSTANCE = new Singleton();  
+    }  
+    private Singleton (){}  
+    public static final Singleton getInstance() {  
+        return SingletonHolder.INSTANCE;  
+    }  
+}  
+</code></pre><h4 id="6、枚举"><a href="#6、枚举" class="headerlink" title="6、枚举"></a>6、枚举</h4><p>JDK 版本：JDK1.5 起<br>是否 Lazy 初始化：否<br>是否多线程安全：是<br>实现难度：易<br>描述：这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。<br>这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。<br>不能通过 reflection attack 来调用私有构造方法。<br>代码实例：<br>    public enum Singleton {<br>        INSTANCE;<br>        public void whateverMethod() {<br>        }<br>    }</p>
+<p>*一般情况下，不建议使用第 1 种和第 2 种懒汉方式，建议使用第 3 种饿汉方式。只有在要明确实现 lazy loading 效果时，才会使用第 5 种登记方式。如果涉及到反序列化创建对象时，可以尝试使用第 6 种枚举方式。如果有其他特殊的需求，可以考虑使用第 4 种双检锁方式。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;反射机制和单例模式两个知识点，jokeLiang刚跟我说完要好好了解反射机制在后续的一个文件解析处理项目中用到了，而和单例模式一起写的原因是因为在项目中一种指标又多个文件，为了保证一种指标只有一个最终值，所以我利用单例模式实现。&lt;/p&gt;
+&lt;/blo
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>携手2017，展望2018</title>
@@ -822,7 +935,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x25;&#x40;&#x69;&#110;&#99;&#108;&#117;&#x64;&#101;&#37;">&#x25;&#x40;&#x69;&#110;&#99;&#108;&#117;&#x64;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#x25;&#64;&#105;&#110;&#x63;&#x6c;&#117;&#100;&#x65;&#37;">&#x25;&#64;&#105;&#110;&#x63;&#x6c;&#117;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
@@ -1991,95 +2104,6 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)throw
     
     
       <category term="http" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/http/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用JAXP进行SAX解析</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/%E5%88%A9%E7%94%A8JAXP%E8%BF%9B%E8%A1%8CSAX%E8%A7%A3%E6%9E%90/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/利用JAXP进行SAX解析/</id>
-    <published>2017-03-10T16:03:44.000Z</published>
-    <updated>2017-03-12T10:36:03.332Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。</p>
-<ul>
-<li>SAX：Simple API for XML。来自开源社区。</li>
-<li>原理：<br><img src="http://i.imgur.com/MzzYlaV.png" alt=""><br>SAX解析是读到XML文档的每一部分，就立刻进行解析。调用对应处理器的响应方法。</li>
-</ul>
-<p><strong>//理解SAX解析的原理</strong></p>
-<ul>
-<li>// 得到创建解析器的工厂<br><code>SAXParserFactory spf = SAXParserFactory.newInstance();</code></li>
-<li>// 得到解析器<br><code>SAXParser parser = spf.newSAXParser();</code></li>
-<li>// 得到读取器<br><code>XMLReader reader = parser.getXMLReader();</code></li>
-<li>// 给读取器注册内容处理器（ContentHandler）<br><code>reader.setContentHandler(new MyContentHandler());</code></li>
-<li><p>// 解析文档<br><code>reader.parse(&quot;src/book.xml&quot;);</code></p>
-</li>
-<li><p>内容处理器</p>
-<pre><code>class MyContentHandler implements ContentHandler {
-
-    public void startDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的开始&quot;);
-    }
-
-    public void endDocument() throws SAXException {
-        System.out.println(&quot;读到了文档的结束&quot;);
-    }
-
-    public void startElement(String uri, String localName, String qName,
-    Attributes atts) throws SAXException {
-        System.out.println(&quot;读到了元素的开始：&quot;+qName);
-    }
-
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
-        System.out.println(&quot;读到了元素的结束：&quot;+qName);
-    }
-
-    public void characters(char[] ch, int start, int length)throws SAXException {
-        System.out.println(&quot;读到了文本内容：&quot;+new String(ch,start,length));
-    }
-
-    public void setDocumentLocator(Locator locator) {
-
-    }
-
-    public void startPrefixMapping(String prefix, String uri)
-        throws SAXException {
-
-    }
-
-    public void endPrefixMapping(String prefix) throws SAXException {
-
-    }
-
-    public void ignorableWhitespace(char[] ch, int start, int length)
-        throws SAXException {
-
-    }
-
-    public void processingInstruction(String target, String data)
-        throws SAXException {
-
-    }
-
-    public void skippedEntity(String name) throws SAXException {
-
-    }
-</code></pre><p>  }</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;昨天学习了JAXP的DOM解析，今天有学了一下JAXP的SAX解析。相对于DOM解析，SAX解析是针对DOM解析需要读取整个xml才能构建DOM树。对于比较大的xml，容易导致内存溢出的缺点而诞生的。（不耗费很多的内存）；缺点是只适合查询。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SAX
-    
-    </summary>
-    
-    
-      <category term="xml" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/xml/"/>
     
   </entry>
   
