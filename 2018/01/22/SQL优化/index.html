@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="李广儒在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://omhz9w11z.bkt.clouddn.com/favicon.ico">
+    <link rel="alternate" type="application/atom+xml" title="knight" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        SQL优化｜knight&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2018/01/22/SQL优化/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/flower.JPG')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    knight
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>SQL优化</h1>
+                    
+                    <span class="meta">
+                         作者 knight
+                        <span>
+                          日期 2018-01-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#数据库"
+                           title="数据库">数据库</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            SQL优化
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>知事故而不世故</p>
+</blockquote>
+<h3 id="优化指引"><a href="#优化指引" class="headerlink" title="优化指引"></a>优化指引</h3><ul>
+<li>每个表都要在关键字段（频繁用于查询的字段）建立索引。<br>查询字段不用*号，写出具体的字段名；只查询出需要用到的字段，查询字段越少查询速度就会越快。</li>
+<li>多表查询，尽量给每个表取别名，并在字段前加别名，减轻数据库用来解析每个字段归属表与歧义的时间。（经常有多个表有相同名的字段名）</li>
+<li>数据库一般按照从右到左的顺序处理from子句中的表名，from子句中写在最后的表(基础表)将被最先处理。在from子句中包含2个表的情况下，必须选择记录条数较少的表作为基础表；如果有3个以上的表连接查询，那就需要选择交叉表作为基础表。（交叉表是指那个被其他表所引用的表）。</li>
+<li>where子句中查询条件：用于表与表之间的连接部分，写在where子句靠前位置，能过滤掉越多记录数的查询条件，越写在WHERE子句的末尾。</li>
+<li>在where子句里，有索引的字段不要进行数据转换后再进行比较（比如用函数把数字转成字符，再比较），这样会失掉索引的作用。</li>
+<li>用到group by的sql，select后面的字段顺序和数量与group by后面的字段顺序和数量一致。</li>
+<li>能在on条件过滤掉的（如关联查询时）数据，不留到where；能在where条件中过滤掉的数据，不留到having过滤；having一般与一些聚合函数一起使用。</li>
+<li>避免在索引列判断is null 或is not null，否则索引将失效。</li>
+<li>比较运算，“&gt;=”符号比“&gt;”效率要高。</li>
+<li>能不用like 或 in ，就尽量不用。</li>
+<li>通常情况下，用union替换where子句中的or将会起到较好的效果。对索引列使用or将造成全表扫描，即索引失效，可考虑用union 把or分成两个sql，这样保证其中一个或者两个都可以用到索引。</li>
+<li>如果可用in与or，尽量用in，如：<br>高效：select … from tableA where A in ( 10,20,30)<br>低效：select … from tableA where A=10 or A=20 or A=30 </li>
+<li>用EXISTS替代IN、用NOT EXISTS替代NOT IN<br>高效：select … from tableA where exists(select 1 from tableB  where tableA.A=tableB.A and  tableB.B=’X’))<br>低效：select  … from tableA where tableA.A in(select tableB.A from tableB where tableB.B=’X’)</li>
+<li>子查询里使用group by会加快查询速度，尽量少用或不用distinct，如下边情况:<br>select  top 100  t1.*  from  table1  t1  where  t1.FId  in (<br>高效：select t2.FId from table2 t2 where t2.FName=‘xxx’ group by t2.FId<br>低效：select distinct t2.FId from table2 t2 where t2.FName=‘xxx’<br>)。</li>
+<li>不要写过于复杂的SQL语句。有限度的在from里使用嵌套子查询，就是from （select f1,f2,f3 from table1 where f4=‘xx’）p 的方式。遇到需要用到多个这样的嵌套查询时，建议使用临时表处理。使用临时表会提高查询速度，大数据量查询效果更明显。注意：临时表使用完后应该drop掉。</li>
+<li>多表查询时，尽量用表连接替换exists子句、子查询；能用inner join 的，尽量不用left/right join。</li>
+<li>count(<em>)快于conut(1)，如果列有索引，count(列)快于count(</em>)</li>
+<li>如果是全表数据删除，truncate比delete效率高，truncate 删除数据是不作日志记录的。</li>
+</ul>
+<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><p>应用程序里写SQL：</p>
+<ul>
+<li>禁止直接使用select * from Table1而不加条件限制；需要什么字段应写明字段名称。</li>
+<li>多表查询，查询条件里必须包含所有的表，禁止在where 部分仅写个where 1=1 而不加其它条件，因为这样相当做了一个笛卡尔积，如果两个表的记录都是1万，则查询的结果将是1亿行，这样就容易把数据库的tempdb爆满，引发故障并导致系统不能用。</li>
+<li>在代码里编写SQL语句，在进行多表关联查询时，表的后面必须加上别名；在字段名前也要加上表别名，明确字段归属的表。 别名的命名按次序a,b,c,d…，或者用简写，如tbMm1Traffic  tfc, tbNeIp  ip。</li>
+<li>为考虑数据库兼容与移植问题：<ul>
+<li>编写SQL时，字段名、表名必须遵循大小写敏感的规则，就算当前所用的数据库可以忽略大小写（例如MYSQL，oracle，SqlServer，DB2）。</li>
+<li>要求对字段起别名，并且别名也强制区分大小写，从而保证界面元素名称与字段的对应。<code>如：Select  iStaffId “iStffId”, sStaffName “sStaffName” from tbOsStaff。</code></li>
+<li>要将一个完整的SQL实例做为注释写在代码里（编程时，查询条件部分多为动态拼装，所以源码里的SQL一般不是完整的SQL实例，可以做一次完整查询，然后从控制台copy一个完整实例贴在注释里）。–此点为曹雄所提。</li>
+</ul>
+</li>
+<li>编写比较复杂的查询语句时，需要格式化（加上回车换行符）和加上详细的注释说明。</li>
+<li>一些枚举、基础配置表的翻译，不要使用数据库表关联的方式翻译；两个以上字段是这种情况，就应该单独查询出来，然后在程序中转换。</li>
+<li>不要将所有的应用压力都推向数据库。需要做比较复杂的运算时，不要企图用一个SQL语句实现或通过编写一批十分复杂的SQL实现，例如：数据的行转列，完全可以使用程序语言的灵活性处理。</li>
+<li>开发时要关注运行速度慢的SQL（标准：超过1秒的SQL），着情进行优化处理，对于不能优化的，用程序处理。</li>
+<li>查询字段的选择，尽量使用ID或有索引的字段，或者说对频繁查询的字段，应该加索引，这样可以大大加快查询的速度。</li>
+<li>尽量用短事务。在事务里尽量只写新增、删除、修改的语句，少写查询SQL。 </li>
+<li>如果要判断某一字符字段是否为空，应该使用以下的判断条件：rtrim(fieldName) is null。<code>如：rtrim(&#39;  &#39;) is null返回的是true； &#39;  &#39; is null 返回的是false。</code></li>
+<li>不要在in 条件里放过多的条件（in 里是子查询除外），这样有可能使查询失败，例如Sybase里in的条件不能超过300个。其他的数据库具体数目不清楚，不过在编写代码的时候必须要留意是否会有这样的情况出现。</li>
+<li>表里的时间字段，如果是取当前时间的，使用数据库服务器的时间。</li>
+<li>手工键入的字符串查询条件都要求模糊匹配。如果还要求不区分大小写，可用upper(fieldName) like upper(‘%+查询条件+%’)，查询字段和条件都用upper进行转换，注意索引失效的情况。</li>
+<li>尽量写标准的SQL，如： *=，= null 这些sybase 特有的语法，而标准SQL: a left join b on …，is null。</li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/01/20/工厂方法模式和抽象工厂模式/" data-toggle="tooltip" data-placement="top"
+                           title="工厂方法模式和抽象工厂模式">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#优化指引"><span class="toc-text">优化指引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程规范"><span class="toc-text">编程规范</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#数据库"
+                           title="数据库">数据库</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://jokerliang.cn/">Joker</a></li>
+                        
+                        <li><a href="http://lzllzl.cn/">Zayvion</a></li>
+                        
+                        <li><a href="http://chen97.com/">CHEN</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/ehazon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/lgrknight">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; knight 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://github.com/lgrknight/lgrknight.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = 'eb0ce832f460b295807b7f65338929ad';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://omhz9w11z.bkt.clouddn.com/icon.jpg">
+</body>
+
+</html>

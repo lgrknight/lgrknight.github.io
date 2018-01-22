@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2018-01-19T01:52:10.082Z</updated>
+  <updated>2018-01-22T03:44:43.018Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,141 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SQL优化</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2018/01/22/SQL%E4%BC%98%E5%8C%96/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2018/01/22/SQL优化/</id>
+    <published>2018-01-22T03:27:44.000Z</published>
+    <updated>2018-01-22T03:44:43.018Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>知事故而不世故</p>
+</blockquote>
+<h3 id="优化指引"><a href="#优化指引" class="headerlink" title="优化指引"></a>优化指引</h3><ul>
+<li>每个表都要在关键字段（频繁用于查询的字段）建立索引。<br>查询字段不用*号，写出具体的字段名；只查询出需要用到的字段，查询字段越少查询速度就会越快。</li>
+<li>多表查询，尽量给每个表取别名，并在字段前加别名，减轻数据库用来解析每个字段归属表与歧义的时间。（经常有多个表有相同名的字段名）</li>
+<li>数据库一般按照从右到左的顺序处理from子句中的表名，from子句中写在最后的表(基础表)将被最先处理。在from子句中包含2个表的情况下，必须选择记录条数较少的表作为基础表；如果有3个以上的表连接查询，那就需要选择交叉表作为基础表。（交叉表是指那个被其他表所引用的表）。</li>
+<li>where子句中查询条件：用于表与表之间的连接部分，写在where子句靠前位置，能过滤掉越多记录数的查询条件，越写在WHERE子句的末尾。</li>
+<li>在where子句里，有索引的字段不要进行数据转换后再进行比较（比如用函数把数字转成字符，再比较），这样会失掉索引的作用。</li>
+<li>用到group by的sql，select后面的字段顺序和数量与group by后面的字段顺序和数量一致。</li>
+<li>能在on条件过滤掉的（如关联查询时）数据，不留到where；能在where条件中过滤掉的数据，不留到having过滤；having一般与一些聚合函数一起使用。</li>
+<li>避免在索引列判断is null 或is not null，否则索引将失效。</li>
+<li>比较运算，“&gt;=”符号比“&gt;”效率要高。</li>
+<li>能不用like 或 in ，就尽量不用。</li>
+<li>通常情况下，用union替换where子句中的or将会起到较好的效果。对索引列使用or将造成全表扫描，即索引失效，可考虑用union 把or分成两个sql，这样保证其中一个或者两个都可以用到索引。</li>
+<li>如果可用in与or，尽量用in，如：<br>高效：select … from tableA where A in ( 10,20,30)<br>低效：select … from tableA where A=10 or A=20 or A=30 </li>
+<li>用EXISTS替代IN、用NOT EXISTS替代NOT IN<br>高效：select … from tableA where exists(select 1 from tableB  where tableA.A=tableB.A and  tableB.B=’X’))<br>低效：select  … from tableA where tableA.A in(select tableB.A from tableB where tableB.B=’X’)</li>
+<li>子查询里使用group by会加快查询速度，尽量少用或不用distinct，如下边情况:<br>select  top 100  t1.*  from  table1  t1  where  t1.FId  in (<br>高效：select t2.FId from table2 t2 where t2.FName=‘xxx’ group by t2.FId<br>低效：select distinct t2.FId from table2 t2 where t2.FName=‘xxx’<br>)。</li>
+<li>不要写过于复杂的SQL语句。有限度的在from里使用嵌套子查询，就是from （select f1,f2,f3 from table1 where f4=‘xx’）p 的方式。遇到需要用到多个这样的嵌套查询时，建议使用临时表处理。使用临时表会提高查询速度，大数据量查询效果更明显。注意：临时表使用完后应该drop掉。</li>
+<li>多表查询时，尽量用表连接替换exists子句、子查询；能用inner join 的，尽量不用left/right join。</li>
+<li>count(<em>)快于conut(1)，如果列有索引，count(列)快于count(</em>)</li>
+<li>如果是全表数据删除，truncate比delete效率高，truncate 删除数据是不作日志记录的。</li>
+</ul>
+<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><p>应用程序里写SQL：</p>
+<ul>
+<li>禁止直接使用select * from Table1而不加条件限制；需要什么字段应写明字段名称。</li>
+<li>多表查询，查询条件里必须包含所有的表，禁止在where 部分仅写个where 1=1 而不加其它条件，因为这样相当做了一个笛卡尔积，如果两个表的记录都是1万，则查询的结果将是1亿行，这样就容易把数据库的tempdb爆满，引发故障并导致系统不能用。</li>
+<li>在代码里编写SQL语句，在进行多表关联查询时，表的后面必须加上别名；在字段名前也要加上表别名，明确字段归属的表。 别名的命名按次序a,b,c,d…，或者用简写，如tbMm1Traffic  tfc, tbNeIp  ip。</li>
+<li>为考虑数据库兼容与移植问题：<ul>
+<li>编写SQL时，字段名、表名必须遵循大小写敏感的规则，就算当前所用的数据库可以忽略大小写（例如MYSQL，oracle，SqlServer，DB2）。</li>
+<li>要求对字段起别名，并且别名也强制区分大小写，从而保证界面元素名称与字段的对应。<code>如：Select  iStaffId “iStffId”, sStaffName “sStaffName” from tbOsStaff。</code></li>
+<li>要将一个完整的SQL实例做为注释写在代码里（编程时，查询条件部分多为动态拼装，所以源码里的SQL一般不是完整的SQL实例，可以做一次完整查询，然后从控制台copy一个完整实例贴在注释里）。–此点为曹雄所提。</li>
+</ul>
+</li>
+<li>编写比较复杂的查询语句时，需要格式化（加上回车换行符）和加上详细的注释说明。</li>
+<li>一些枚举、基础配置表的翻译，不要使用数据库表关联的方式翻译；两个以上字段是这种情况，就应该单独查询出来，然后在程序中转换。</li>
+<li>不要将所有的应用压力都推向数据库。需要做比较复杂的运算时，不要企图用一个SQL语句实现或通过编写一批十分复杂的SQL实现，例如：数据的行转列，完全可以使用程序语言的灵活性处理。</li>
+<li>开发时要关注运行速度慢的SQL（标准：超过1秒的SQL），着情进行优化处理，对于不能优化的，用程序处理。</li>
+<li>查询字段的选择，尽量使用ID或有索引的字段，或者说对频繁查询的字段，应该加索引，这样可以大大加快查询的速度。</li>
+<li>尽量用短事务。在事务里尽量只写新增、删除、修改的语句，少写查询SQL。 </li>
+<li>如果要判断某一字符字段是否为空，应该使用以下的判断条件：rtrim(fieldName) is null。<code>如：rtrim(&#39;  &#39;) is null返回的是true； &#39;  &#39; is null 返回的是false。</code></li>
+<li>不要在in 条件里放过多的条件（in 里是子查询除外），这样有可能使查询失败，例如Sybase里in的条件不能超过300个。其他的数据库具体数目不清楚，不过在编写代码的时候必须要留意是否会有这样的情况出现。</li>
+<li>表里的时间字段，如果是取当前时间的，使用数据库服务器的时间。</li>
+<li>手工键入的字符串查询条件都要求模糊匹配。如果还要求不区分大小写，可用upper(fieldName) like upper(‘%+查询条件+%’)，查询字段和条件都用upper进行转换，注意索引失效的情况。</li>
+<li>尽量写标准的SQL，如： *=，= null 这些sybase 特有的语法，而标准SQL: a left join b on …，is null。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;知事故而不世故&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;优化指引&quot;&gt;&lt;a href=&quot;#优化指引&quot; class=&quot;headerlink&quot; title=&quot;优化指引&quot;&gt;&lt;/a&gt;优化指引&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;每个表都要在关键字段（频繁用
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>工厂方法模式和抽象工厂模式</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2018/01/20/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2018/01/20/工厂方法模式和抽象工厂模式/</id>
+    <published>2018-01-20T04:30:10.000Z</published>
+    <updated>2018-01-20T07:03:57.663Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>前几天刚写了反射，工厂模式也是用到了反射实现。上次写到为了保证一类指标一种结果我用到了单例模式，其实工厂方法模式中有个延迟始化的应用也能够实现这一需求。</p>
+</blockquote>
+<h3 id="工厂方法模式【Factory-Method-Pattern】"><a href="#工厂方法模式【Factory-Method-Pattern】" class="headerlink" title="工厂方法模式【Factory Method Pattern】"></a>工厂方法模式【Factory Method Pattern】</h3><p>定义：工厂方法模式又称为工厂模式，也叫虚拟构造器（Virtual Constructor）模式或者多态工厂模式（Polymorphic Factory），在工厂方法模式中，父类负责定义创建对象的公共接口，而子类则负责生成具体的对象，这样做的目的是将类的实例化操作延迟到子类中完成，即由子类来决定究竟应该实例化（创建）哪一个类。<br>工厂方式法模式（Factory Method），定义了一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到子类。</p>
+<p>工厂方法模式有一个非常重要的应用，就是延迟始化(Lazy initiali zation)，<br>一个对象初始化完毕后就不释放，等到再次用到得就不用再次初始化了，直接从内存过中拿到就可以了,看例子： </p>
+<pre><code>package com.cbf4life.advance;
+
+import java.util.HashMap;
+
+@SuppressWarnings(&quot;all&quot;)
+public class HumanFactory {
+    // 定义一个 MAP, 初始化过的 Human 对象都放在这里
+
+    private static HashMap&lt;String, Human&gt; humans = new HashMap&lt;String, Human&gt;();
+
+    // 定一个烤箱，泥巴塞进去，人就出来，这个太先进了
+    public static Human createHuman(Class c) {
+        Human human = null;
+        // 定义一个类型的人类
+        try {
+            // 如果 MAP 中有，则直接从取出，不用初始化了
+            if (humans.containsKey(c.getSimpleName())) {
+                human = humans.get(c.getSimpleName());
+            } else {
+                human = (Human) Class.forName(c.getName()).newInstance();
+                // 放到 MAP 中
+                humans.put(c.getSimpleName(), human);
+            }
+        } catch (InstantiationException e) {
+            // 你要是不说个人种颜色的话，没法烤，要白的 黑，你说话了才好烤
+            System.out.println(&quot; 必须指定人种的颜色 &quot;);
+        } catch (IllegalAccessException e) {
+            // 一定定义的人种有问题，那就烤不出来了， 这是 ...
+            System.out.println(&quot; 人种定义错误！ &quot;);
+        } catch (ClassNotFoundException e) {
+            // 你随便说个人种，我到哪里给你制造去？！
+            System.out.println(&quot; 混蛋，你指定的人种找不到！ &quot;);
+        }
+        return human;
+    }
+}
+</code></pre><p>这个在类初始化很消耗资源的情况比较实用，比如你要连接硬件 ，或 者 是 为 了 初 始 化 一 个 类 需 要 准 备 比 较 多 条 件（ 参数 ），通 过 这 种 方 式 可 以 很 好 的 减 少 项 目 的 复 杂 程 度 。 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;前几天刚写了反射，工厂模式也是用到了反射实现。上次写到为了保证一类指标一种结果我用到了单例模式，其实工厂方法模式中有个延迟始化的应用也能够实现这一需求。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;工厂方法模式【Factory-Method
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>反射机制和单例模式</title>
@@ -940,7 +1075,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#37;&#x40;&#105;&#110;&#x63;&#108;&#x75;&#100;&#101;&#x25;">&#37;&#x40;&#105;&#110;&#x63;&#108;&#x75;&#100;&#101;&#x25;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x25;&#64;&#105;&#110;&#99;&#108;&#x75;&#100;&#101;&#37;">&#x25;&#64;&#105;&#110;&#99;&#108;&#x75;&#100;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
@@ -1842,273 +1977,6 @@ public class RequestDemo4 extends HttpServlet {
     
     
       <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Servlet学习笔记</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/13/Servlet学习笔记/</id>
-    <published>2017-03-13T12:43:20.000Z</published>
-    <updated>2017-03-14T00:09:03.338Z</updated>
-    
-    <content type="html"><![CDATA[<p>这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。</p>
-<h2 id="1、Servlet简介"><a href="#1、Servlet简介" class="headerlink" title="1、Servlet简介"></a>1、Servlet简介</h2><ul>
-<li>Servlet技术基于Request-Response编程模型 —- HTTP协议也是基于此模型（请求-响应模型） </li>
-<li>Servlet中的方法<br><code>public void service(ServletRequest req,ServletResponse res)
-throws ServletException,java.io.IOException</code><br><code>ServletRequest req:</code>代表着请求对象，该对象中有HTTP协议的请求部分的所有内容。它的实现类由服务器提供的，封装数据也是服务器来做的。<br><code>ServletResponse res：</code>代表着响应对象，该对象中由我们写数据（HTTP协议的响应部分）进去。它的实现类也是由服务器提供的。</li>
-<li>执行过程<br><img src="http://i.imgur.com/7aMDTvN.png" alt=""></li>
-</ul>
-<h2 id="2、关于Servlet的一些类"><a href="#2、关于Servlet的一些类" class="headerlink" title="2、关于Servlet的一些类"></a>2、关于Servlet的一些类</h2><ul>
-<li><p>Servlet接口</p>
-<ul>
-<li>定义了所有Servlet需要实现的方法</li>
-<li>它定义了init destory service等方法</li>
-<li>为了解决基于请求-响应模型的数据处理（没有涉及与HTTP协议相关的API）</li>
-</ul>
-</li>
-<li><p>GenericServlet抽象类</p>
-<ul>
-<li>它是Servlet接口的实现类</li>
-<li>它扩展了一些方法</li>
-<li>也没有涉及与HTTP协议相关的API</li>
-</ul>
-</li>
-<li><p>HttpServlet抽象类</p>
-<ul>
-<li>它继承于GenericServlet</li>
-<li>它新增了一些与HTTP协议相关的方法，如doGet，doPost等等</li>
-<li>HttpServlet在实现Servlet接口时，覆写了service方法，该方法内的代码会自动判断用户的请求方式，如为GET请求，则调用HttpServlet的doGet方法，如为Post请求，则调用doPost方法。因此，程序员在编写Servlet时，通常只需要覆写doGet或doPost方法，而不要去覆写service方法。<br><img src="http://i.imgur.com/5Dy9rMH.png" alt=""></li>
-</ul>
-</li>
-<li>HttpServlet比Servlet更为强大，也可以保护Servlet接口不被轻易改动，所以程序员自己创建的Servlet都是继承于HttpServlet，从而间接地实现了Servlet接口。</li>
-</ul>
-<h2 id="3、Servlet生命周期"><a href="#3、Servlet生命周期" class="headerlink" title="3、Servlet生命周期"></a>3、Servlet生命周期</h2><ul>
-<li>生命周期<ol>
-<li>实例化：Servlet 容器创建 Servlet 的实例</li>
-<li>初始化 ：该容器调用 init 方法</li>
-<li>请求处理：如果请求 Servlet，则容器调用 service 方法</li>
-<li>服务终止：销毁实例之前调用 destroy 方法</li>
-</ol>
-</li>
-</ul>
-<blockquote>
-<p>其中，init方法只有在Servlet第一次被请求加载时被调用一次，当有客户再请求Servlet服务时，web服务器将启动一个新的线程，在该线程中，调用service方法响应客户的请求。<br><strong>一个Servlet可以配置多个url-pattern</strong></p>
-<ul>
-<li>URL 配置格式 三种：<ol>
-<li>完全路径匹配 (以/开始 ) 例如：/hello/init </li>
-<li>目录匹配 (以/开始) 例如：/<em> 、 /abc/</em><br><code>/</code> 代表网站根目录<br><code>/*</code>表示任何路径都可以匹配到这个Servlet<br><code>/abc/*</code>表示abc目录下的任何路径都可以匹配到这个Servlet</li>
-<li>扩展名 (不能以/开始) 例如：<em>.do、 </em>.action</li>
-</ol>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li>优先级：完全匹配&gt;目录匹配 &gt; 扩展名匹配 </li>
-</ul>
-<h2 id="4、ServletConfig获得初始化参数"><a href="#4、ServletConfig获得初始化参数" class="headerlink" title="4、ServletConfig获得初始化参数"></a>4、ServletConfig获得初始化参数</h2><ul>
-<li>init方法中的ServletConfig对象<ul>
-<li>getInitParameter（String)—— 通过name获得value</li>
-<li>getInitParameterNames() —– 获得所有name </li>
-</ul>
-</li>
-<li>结论：子类Servlet不需要覆写init(ServletConfig), 只需要通过GenericServlet中 getServletConfig()方法来获得ServletConfig对象。<blockquote>
-<p>ServletConfig 配置初始化数据，只能在配置Servlet获得，其它Servlet无法获得 —– 每个Servlet程序都对应一个ServletConfig对象 </p>
-</blockquote>
-</li>
-</ul>
-<h2 id="5、web引用对象——ServletContext"><a href="#5、web引用对象——ServletContext" class="headerlink" title="5、web引用对象——ServletContext"></a>5、web引用对象——ServletContext</h2><ul>
-<li>web容器在启动时，它会为每一个web应用创建一个ServletContext对象，这个对象代表当前web应用。</li>
-<li>操作ServletContext必须通过ServletConfig获得对象。可以通过ServletConfig.getServletContext方法来获得ServletContext对象。</li>
-<li><p>由于一个web应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。<br><strong>应用：</strong></p>
-<ol>
-<li>获得整个web应用初始化参数</li>
-</ol>
-<ul>
-<li>和ServletConfig对象有什么不同？<br>如果用ServletConfig对象配置参数，只对配置的Servlet有效，如果通过ServletContext对象配置参数，所有的Servlet都可以访问。</li>
-<li>配置方法，在web.xml中添加如下格式的代码：</li>
-<li>获得 hobby 全局参数：<br>  // 通过ServletConfig 获得 ServletContext<pre><code>`ServletContext context = getServletConfig().getServletContext();`
-// 上面写法可以简化一下
-`ServletContext context = getServletContext();`
-// 读取全局初始化参数
-`System.out.println(context.getInitParameter(&quot;hobby&quot;));`
-</code></pre></li>
-</ul>
-<ol>
-<li>实现全局数据共享</li>
-</ol>
-<ul>
-<li>预期效果：在ServletContext中 保存站点访问次数 ，每当一个用户访问站点，将访问次数+1。所有Servlet都可以获得该数据</li>
-<li>在CountServlet 初始化过程中，向ServletContext 保存访问次数为0。<br>利用<code>ServletContext.setAttribute(&quot;KEY&quot;,&quot;VALUE&quot;);</code></li>
-<li><p>代码实现(只显示init方法和doGet方法：</p>
-<pre><code>public void init() throws ServletException {
-    // 向ServletContext 保存访问次数 0
-    // 获得ServletContext对象
-    ServletContext context = getServletContext();
-    // 保存数据 setAttribute
-    context.setAttribute(&quot;visittimes&quot;, 0);
-
-}
-
-public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-    // 每次访问 执行 doGet --- 将visittimes 次数 +1
-
-    // 1、从ServletContext中获得 访问次数
-    ServletContext context = getServletContext();
-    int times = (Integer) context.getAttribute(&quot;visittimes&quot;);
-
-    // 2、访问次数 +1
-    times++;
-
-    // 3、将访问次数更新回去 ServletContext
-    context.setAttribute(&quot;visittimes&quot;, times);
-
-    System.out.println(&quot;网站被访问了一次！&quot;);
-}
-</code></pre></li>
-</ul>
-<ol>
-<li>实现服务器端转发功能（少见，现在多用request、response）</li>
-<li>读取web工程资源文件（必须使用绝对磁盘路径）<ul>
-<li>使用java application 读取文件，读取当前工程下所有文件 —– 使用相对路径读取文件。</li>
-<li>使用Servlet读取文件只能读取WebRoot下所有文件(注意Servlet是运行在tomcat中的） —- 必须使用绝对磁盘路径读取文件。</li>
-<li>如何获得绝对磁盘路径？<ul>
-<li>通过站点根目录绝对路径获得磁盘绝对路径 —— <code>getServletContext().getRealPath(&quot;/WEB-INF/XXX.txt&quot;)</code></li>
-<li>因为 WEB-INF/classes 非常特殊 （存放.class文件目录），被类加载器加载，可以通过Class类对象读取该目录下文件（假设该Servlet名字叫做ReadFileServlet）。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="6、缺省Servlet"><a href="#6、缺省Servlet" class="headerlink" title="6、缺省Servlet"></a>6、缺省Servlet</h2><ul>
-<li>如果某个Servlet的映射路径仅仅为一个正斜杠“/”，那么这个Servlet就成为当前web应用的缺省Servlet。</li>
-<li>凡是在web.xml文件中找不到匹配的URL，它们的访问请求都将交给缺省Servlet处理，也就是说，缺省Servlet用于处理其他Servlet都不处理的访问请求。</li>
-<li>在<tomcat的安装目录>\conf\web.xml文件中，注册了一个名称为org.apache.catalina.servlets.DefaultServlet的Servlet，并将这个Servlet设置为了缺省Servlet。</tomcat的安装目录></li>
-<li>当访问tomcat服务器中的某个静态HTML和图片时，实际上是在访问这个缺省的Servlet。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这本是昨晚应该发的博客，但昨晚玩“阴阳师”去了，拖延了一天，今天重新整理复习把servlet的知识在罗列整理一下。把阴阳师卸了。。。&lt;/p&gt;
-&lt;h2 id=&quot;1、Servlet简介&quot;&gt;&lt;a href=&quot;#1、Servlet简介&quot; class=&quot;headerlink&quot; tit
-    
-    </summary>
-    
-    
-      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HTTP协议</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/11/HTTP协议/</id>
-    <published>2017-03-11T10:37:39.000Z</published>
-    <updated>2017-03-14T00:11:01.362Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、HTTP协议概述"><a href="#1、HTTP协议概述" class="headerlink" title="1、HTTP协议概述"></a>1、HTTP协议概述</h2><ul>
-<li>HTTP是什么？超文本传输协议。<br>描述客户端和服务器端的数据标准，该协议由W3C维护和管理。<br>版本：</li>
-<li>HTTP1.0:每次发出请求都需要建立网络连接</li>
-<li>HTTP1.1:(主流)在一次网络连接上发出多次请求和得到多次响应。多了一些头。</li>
-<li>明确：<br>浏览器遇到以下标记时，会自动发出请求<br><img src="http://i.imgur.com/dhiU7TO.jpg" alt=""></li>
-</ul>
-<h2 id="2、HTTP协议的组成"><a href="#2、HTTP协议的组成" class="headerlink" title="2、HTTP协议的组成"></a>2、HTTP协议的组成</h2><ul>
-<li>2.1请求部分<br><img src="http://i.imgur.com/1YIseVf.jpg" alt=""></li>
-<li>2.2响应部分<br><img src="http://i.imgur.com/77vLg7f.jpg" alt=""></li>
-</ul>
-<h2 id="3、请求部分详解"><a href="#3、请求部分详解" class="headerlink" title="3、请求部分详解"></a>3、请求部分详解</h2><ul>
-<li><p>3.1请求行：<br><code>GET /app1/1.html HTTP/1.1</code><br>GET：请求方式。<br>常用的请求方式：GET(默认的)、POST、HEAD、OPTIONS等<br>GET：默认的<br><a href="http://localhost:8080/app1/1.html?username=abc&amp;password=123" target="_blank" rel="external">http://localhost:8080/app1/1.html?username=abc&amp;password=123</a><br>提交的数据显示出来了，相对不安全，协议的第一行有长度限制，<1kb. (有请求数据时推荐)post：可以通过<form="" method="”post”/"></1kb.></p>
-<pre><code>      username=abc&amp;password=123
-         提交的数据在请求正文中的，相对安全，长度没有限制。
-
-/app1/1.html ：请求的资源地址。（URI）
-       URL：协议+主机：端口+资源地址
-              http://localhost:8080/app1/1.html
-</code></pre><p>HTTP/1.1:客户端浏览器使用的协议的版本。</p>
-</li>
-</ul>
-<ul>
-<li>3.2请求消息头：（做好笔记，记住常用的头）<ul>
-<li>作用：向服务器端传递附加信息（暗号指令）</li>
-<li>Accept:告知服务器，客户端可以接受的数据类型（MIME类型）</li>
-<li>文件系统：通过文件的扩展名区分不同的文件的。txt jpeg</li>
-<li>MIME类型：大类型/小类型。  txt—&gt;text/plain   html—-&gt;text/html js—-&gt;text/javascript (具体对应关系：Tomcat\conf\web.xml) </li>
-<li>Accept-Encoding：告知服务器，客户端可以接受的压缩编码。比如gzip</li>
-<li>Accept-Language：告知服务器，客户端支持的语言</li>
-<li>Referer：告知服务器，从哪个页面过来的。<ul>
-<li>作用：统计广告的投放效果；防止盗链。</li>
-</ul>
-</li>
-<li>Content-Type：告知服务器，请求正文的MIME类型<ul>
-<li>默认类型：application/x-www-form-urlencoded(表单enctype属性的默认取值)</li>
-<li>具体体现：username=abc&amp;password=123</li>
-<li>其他类型：multipart/form-data(文件上传时用的)</li>
-</ul>
-</li>
-<li>If-Modified-Since：告知服务器，当前访问的资源，缓存中的文件的最后修改时间。</li>
-<li>User-Agent:告知服务器，浏览器的类型</li>
-<li>Content-Length：请求正文的数据长度</li>
-<li>Cookie：（<strong>*</strong>重要）会话管理有关</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>3.3请求正文：<br>数据能提交到服务器，表单中的输入域必须有name属性值<br>POST请求是才有正文<br>username=abc&amp;password=123</li>
-</ul>
-<h2 id="4、响应部分详解"><a href="#4、响应部分详解" class="headerlink" title="4、响应部分详解"></a>4、响应部分详解</h2><ul>
-<li><p>4.1响应行：<br><code>HTTP/1.1 200 OK</code></p>
-<ul>
-<li>HTTP/1.1 ：说明服务器端用的协议版本</li>
-<li>200 ：响应状态码</li>
-<li>1XX 2XX 3XX 4XX 5XX</li>
-<li>2XX:处理完毕</li>
-<li>4XX：请求有误</li>
-<li>5XX：服务器有误</li>
-<li>记住常用的响应码：<ul>
-<li>200：一切正常</li>
-<li>302/307:请求重定向</li>
-<li>304：服务器上的资源没有发生改变</li>
-<li>404：访问的地址不存在</li>
-<li>500：服务器端错误</li>
-<li>OK：响应吗描述</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>4.2响应消息头：</p>
-<ul>
-<li>作用：服务器端向客户端传递的附加信息（暗号指令）</li>
-<li>Location：告知客户端，你去访问的地址。<br>和302/307实现请求重定向</li>
-<li>Content-Encoding：告知客户端，响应正文使用的压缩编码（gzip）</li>
-<li>Content-Length:告知客户端，响应正文的长度</li>
-<li>Content-Type：告知客户端，响应文正的MIME类型。默认text/html</li>
-<li>Refresh:告知客户端，定时刷新</li>
-<li>Content-Disposition：告知客户端，用下载的方式打开<br>attachment;filename=23.jpg</li>
-<li><p>Set-Cookie:(<strong>*</strong>)会话有关</p>
-</li>
-<li><p>Expires: -1 控制时间的</p>
-</li>
-<li>Cache-Control: no-cache (1.1) </li>
-<li>Pragma: no-cache   (1.0)<br>三头一块用，用于告知浏览器，不要缓存。</li>
-</ul>
-</li>
-<li><p>4.3响应正文：<br>浏览器解析的正文内容，右键查看源码一样的</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1、HTTP协议概述&quot;&gt;&lt;a href=&quot;#1、HTTP协议概述&quot; class=&quot;headerlink&quot; title=&quot;1、HTTP协议概述&quot;&gt;&lt;/a&gt;1、HTTP协议概述&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;HTTP是什么？超文本传输协议。&lt;br&gt;描述客户端和服务器端的数
-    
-    </summary>
-    
-    
-      <category term="http" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/http/"/>
     
   </entry>
   
