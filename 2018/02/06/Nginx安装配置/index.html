@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        SQL优化｜knight&#39;s blog
+        Nginx安装配置｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2018/01/22/SQL优化/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2018/02/06/Nginx安装配置/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud6.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>SQL优化</h1>
+                    <h1>Nginx安装配置</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2018-01-22
+                          日期 2018-02-06
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#数据库"
-                           title="数据库">数据库</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            SQL优化
+            Nginx安装配置
         </span>
     </div>
 </header>
@@ -177,66 +177,44 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>知事故而不世故</p>
+<p>非淡泊无以明志，非宁静无以致远</p>
 </blockquote>
-<h3 id="优化指引"><a href="#优化指引" class="headerlink" title="优化指引"></a>优化指引</h3><ul>
-<li>每个表都要在关键字段（频繁用于查询的字段）建立索引。<br>查询字段不用*号，写出具体的字段名；只查询出需要用到的字段，查询字段越少查询速度就会越快。</li>
-<li>多表查询，尽量给每个表取别名，并在字段前加别名，减轻数据库用来解析每个字段归属表与歧义的时间。（经常有多个表有相同名的字段名）</li>
-<li>数据库一般按照从右到左的顺序处理from子句中的表名，from子句中写在最后的表(基础表)将被最先处理。在from子句中包含2个表的情况下，必须选择记录条数较少的表作为基础表；如果有3个以上的表连接查询，那就需要选择交叉表作为基础表。（交叉表是指那个被其他表所引用的表）。</li>
-<li>where子句中查询条件：用于表与表之间的连接部分，写在where子句靠前位置，能过滤掉越多记录数的查询条件，越写在WHERE子句的末尾。</li>
-<li>在where子句里，有索引的字段不要进行数据转换后再进行比较（比如用函数把数字转成字符，再比较），这样会失掉索引的作用。</li>
-<li>用到group by的sql，select后面的字段顺序和数量与group by后面的字段顺序和数量一致。</li>
-<li>能在on条件过滤掉的（如关联查询时）数据，不留到where；能在where条件中过滤掉的数据，不留到having过滤；having一般与一些聚合函数一起使用。</li>
-<li>避免在索引列判断is null 或is not null，否则索引将失效。</li>
-<li>比较运算，“&gt;=”符号比“&gt;”效率要高。</li>
-<li>能不用like 或 in ，就尽量不用。</li>
-<li>通常情况下，用union替换where子句中的or将会起到较好的效果。对索引列使用or将造成全表扫描，即索引失效，可考虑用union 把or分成两个sql，这样保证其中一个或者两个都可以用到索引。</li>
-<li>如果可用in与or，尽量用in，如：<br>高效：select … from tableA where A in ( 10,20,30)<br>低效：select … from tableA where A=10 or A=20 or A=30 </li>
-<li>用EXISTS替代IN、用NOT EXISTS替代NOT IN<br>高效：select … from tableA where exists(select 1 from tableB  where tableA.A=tableB.A and  tableB.B=’X’))<br>低效：select  … from tableA where tableA.A in(select tableB.A from tableB where tableB.B=’X’)</li>
-<li>子查询里使用group by会加快查询速度，尽量少用或不用distinct，如下边情况:<br>select  top 100  t1.*  from  table1  t1  where  t1.FId  in (<br>高效：select t2.FId from table2 t2 where t2.FName=‘xxx’ group by t2.FId<br>低效：select distinct t2.FId from table2 t2 where t2.FName=‘xxx’<br>)。</li>
-<li>不要写过于复杂的SQL语句。有限度的在from里使用嵌套子查询，就是from （select f1,f2,f3 from table1 where f4=‘xx’）p 的方式。遇到需要用到多个这样的嵌套查询时，建议使用临时表处理。使用临时表会提高查询速度，大数据量查询效果更明显。注意：临时表使用完后应该drop掉。</li>
-<li>多表查询时，尽量用表连接替换exists子句、子查询；能用inner join 的，尽量不用left/right join。</li>
-<li>count(<em>)快于conut(1)，如果列有索引，count(列)快于count(</em>)</li>
-<li>如果是全表数据删除，truncate比delete效率高，truncate 删除数据是不作日志记录的。</li>
-</ul>
-<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><p>应用程序里写SQL：</p>
-<ul>
-<li>禁止直接使用select * from Table1而不加条件限制；需要什么字段应写明字段名称。</li>
-<li>多表查询，查询条件里必须包含所有的表，禁止在where 部分仅写个where 1=1 而不加其它条件，因为这样相当做了一个笛卡尔积，如果两个表的记录都是1万，则查询的结果将是1亿行，这样就容易把数据库的tempdb爆满，引发故障并导致系统不能用。</li>
-<li>在代码里编写SQL语句，在进行多表关联查询时，表的后面必须加上别名；在字段名前也要加上表别名，明确字段归属的表。 别名的命名按次序a,b,c,d…，或者用简写，如tbMm1Traffic  tfc, tbNeIp  ip。</li>
-<li>为考虑数据库兼容与移植问题：<ul>
-<li>编写SQL时，字段名、表名必须遵循大小写敏感的规则，就算当前所用的数据库可以忽略大小写（例如MYSQL，oracle，SqlServer，DB2）。</li>
-<li>要求对字段起别名，并且别名也强制区分大小写，从而保证界面元素名称与字段的对应。<code>如：Select  iStaffId “iStffId”, sStaffName “sStaffName” from tbOsStaff。</code></li>
-<li>要将一个完整的SQL实例做为注释写在代码里（编程时，查询条件部分多为动态拼装，所以源码里的SQL一般不是完整的SQL实例，可以做一次完整查询，然后从控制台copy一个完整实例贴在注释里）。–此点为曹雄所提。</li>
-</ul>
-</li>
-<li>编写比较复杂的查询语句时，需要格式化（加上回车换行符）和加上详细的注释说明。</li>
-<li>一些枚举、基础配置表的翻译，不要使用数据库表关联的方式翻译；两个以上字段是这种情况，就应该单独查询出来，然后在程序中转换。</li>
-<li>不要将所有的应用压力都推向数据库。需要做比较复杂的运算时，不要企图用一个SQL语句实现或通过编写一批十分复杂的SQL实现，例如：数据的行转列，完全可以使用程序语言的灵活性处理。</li>
-<li>开发时要关注运行速度慢的SQL（标准：超过1秒的SQL），着情进行优化处理，对于不能优化的，用程序处理。</li>
-<li>查询字段的选择，尽量使用ID或有索引的字段，或者说对频繁查询的字段，应该加索引，这样可以大大加快查询的速度。</li>
-<li>尽量用短事务。在事务里尽量只写新增、删除、修改的语句，少写查询SQL。 </li>
-<li>如果要判断某一字符字段是否为空，应该使用以下的判断条件：rtrim(fieldName) is null。<code>如：rtrim(&#39;  &#39;) is null返回的是true； &#39;  &#39; is null 返回的是false。</code></li>
-<li>不要在in 条件里放过多的条件（in 里是子查询除外），这样有可能使查询失败，例如Sybase里in的条件不能超过300个。其他的数据库具体数目不清楚，不过在编写代码的时候必须要留意是否会有这样的情况出现。</li>
-<li>表里的时间字段，如果是取当前时间的，使用数据库服务器的时间。</li>
-<li>手工键入的字符串查询条件都要求模糊匹配。如果还要求不区分大小写，可用upper(fieldName) like upper(‘%+查询条件+%’)，查询字段和条件都用upper进行转换，注意索引失效的情况。</li>
-<li>尽量写标准的SQL，如： *=，= null 这些sybase 特有的语法，而标准SQL: a left join b on …，is null。</li>
-</ul>
+<h3 id="Nginx简介"><a href="#Nginx简介" class="headerlink" title="Nginx简介"></a>Nginx简介</h3><p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。<br><code>在高连接并发的情况下，Nginx是Apache服务器不错的替代品。</code></p>
+<h3 id="Nginx-安装"><a href="#Nginx-安装" class="headerlink" title="Nginx 安装"></a>Nginx 安装</h3><p>系统平台：CentOS 7.3 64位。</p>
+<h4 id="一、安装编译工具及库文件"><a href="#一、安装编译工具及库文件" class="headerlink" title="一、安装编译工具及库文件"></a>一、安装编译工具及库文件</h4><p>安装C++解析环境<br><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel</code></p>
+<h4 id="二、首先要安装-PCRE"><a href="#二、首先要安装-PCRE" class="headerlink" title="二、首先要安装 PCRE"></a>二、首先要安装 PCRE</h4><p> PCRE 作用是让 Nginx 支持 Rewrite 功能。</p>
+<ol>
+<li>下载 PCRE 安装包，下载地址：<code>http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz</code></li>
+<li>解压安装包:<br><code>tar zxvf pcre-8.35.tar.gz</code></li>
+<li>进入安装包目录<br><code>cd pcre-8.35</code></li>
+<li>编译安装<br><code>./configure</code><br><code>make &amp;&amp; make install</code></li>
+<li>查看pcre版本<br><code>pcre-config --version</code><br>能查看到版本信息表示安装成功</li>
+</ol>
+<h4 id="三、安装-Nginx"><a href="#三、安装-Nginx" class="headerlink" title="三、安装 Nginx"></a>三、安装 Nginx</h4><ol>
+<li>下载 Nginx，下载地址：<code>http://nginx.org/download/nginx-1.6.2.tar.gz</code><br><code>wget http://nginx.org/download/nginx-1.6.2.tar.gz</code></li>
+<li>解压安装包<br><code>tar zxvf nginx-1.6.2.tar.gz</code></li>
+<li>进入安装包目录<br><code>cd nginx-1.6.2</code></li>
+<li>编译安装<br><code>./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/src/pcre-8.35</code><br><code>make</code><br><code>make install</code></li>
+<li>查看nginx版本<br><code>/usr/local/webserver/nginx/sbin/nginx -v</code><br>到此，nginx安装完成。<h3 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h3></li>
+<li>创建 Nginx 运行使用的用户 knight：<br><code>/usr/sbin/groupadd knight</code><br><code>/usr/sbin/useradd -g knight knight</code></li>
+<li>配置nginx.conf<br><code>cat /usr/local/nginx/conf/nginx.conf</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">user knight knight;</div><div class="line">worker_processes 2; #设置值和CPU核心数一致</div><div class="line">error_log /usr/local/webserver/nginx/logs/nginx_error.log crit; #日志位置和日志级别</div><div class="line">pid /usr/local/webserver/nginx/nginx.pid;</div><div class="line">#Specifies the value for maximum file descriptors that can be opened by this process.</div><div class="line">worker_rlimit_nofile 65535;</div><div class="line">events</div><div class="line">&#123;</div><div class="line">  use epoll;</div><div class="line">  worker_connections 65535;</div><div class="line">&#125;</div><div class="line">http</div><div class="line">&#123;</div><div class="line">  include mime.types;</div><div class="line">  default_type application/octet-stream;</div><div class="line">  log_format main  '$remote_addr - $remote_user [$time_local] "$request" '</div><div class="line">               '$status $body_bytes_sent "$http_referer" '</div><div class="line">               '"$http_user_agent" $http_x_forwarded_for';</div><div class="line">  </div><div class="line">#charset gb2312;</div><div class="line">     </div><div class="line">  server_names_hash_bucket_size 128;</div><div class="line">  client_header_buffer_size 32k;</div><div class="line">  large_client_header_buffers 4 32k;</div><div class="line">  client_max_body_size 8m;</div><div class="line">     </div><div class="line">  sendfile on;</div><div class="line">  tcp_nopush on;</div><div class="line">  keepalive_timeout 60;</div><div class="line">  tcp_nodelay on;</div><div class="line">  fastcgi_connect_timeout 300;</div><div class="line">  fastcgi_send_timeout 300;</div><div class="line">  fastcgi_read_timeout 300;</div><div class="line">  fastcgi_buffer_size 64k;</div><div class="line">  fastcgi_buffers 4 64k;</div><div class="line">  fastcgi_busy_buffers_size 128k;</div><div class="line">  fastcgi_temp_file_write_size 128k;</div><div class="line">  gzip on; </div><div class="line">  gzip_min_length 1k;</div><div class="line">  gzip_buffers 4 16k;</div><div class="line">  gzip_http_version 1.0;</div><div class="line">  gzip_comp_level 2;</div><div class="line">  gzip_types text/plain application/x-javascript text/css application/xml;</div><div class="line">  gzip_vary on;</div><div class="line"> </div><div class="line">  #limit_zone crawler $binary_remote_addr 10m;</div><div class="line"> #下面是server虚拟主机的配置</div><div class="line"> server</div><div class="line">  &#123;</div><div class="line">    listen 80;#监听端口</div><div class="line">    server_name localhost;#域名</div><div class="line">    index index.html index.htm index.php;</div><div class="line">    root /usr/local/webserver/nginx/html;#站点目录</div><div class="line">      location ~ .*\.(php|php5)?$</div><div class="line">    &#123;</div><div class="line">      #fastcgi_pass unix:/tmp/php-cgi.sock;</div><div class="line">      fastcgi_pass 127.0.0.1:9000;</div><div class="line">      fastcgi_index index.php;</div><div class="line">      include fastcgi.conf;</div><div class="line">    &#125;</div><div class="line">    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ico)$</div><div class="line">    &#123;</div><div class="line">      expires 30d;</div><div class="line">  # access_log off;</div><div class="line">    &#125;</div><div class="line">    location ~ .*\.(js|css)?$</div><div class="line">    &#123;</div><div class="line">      expires 15d;</div><div class="line">   # access_log off;</div><div class="line">    &#125;</div><div class="line">    access_log off;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>检查配置文件ngnix.conf的正确性命令：<br><code>/usr/local/nginx/sbin/nginx</code></li>
+</ol>
+<h3 id="启动-Nginx"><a href="#启动-Nginx" class="headerlink" title="启动 Nginx"></a>启动 Nginx</h3><p>Nginx启动命令<br><code>/usr/local/nginx/sbin/nginx</code></p>
+<p>Nginx 其他命令<br>以下包含了 Nginx 常用的几个命令：<br><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">/usr/local/webserver/nginx/sbin/nginx -s reload            # 重新载入配置文件</div><div class="line">/usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx</div><div class="line">/usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx</div></pre></td></tr></table></figure></p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2018/02/06/redis/" data-toggle="tooltip" data-placement="top"
-                           title="redis">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2018/01/20/工厂方法模式和抽象工厂模式/" data-toggle="tooltip" data-placement="top"
-                           title="工厂方法模式和抽象工厂模式">Next Post &rarr;</a>
+                        <a href="/2018/02/06/redis/" data-toggle="tooltip" data-placement="top"
+                           title="redis">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -252,7 +230,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#优化指引"><span class="toc-text">优化指引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程规范"><span class="toc-text">编程规范</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx简介"><span class="toc-text">Nginx简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-安装"><span class="toc-text">Nginx 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、安装编译工具及库文件"><span class="toc-text">一、安装编译工具及库文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、首先要安装-PCRE"><span class="toc-text">二、首先要安装 PCRE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、安装-Nginx"><span class="toc-text">三、安装 Nginx</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-配置"><span class="toc-text">Nginx 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动-Nginx"><span class="toc-text">启动 Nginx</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -274,8 +252,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#数据库"
-                           title="数据库">数据库</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </section>

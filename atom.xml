@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/lgrknight/lgrknight.github.io/"/>
-  <updated>2018-01-22T03:44:43.018Z</updated>
+  <updated>2018-02-06T08:19:43.570Z</updated>
   <id>https://github.com/lgrknight/lgrknight.github.io/</id>
   
   <author>
@@ -14,6 +14,182 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx安装配置</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2018/02/06/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2018/02/06/Nginx安装配置/</id>
+    <published>2018-02-06T07:57:19.000Z</published>
+    <updated>2018-02-06T08:19:43.570Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>非淡泊无以明志，非宁静无以致远</p>
+</blockquote>
+<h3 id="Nginx简介"><a href="#Nginx简介" class="headerlink" title="Nginx简介"></a>Nginx简介</h3><p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。<br><code>在高连接并发的情况下，Nginx是Apache服务器不错的替代品。</code></p>
+<h3 id="Nginx-安装"><a href="#Nginx-安装" class="headerlink" title="Nginx 安装"></a>Nginx 安装</h3><p>系统平台：CentOS 7.3 64位。</p>
+<h4 id="一、安装编译工具及库文件"><a href="#一、安装编译工具及库文件" class="headerlink" title="一、安装编译工具及库文件"></a>一、安装编译工具及库文件</h4><p>安装C++解析环境<br><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel</code></p>
+<h4 id="二、首先要安装-PCRE"><a href="#二、首先要安装-PCRE" class="headerlink" title="二、首先要安装 PCRE"></a>二、首先要安装 PCRE</h4><p> PCRE 作用是让 Nginx 支持 Rewrite 功能。</p>
+<ol>
+<li>下载 PCRE 安装包，下载地址：<code>http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz</code></li>
+<li>解压安装包:<br><code>tar zxvf pcre-8.35.tar.gz</code></li>
+<li>进入安装包目录<br><code>cd pcre-8.35</code></li>
+<li>编译安装<br><code>./configure</code><br><code>make &amp;&amp; make install</code></li>
+<li>查看pcre版本<br><code>pcre-config --version</code><br>能查看到版本信息表示安装成功</li>
+</ol>
+<h4 id="三、安装-Nginx"><a href="#三、安装-Nginx" class="headerlink" title="三、安装 Nginx"></a>三、安装 Nginx</h4><ol>
+<li>下载 Nginx，下载地址：<code>http://nginx.org/download/nginx-1.6.2.tar.gz</code><br><code>wget http://nginx.org/download/nginx-1.6.2.tar.gz</code></li>
+<li>解压安装包<br><code>tar zxvf nginx-1.6.2.tar.gz</code></li>
+<li>进入安装包目录<br><code>cd nginx-1.6.2</code></li>
+<li>编译安装<br><code>./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/src/pcre-8.35</code><br><code>make</code><br><code>make install</code></li>
+<li>查看nginx版本<br><code>/usr/local/webserver/nginx/sbin/nginx -v</code><br>到此，nginx安装完成。<h3 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h3></li>
+<li>创建 Nginx 运行使用的用户 knight：<br><code>/usr/sbin/groupadd knight</code><br><code>/usr/sbin/useradd -g knight knight</code></li>
+<li>配置nginx.conf<br><code>cat /usr/local/nginx/conf/nginx.conf</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">user knight knight;</div><div class="line">worker_processes 2; #设置值和CPU核心数一致</div><div class="line">error_log /usr/local/webserver/nginx/logs/nginx_error.log crit; #日志位置和日志级别</div><div class="line">pid /usr/local/webserver/nginx/nginx.pid;</div><div class="line">#Specifies the value for maximum file descriptors that can be opened by this process.</div><div class="line">worker_rlimit_nofile 65535;</div><div class="line">events</div><div class="line">&#123;</div><div class="line">  use epoll;</div><div class="line">  worker_connections 65535;</div><div class="line">&#125;</div><div class="line">http</div><div class="line">&#123;</div><div class="line">  include mime.types;</div><div class="line">  default_type application/octet-stream;</div><div class="line">  log_format main  '$remote_addr - $remote_user [$time_local] "$request" '</div><div class="line">               '$status $body_bytes_sent "$http_referer" '</div><div class="line">               '"$http_user_agent" $http_x_forwarded_for';</div><div class="line">  </div><div class="line">#charset gb2312;</div><div class="line">     </div><div class="line">  server_names_hash_bucket_size 128;</div><div class="line">  client_header_buffer_size 32k;</div><div class="line">  large_client_header_buffers 4 32k;</div><div class="line">  client_max_body_size 8m;</div><div class="line">     </div><div class="line">  sendfile on;</div><div class="line">  tcp_nopush on;</div><div class="line">  keepalive_timeout 60;</div><div class="line">  tcp_nodelay on;</div><div class="line">  fastcgi_connect_timeout 300;</div><div class="line">  fastcgi_send_timeout 300;</div><div class="line">  fastcgi_read_timeout 300;</div><div class="line">  fastcgi_buffer_size 64k;</div><div class="line">  fastcgi_buffers 4 64k;</div><div class="line">  fastcgi_busy_buffers_size 128k;</div><div class="line">  fastcgi_temp_file_write_size 128k;</div><div class="line">  gzip on; </div><div class="line">  gzip_min_length 1k;</div><div class="line">  gzip_buffers 4 16k;</div><div class="line">  gzip_http_version 1.0;</div><div class="line">  gzip_comp_level 2;</div><div class="line">  gzip_types text/plain application/x-javascript text/css application/xml;</div><div class="line">  gzip_vary on;</div><div class="line"> </div><div class="line">  #limit_zone crawler $binary_remote_addr 10m;</div><div class="line"> #下面是server虚拟主机的配置</div><div class="line"> server</div><div class="line">  &#123;</div><div class="line">    listen 80;#监听端口</div><div class="line">    server_name localhost;#域名</div><div class="line">    index index.html index.htm index.php;</div><div class="line">    root /usr/local/webserver/nginx/html;#站点目录</div><div class="line">      location ~ .*\.(php|php5)?$</div><div class="line">    &#123;</div><div class="line">      #fastcgi_pass unix:/tmp/php-cgi.sock;</div><div class="line">      fastcgi_pass 127.0.0.1:9000;</div><div class="line">      fastcgi_index index.php;</div><div class="line">      include fastcgi.conf;</div><div class="line">    &#125;</div><div class="line">    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ico)$</div><div class="line">    &#123;</div><div class="line">      expires 30d;</div><div class="line">  # access_log off;</div><div class="line">    &#125;</div><div class="line">    location ~ .*\.(js|css)?$</div><div class="line">    &#123;</div><div class="line">      expires 15d;</div><div class="line">   # access_log off;</div><div class="line">    &#125;</div><div class="line">    access_log off;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>检查配置文件ngnix.conf的正确性命令：<br><code>/usr/local/nginx/sbin/nginx</code></li>
+</ol>
+<h3 id="启动-Nginx"><a href="#启动-Nginx" class="headerlink" title="启动 Nginx"></a>启动 Nginx</h3><p>Nginx启动命令<br><code>/usr/local/nginx/sbin/nginx</code></p>
+<p>Nginx 其他命令<br>以下包含了 Nginx 常用的几个命令：<br><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">/usr/local/webserver/nginx/sbin/nginx -s reload            # 重新载入配置文件</div><div class="line">/usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx</div><div class="line">/usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;非淡泊无以明志，非宁静无以致远&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Nginx简介&quot;&gt;&lt;a href=&quot;#Nginx简介&quot; class=&quot;headerlink&quot; title=&quot;Nginx简介&quot;&gt;&lt;/a&gt;Nginx简介&lt;/h3&gt;&lt;p&gt;
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>redis</title>
+    <link href="https://github.com/lgrknight/lgrknight.github.io/2018/02/06/redis/"/>
+    <id>https://github.com/lgrknight/lgrknight.github.io/2018/02/06/redis/</id>
+    <published>2018-02-06T06:05:42.000Z</published>
+    <updated>2018-02-06T07:55:13.642Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>我知道很多人的欲望很难突破，我也不赞成用压抑的方式去对待欲望。欲望是需要被穿越的，而穿越的方法有时候就是追逐、满足它。到了一定时候，你会像我一样精疲力竭，坐回到自己的位子上，才发现，原来我想要的一切，都已经在我出发地方等着我了。</p>
+</blockquote>
+<h3 id="redis概述"><a href="#redis概述" class="headerlink" title="redis概述"></a>redis概述</h3><h4 id="关于关系型数据库和nosql数据库"><a href="#关于关系型数据库和nosql数据库" class="headerlink" title="关于关系型数据库和nosql数据库"></a>关于关系型数据库和nosql数据库</h4><p>NoSQL（not only SQL），意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型数据库。<br>关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据    库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库    要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实    际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。</p>
+<h4 id="为什么要使用Redis"><a href="#为什么要使用Redis" class="headerlink" title="为什么要使用Redis"></a>为什么要使用Redis</h4><p>随着互联网的发展，对数据产生了很多新的需求：</p>
+<ol>
+<li>对数据库高并发读写的需求</li>
+<li>对海量数据的高效率存储和访问的需求</li>
+<li>对数据库的搞可扩展性和高可用性的需求</li>
+</ol>
+<h4 id="redis在Linux上的安装"><a href="#redis在Linux上的安装" class="headerlink" title="redis在Linux上的安装"></a>redis在Linux上的安装</h4><p>1）安装redis编译的c环境，yum install gcc-c++<br>2）将redis-2.6.16.tar.gz上传到Linux系统中<br>3）解压到/usr/local下  tar -xvf redis-2.6.16.tar.gz -C /usr/local<br>4）进入redis-2.6.16目录 使用make命令编译redis<br>5）在redis-2.6.16目录中 使用make PREFIX=/usr/local/redis install命令安装redis到/usr/local/redis中<br>6）拷贝redis-2.6.16中的redis.conf到安装目录redis中<br>7）启动redis 在bin下执行命令redis-server redis.conf<br>8）如需远程连接redis，需配置redis端口6379在linux防火墙中开发<br>    /sbin/iptables -I INPUT -p tcp –dport 6379 -j ACCEPT<br>    /etc/rc.d/init.d/iptables save<br>将redis.conf文件中的daemonize从false修改成true表示后台启动<br>使用命令查看6379端口是否启动ps -ef | grep redis</p>
+<h3 id="Java操作Redis"><a href="#Java操作Redis" class="headerlink" title="Java操作Redis"></a>Java操作Redis</h3><p>一般通过Jedis操作</p>
+<h4 id="单实例连接"><a href="#单实例连接" class="headerlink" title="单实例连接"></a>单实例连接</h4><pre><code>@Test
+//获得单一的jedis对象操作数据库
+public void test1(){
+
+    //1、获得连接对象
+    Jedis jedis = new Jedis(&quot;192.168.186.131&quot;, 6379);
+
+    //2、获得数据
+    String username = jedis.get(&quot;username&quot;);
+    System.out.println(username);
+
+    //3、存储
+    jedis.set(&quot;addr&quot;, &quot;北京&quot;);
+    System.out.println(jedis.get(&quot;addr&quot;));
+
+    //4、释放资源
+    jedis.close();    
+}
+</code></pre><h4 id="通过jedis的pool获得jedis连接对象"><a href="#通过jedis的pool获得jedis连接对象" class="headerlink" title="通过jedis的pool获得jedis连接对象"></a>通过jedis的pool获得jedis连接对象</h4><pre><code>@Test
+public void test2(){
+    //0、创建池子的配置对象
+    JedisPoolConfig poolConfig = new JedisPoolConfig();
+    poolConfig.setMaxIdle(30);//最大闲置个数
+    poolConfig.setMinIdle(10);//最小闲置个数
+    poolConfig.setMaxTotal(50);//最大连接数
+
+    //1、创建一个redis的连接池
+    JedisPool pool = new JedisPool(poolConfig, &quot;192.168.186.131&quot;, 6379);
+
+    //2、从池子中获取redis的连接资源
+    Jedis jedis = pool.getResource();
+
+    //3、操作数据库
+    jedis.set(&quot;xxx&quot;,&quot;yyyy&quot;);
+    System.out.println(jedis.get(&quot;xxx&quot;));
+
+    //4、关闭资源
+    jedis.close();
+    pool.close();
+
+}
+</code></pre><h4 id="封装连接池工具类连接"><a href="#封装连接池工具类连接" class="headerlink" title="封装连接池工具类连接"></a>封装连接池工具类连接</h4><pre><code>public class JedisPoolUtils {
+
+    private static JedisPool pool = null;
+
+    static{            
+        //加载配置文件
+        InputStream in = JedisPoolUtils.class.getClassLoader().getResourceAsStream(&quot;redis.properties&quot;);
+        Properties pro = new Properties();
+        try {
+            pro.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //获得池子对象
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxIdle(Integer.parseInt(pro.get(&quot;redis.maxIdle&quot;).toString()));//最大闲置个数
+        poolConfig.setMinIdle(Integer.parseInt(pro.get(&quot;redis.minIdle&quot;).toString()));//最小闲置个数
+        poolConfig.setMaxTotal(Integer.parseInt(pro.get(&quot;redis.maxTotal&quot;).toString()));//最大连接数
+        pool = new JedisPool(poolConfig,pro.getProperty(&quot;redis.url&quot;) , Integer.parseInt(pro.get(&quot;redis.port&quot;).toString()));
+    }
+
+    //获得jedis资源的方法
+    public static Jedis getJedis(){
+        return pool.getResource();
+    }
+
+    public static void main(String[] args) {
+        Jedis jedis = getJedis();
+        System.out.println(jedis.get(&quot;xxx&quot;));
+    }    
+}
+</code></pre><h3 id="Redis的常用命令"><a href="#Redis的常用命令" class="headerlink" title="Redis的常用命令"></a>Redis的常用命令</h3><p>redis是一种高级的key-value的存储系统<br>key是字符串类型，尽可能满足如下几点：</p>
+<pre><code>1. key不要太长，最好不要操作1024个字节，这不仅会消耗内存还会降低查找        效率
+2.  key不要太短，如果太短会降低key的可读性
+3. 在项目中，key最好有一个统一的命名规范（根据企业的需求）
+</code></pre><p>value支持五种数据类型：</p>
+<pre><code>1. 字符串型 string
+2. 字符串列表 lists
+3. 字符串集合 sets
+4. 有序字符串集合 sorted sets
+5. 哈希类型 hashs
+</code></pre><p>存储字符串string<br>    字符串类型是Redis中最为基础的数据存储类型，它在Redis中是二进制安全的，这    便意味着该类型可以接受任何格式的数据。字符串类型的Value最多可以容纳的数据长度是512M</p>
+<pre><code>1. set key value：设定key持有指定的字符串value，如果该key存在则进行覆盖    操作。总是返回”OK”
+2. get key：获取key的value。如果与该key关联的value不是String类型，redis    将返回错误信息，因为get命令只能用于获取String value；如果该key不存在，返    回null。
+3. getset key value：先获取该key的值，然后在设置该key的值。
+4. incr key：将指定的key的value原子性的递增1.如果该key不存在，其初始值    为0，在incr之后其值为1。如果value的值不能转成整型，如hello，该操作将执    行失败并返回相应的错误信息。
+5. decr key：将指定的key的value原子性的递减1.如果该key不存在，其初始值    为0，在incr之后其值为-1。如果value的值不能转成整型，如hello，该操作将执    行失败并返回相应的错误信息。
+</code></pre><p>redis数据类型list<br>    arraylist和list的区别<br>        arraylist查询快，list更删改快</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;我知道很多人的欲望很难突破，我也不赞成用压抑的方式去对待欲望。欲望是需要被穿越的，而穿越的方法有时候就是追逐、满足它。到了一定时候，你会像我一样精疲力竭，坐回到自己的位子上，才发现，原来我想要的一切，都已经在我出发地方等着我了。&lt;/p&gt;
+&lt;/blo
+    
+    </summary>
+    
+    
+      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
+    
+  </entry>
   
   <entry>
     <title>SQL优化</title>
@@ -453,29 +629,6 @@ public class Singleton {
     
     
       <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hibernate（一篇）</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/06/14/hibernate%EF%BC%88%E4%B8%80%E7%AF%87%EF%BC%89/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/06/14/hibernate（一篇）/</id>
-    <published>2017-06-14T14:59:22.000Z</published>
-    <updated>2017-06-14T15:23:47.716Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>我知道很多人的欲望很难突破，我也不赞成用压抑的方式去对待欲望。欲望事需要被穿越的，而穿越的方法有时候就是追逐、满足它。到了一定时候，你会像我一样精疲力竭，坐会到自己的位子上，才发现，原来我想要的一切，都已经在我出发地方等着我了。</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;我知道很多人的欲望很难突破，我也不赞成用压抑的方式去对待欲望。欲望事需要被穿越的，而穿越的方法有时候就是追逐、满足它。到了一定时候，你会像我一样精疲力竭，坐会到自己的位子上，才发现，原来我想要的一切，都已经在我出发地方等着我了。&lt;/p&gt;
-&lt;/blo
-    
-    </summary>
-    
     
   </entry>
   
@@ -1075,7 +1228,7 @@ protected void onDraw(Canvas canvas) {
 <h3 id="五、JSP中的转发和包含"><a href="#五、JSP中的转发和包含" class="headerlink" title="五、JSP中的转发和包含"></a>五、JSP中的转发和包含</h3><ul>
 <li>1、转发：<br><code>&lt;jsp:forward page=&quot;/10forward.jsp&quot;&gt;&lt;/jsp:forward&gt;</code><br>JSP的内置标签。</li>
 <li>2、参数：不能单独使用<br>向目标传递请求参数</li>
-<li>3、包含：（面试题）<br>静态包含：<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x25;&#64;&#105;&#110;&#99;&#108;&#x75;&#100;&#101;&#37;">&#x25;&#64;&#105;&#110;&#99;&#108;&#x75;&#100;&#101;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
+<li>3、包含：（面试题）<br>静态包含：<a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#37;&#64;&#x69;&#110;&#99;&#x6c;&#x75;&#100;&#x65;&#37;">&#37;&#64;&#x69;&#110;&#99;&#x6c;&#x75;&#100;&#x65;&#37;</a><br>动态包含：其余的<br><code>&lt;jsp:include page=””/&gt;</code></li>
 </ul>
 <p><strong>总结：用标签可以少些java脚本。</strong></p>
 <h3 id="六、JSP的九个隐含对象：（面试题）"><a href="#六、JSP的九个隐含对象：（面试题）" class="headerlink" title="六、JSP的九个隐含对象：（面试题）"></a>六、JSP的九个隐含对象：（面试题）</h3><p>JSP对应的Servlet的service方法中的局部变量</p>
@@ -1454,524 +1607,6 @@ public class LoginUIServlet extends HttpServlet {
     
       &lt;blockquote&gt;
 &lt;p&gt;由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.典型的场景比如购物车，当你点击下单按钮时，由于HTTP协议无状态，所以并不知道是哪个用户操作的，所以服务端要为特定的用户创建
-    
-    </summary>
-    
-    
-      <category term="java web" scheme="https://github.com/lgrknight/lgrknight.github.io/tags/java-web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Request和Response的学习笔记</title>
-    <link href="https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request%E5%92%8CResponse%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>https://github.com/lgrknight/lgrknight.github.io/2017/03/14/Request和Response的学习笔记/</id>
-    <published>2017-03-14T11:29:30.000Z</published>
-    <updated>2017-03-14T14:13:19.631Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出的文字时又是满满的感动。</p>
-</blockquote>
-<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><ul>
-<li>web服务器收到客户端的http请求，会针对每一次请求，分别创建一个用于代表请求的request对象和代表响应的request对象。</li>
-<li>request和response对象既然代表请求和响应，那我们要获取客户端（浏览器）提交过来的数据，只需要找request对象就行了。要客户端输出数据，只需要找response对象就行了。<br><strong>注意：</strong> request中封装的是浏览器的信息和请求参数，即浏览器的请求；response中封装的是服务器向浏览器发送的数据、响应头和编码格式等，即服务器的响应。</li>
-</ul>
-<h2 id="二、HttpServletResponse-响应对象"><a href="#二、HttpServletResponse-响应对象" class="headerlink" title="二、HttpServletResponse 响应对象"></a>二、HttpServletResponse 响应对象</h2><h3 id="1、字节流向客户端输出中文数据"><a href="#1、字节流向客户端输出中文数据" class="headerlink" title="1、字节流向客户端输出中文数据"></a>1、字节流向客户端输出中文数据</h3><ul>
-<li>默认情况下：浏览器是乱码的（他默认查GBK）<ol>
-<li>解决方案一：更改浏览器的码表（不建议）</li>
-<li>解决方案二(不建议)：向客户端输出一个<meta>标签,模拟了响应消息头：<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"></li>
-<li>解决方案三（建议）:向客户端输出响应消息头：response.setHeader(“Content-Type”, “text/html;charset=UTF-8”);</li>
-<li>解决方案四（建议）：向客户端输出响应消息头response.setContentType(“text/html;charset=UTF-8”);</li>
-</ol>
-</li>
-</ul>
-<p>案例代码：</p>
-<pre><code>import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-//字节流向客户端输出中文数据
-public class ResponseDemo1 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        test2(response);
-    }
-
-    //字节流输出数据查UTF-8
-    private void test2(HttpServletResponse response) throws IOException {
-        String data = &quot;不见了远处的青山&quot;;
-
-        response.setContentType(&quot;text/html;charset=UTF-8&quot;);
-        ServletOutputStream out = response.getOutputStream();
-        out.write(data.getBytes(&quot;UTF-8&quot;));//默认情况下：浏览器是乱码的（他默认查GBK）
-    }
-    //字节流输出数据查本地码表
-    private void test1(HttpServletResponse response) throws IOException {
-        String data = &quot;不见了远处的青山&quot;;
-        ServletOutputStream out = response.getOutputStream();
-        out.write(data.getBytes());//String:  getBytes()查本地默认的码表GBK getBytes(String charset)查指定码表
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h3 id="2、字符流输出中文数据"><a href="#2、字符流输出中文数据" class="headerlink" title="2、字符流输出中文数据"></a>2、字符流输出中文数据</h3><ul>
-<li>HttpServletResponse的实例由Tomcat服务器提供，默认查ISO-8859-1的。</li>
-<li>Tomcat8.X ,默认编码就变为了UTF-8</li>
-</ul>
-<p>案例源码：</p>
-<pre><code>import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-//字符流输出中文数据
-public class ResponseDemo2 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String data = &quot;幸福是什么呢&quot;;
-        //改变字符流查的码表，还能告知客户端用UTF-8进行解码
-        response.setContentType(&quot;text/html;charset=UTF-8&quot;);
-        PrintWriter out = response.getWriter();
-
-        out.write(data);
-    }
-
-    private void test1(HttpServletResponse response) throws IOException {
-        String data = &quot;幸福是什么&quot;;
-        //改变字符流查的码表
-        response.setCharacterEncoding(&quot;UTF-8&quot;);
-        //告知客户端用UTF-8进行解码
-        response.setContentType(&quot;text/html;charset=UTF-8&quot;);
-        PrintWriter out = response.getWriter();
-
-        out.write(data);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><p><strong>注意：</strong> 在开发中尽量使用字节流，因为字节流可以处理任何数据，而字符流只能用来处理文本。</p>
-<h3 id="3、输出随机验证码图片：CAPTCHA图像"><a href="#3、输出随机验证码图片：CAPTCHA图像" class="headerlink" title="3、输出随机验证码图片：CAPTCHA图像"></a>3、输出随机验证码图片：CAPTCHA图像</h3><p>案例源码：</p>
-<pre><code>import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-//输出随机验证码图片：CAPTCHA图像
-public class ResponseDemo3 extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        int width = 120;
-        int height = 25;
-        //创建一副内存图像
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        //得到画笔
-        Graphics g = image.getGraphics();
-        //开始画
-        //边线
-        g.setColor(Color.BLUE);
-        g.drawRect(0, 0, width, height);
-        //填充背景色
-        g.setColor(Color.YELLOW);
-        g.fillRect(1, 1, width-2, height-2);
-        //话干扰线
-        g.setColor(Color.GRAY);
-
-        Random r = new Random();
-        for(int i=0;i&lt;9;i++)
-            g.drawLine(r.nextInt(width), r.nextInt(height), r.nextInt(width), r.nextInt(height));
-        //验证码
-        g.setColor(Color.RED);
-        g.setFont(new Font(&quot;宋体&quot;, Font.ITALIC|Font.BOLD, 19));
-        int x = 20;
-        for(int i=0;i&lt;4;i++){
-            g.drawString(r.nextInt(10)+&quot;&quot;, x,20 );
-            //g.drawString(base.charAt(r.nextInt(base.length()))+&quot;&quot;, x, 20);
-            x+=18;
-        }
-        //输出
-        response.setHeader(&quot;Expires&quot;, &quot;-1&quot;);
-        response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);
-        response.setHeader(&quot;Pragma&quot;, &quot;no-cache&quot;);
-        ImageIO.write(image, &quot;jpg&quot;, response.getOutputStream());
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h3 id="4、控制客户端定时刷新"><a href="#4、控制客户端定时刷新" class="headerlink" title="4、控制客户端定时刷新"></a>4、控制客户端定时刷新</h3><pre><code>import java.io.IOException;
-import java.util.Random;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-//控制客户端定时刷新
-public class ResponseDemo4 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        test2(response);
-    }
-    //定时刷新到别处
-    private void test2(HttpServletResponse response) throws IOException {
-        response.setContentType(&quot;text/htm;charset=UTF-8&quot;);
-        response.setHeader(&quot;Refresh&quot;, &quot;2;URL=http://www.itheima.com&quot;);
-        response.getWriter().write(&quot;登录成功，2秒后跳转到主页&quot;);
-    }
-    //定时刷新自己
-    private void test1(HttpServletResponse response) throws IOException {
-        Random r = new Random();
-        //response.setHeader(&quot;Refresh&quot;, &quot;1&quot;);
-        response.setIntHeader(&quot;Refresh&quot;, 1);
-        response.getWriter().write(r.nextInt()+&quot;&quot;);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h3 id="5、控制缓存的时间"><a href="#5、控制缓存的时间" class="headerlink" title="5、控制缓存的时间"></a>5、控制缓存的时间</h3><ul>
-<li>静态资源需要控制缓存时间</li>
-<li>动态资源一般不要缓存</li>
-</ul>
-<p>案例源码：</p>
-<pre><code>import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class ResponseDemo5 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String data = &quot;不见了远处的青山&quot;;
-        //让他缓存1个小时
-        response.setDateHeader(&quot;Expires&quot;, System.currentTimeMillis()+1*60*60*1000);
-        response.setContentType(&quot;text/html;charset=UTF-8&quot;);
-        response.getWriter().write(data);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h3 id="6、请求重定向"><a href="#6、请求重定向" class="headerlink" title="6、请求重定向"></a>6、请求重定向</h3><ul>
-<li>演示请求重定向:可以重定向到任何地址上</li>
-<li>发出2次请求</li>
-<li>地址栏会发生变化</li>
-</ul>
-<p>案例源码：</p>
-<pre><code>import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class ResponseDemo6 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        response.sendRedirect(&quot;http://www.itheima.com&quot;);
-    }
-    //重定向到应用内的资源
-    private void test1(HttpServletResponse response) throws IOException {
-        //response.setStatus(302);
-        //response.setHeader(&quot;Location&quot;, &quot;/day08_00_response/servlet/ResponseDemo7&quot;);
-        response.sendRedirect(&quot;/day08_00_response/servlet/    ResponseDemo7&quot;);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h3 id="7、response细节"><a href="#7、response细节" class="headerlink" title="7、response细节"></a>7、response细节</h3><ul>
-<li>getOutputStream和getWriter方法分别用于得到输出二进制数据、输出文本数据的ServletOutputStream、PrintWriter对象。</li>
-<li>getOutputStream和getWriter这两个方法互相排斥，调用其中的任何一个方法后，就不能再调用另一个方法。</li>
-<li>servlet程序向ServletOutputStream和PrintWriter对象中写入的数据将被servlet引擎从response里面获取，servlet引擎将这些数据当作响应消息的正文，然后再与响应状态行和各响应头组合后输出到客户端。</li>
-<li>servlet的service方法结束后，servlet引擎将检查getWriter或getOutputStream方法返回的输出流对象是否已经调用过close方法，如果没有，servlet引擎将调用close方法关闭该输出对象。</li>
-</ul>
-<h2 id="三、HttpServletRequest-请求对象"><a href="#三、HttpServletRequest-请求对象" class="headerlink" title="三、HttpServletRequest 请求对象"></a>三、HttpServletRequest 请求对象</h2><blockquote>
-<p>HttpServletRequest对象代表客户端的请求，当客户端通过HTTP协议访问服务器时，HTTP请求头的所有信息都封装在这个对象中，开发人员通过这个对象的方法，可以获得客户这些信息。</p>
-</blockquote>
-<h3 id="3-1常用方法"><a href="#3-1常用方法" class="headerlink" title="3.1常用方法"></a>3.1常用方法</h3><h4 id="3-1-1获得浏览器的信息"><a href="#3-1-1获得浏览器的信息" class="headerlink" title="3.1.1获得浏览器的信息"></a>3.1.1获得浏览器的信息</h4><blockquote>
-<p>getRequestURL()方法返回客户端发出请求时完整的URL<br>getRequestURI()方法返回请求行中的资源名部分<br>getQueryString()方法返回请求行中的参数部分<br>getRemoteAddr()方法返回请求的客户机的完整IP地址<br>getRemoteHost()方法返回发出请求的客户机的完整主机名<br>getRemotePort()方法返回客户机所使用的网络端口号<br>getLocalAddr()方法返回Web服务器的IP地址<br>getLocalName()方法返回Web服务器的主机名<br>getMethod()得到客户机的请求方式</p>
-</blockquote>
-<h4 id="3-1-2获得浏览器的请求头"><a href="#3-1-2获得浏览器的请求头" class="headerlink" title="3.1.2获得浏览器的请求头"></a>3.1.2获得浏览器的请求头</h4><blockquote>
-<p>getHeader(String name)方法<br>getHeaders(String name)方法<br>getHeaderNames方法</p>
-</blockquote>
-<p><strong>例1.获取请求头</strong></p>
-<pre><code>import java.io.IOException;
-import java.util.Enumeration;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class RequestDemo2 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        //获取请求头，但是这个头可能出现多次，此时我们可以使用getHeaders方法
-        String head = request.getHeader(&quot;Accept-Encoding&quot;);
-
-            System.out.println(head);
-        if(head.contains(&quot;gzip&quot;)){
-            //看是否包含gzip头，若存在，再向其输出压缩数据
-        }else{
-            //不存在则输出没有压缩的数据
-        }
-
-        //当一个头出现多次
-        Enumeration e = request.getHeaders(&quot;Accept-Encoding&quot;);
-        while(e.hasMoreElements()){
-            String value = (String) e.nextElement();
-            System.out.println(value);
-        }
-
-        //获得所有的头和对应的值
-           e = request.getHeaderNames();
-        while(e.hasMoreElements()){
-            String name = (String) e.nextElement();
-            String value = request.getHeader(name);
-            System.out.println(value);
-        }
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-}
-</code></pre><h4 id="3-1-3获得浏览器请求参数（即浏览器提交的数据）"><a href="#3-1-3获得浏览器请求参数（即浏览器提交的数据）" class="headerlink" title="3.1.3获得浏览器请求参数（即浏览器提交的数据）"></a>3.1.3获得浏览器请求参数（即浏览器提交的数据）</h4><pre><code>import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
-
-import com.itheima.domain.User;
-//获取请求参数
-public class RequestDemo3 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        test8(request, response);
-    }
-    //终极解决方案：借助BeanUtil框架
-    private void test8(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        User user = new User();
-        System.out.println(&quot;封装前：&quot;+user);
-        try {
-            BeanUtils.populate(user, request.getParameterMap());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(&quot;封装后：&quot;+user);
-    }
-    //getParameterMap获取参数:封装到JavaBean中
-    private void test7(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        //key:请求参数名 value:请求参数值数组
-        Map&lt;String,String[]&gt; map = request.getParameterMap();
-        User user = new User();
-        System.out.println(&quot;封装前：&quot;+user);
-        for(Map.Entry&lt;String, String[]&gt; me:map.entrySet()){
-            String paramName = me.getKey();//参数名称
-            String paramValues[] = me.getValue();//参数值
-            try {
-                PropertyDescriptor pd = new PropertyDescriptor(paramName, User.class);
-                Method m = pd.getWriteMethod();//setter方法
-                if(paramValues.length&gt;1){
-                m.invoke(user, (Object)paramValues);//参考补充视频：反射main方法
-                }else{
-                    m.invoke(user, paramValues);
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        }
-        System.out.println(&quot;封装后：&quot;+user);
-    }
-    //getParameterMap获取参数
-    private void test6(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        //key:请求参数名 value:请求参数值数组
-        Map&lt;String,String[]&gt; map = request.getParameterMap();
-        for(Map.Entry&lt;String, String[]&gt; me:map.entrySet()){
-            System.out.println(me.getKey()+&quot;=&quot;+Arrays.asList(me.getValue()));
-        }
-    }
-
-    //把请求参数的值封装到JavaBean中
-    //约定优于编码：表单的输入域的name取值和JavaBean中的属性（getter和setter方法）保持一致
-    private void test5(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-
-
-        Enumeration&lt;String&gt; e = request.getParameterNames();//参数名
-        User user = new User();
-        System.out.println(&quot;封装前：&quot;+user);
-        while(e.hasMoreElements()){
-            String paramName = e.nextElement();//即是JavaBean中的属性名称
-            String paramValue = request.getParameter(paramName);
-            //setUsername(paramValue); setPassword(paramValue);
-            //JavaBean的内省
-        try {
-            PropertyDescriptor pd = new PropertyDescriptor(paramName, User.class);
-            Method m = pd.getWriteMethod();//setter方法
-            m.invoke(user, paramValue);
-            } catch (Exception e1) {
-            e1.printStackTrace();
-            }
-        }
-        System.out.println(&quot;封装后：&quot;+user);
-    }    
-//private void test4(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        User user = new User();
-//        System.out.println(&quot;封装前：&quot;+user);
-//        String username = request.getParameter(&quot;username&quot;);
-//        String password = request.getParameter(&quot;password&quot;);
-//        String gender = request.getParameter(&quot;gender&quot;);
-//        user.setUsername(username);
-//        user.setPassword(password);
-//        user.setGender(gender);
-//        System.out.println(&quot;封装后：&quot;+user);
-//    }    
-    //以下内容只用简单的程序开发
-
-    //获取所有的请求参数名和值
-    private void test3(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        Enumeration&lt;String&gt; e = request.getParameterNames();//参数名
-        while(e.hasMoreElements()){
-            String paramName = e.nextElement();
-            String values [] = request.getParameterValues(paramName);
-            System.out.println(paramName+&quot;=&quot;+Arrays.asList(values));
-        }
-    }
-    //获取重名请求参数的值
-    private void test2(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String username = request.getParameter(&quot;username&quot;);//不区分get还是post的
-        String passwords[] = request.getParameterValues(&quot;password&quot;);//获取重名的请求参数值
-        System.out.println(username+&quot;:&quot;+Arrays.asList(passwords));
-    }
-    //获取单一的请求参数的值(用户所有的输入都是String)
-    private void test1(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String username = request.getParameter(&quot;username&quot;);//不区分get还是post的
-        String password = request.getParameter(&quot;password&quot;);
-        System.out.println(username+&quot;:&quot;+password);
-    }
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-
-}
-</code></pre><h4 id="3-1-4请求参数的中文乱码问题"><a href="#3-1-4请求参数的中文乱码问题" class="headerlink" title="3.1.4请求参数的中文乱码问题"></a>3.1.4请求参数的中文乱码问题</h4><pre><code>import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-//中文乱码问题
-public class RequestDemo4 extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        //post提交时乱码解决方式：设置服务器打开请求数据时用的码表，即request使用的码表
-        //request.setCharacterEncoding(&quot;UTF-8&quot;);
-
-        String username = request.getParameter(&quot;username&quot;);
-        System.out.println(username);
-
-        //get提交时乱码解决方式：先使用iso8859-1得到数据，然后再使用正确的编码转换过来
-        byte[] source = username.getBytes(&quot;iso8859-1&quot;);
-        username = new String(source, &quot;UTF-8&quot;);
-        System.out.println(username);
-
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        doGet(request, response);
-    }
-}
-</code></pre><p><strong>注意：</strong></p>
-<ul>
-<li>使用post方式提交表单数据时需要注意几点：<ul>
-<li>在html中我们使用<meta name="content-type" content="text/html; charset=UTF-8">规定保存此文件的格式，我们可以选中文件右键àProperties可以在下面的Default处看到文件的编码格式，是和我们设置的编码一致的。</li>
-<li>表单在提交的时候我们需要查看浏览器使用哪张码表打开此表单，如果使用GBK打开此表单，那么填写在此表单中提交的数据也将使用GBK编码，提交到服务器之后request.getParameter默认会使用iso8859-1码表将获得的数据转换成字符串，此时会出现乱码。我们可以使用request.setCharacterEncoding(“GBK”);将Request使用的码表换成GBK，这样和浏览器使用的编码就一致了。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>使用get方式提交表单数据时需要注意：<ul>
-<li>当使用get方式提交表单数据时，设置Request编码是无效的，于是我们需要先使用iso8859码表得到乱码数据，然后再使用何时的码表将乱码转换成正确的文本数据。这是看视频教程中是这样解决的，但是在自己本地却不好使，当我的网页使用UTF-8打开时提交的数据能正确显示，但是如果使用GBK打开则不能正确显示。也就是网页使用UTF-8编码的数据提交才能正确显示，不是默认去查iso8859-1吗，这难道是tomcat的原因？？？？</li>
-<li>还有个问题没有解决：就是当直接使用地址<a href="http://localhost:8080/ResAndReq/servlet/RequestDemo4?username=&#39;中国" target="_blank" rel="external">http://localhost:8080/ResAndReq/servlet/RequestDemo4?username=&#39;中国</a>‘ 访问服务器时，不需要设置任何编码就可以显示正确的文本。而且不管浏览器使用什么编码我们在地址栏中都可以看到正确的文本。URL其实对于汉字是直接使用的ASCII码，只是每个字的编码前加上一个%号？？？？</li>
-<li>最后还可以更改服务器配置文件，在server.xml中的<connector>标签的最后加上一个属性：URIEncoding=”UTF-8”即可。这时什么都不需要设置了直接使用String username = request.getParameter(“username”);这种方式一般不适用.这里我们还有一种灵活的方式,在<connector>标签添加下面这个属性将useBodyEncodingForURI属性设置为true，那么如果我们request.setCharacterEncoding(“UTF-8”);之后连接器就使用什么编码。不管是什么方式，但是更改服务器的配置文件一般不推荐。</connector></connector></li>
-</ul>
-</li>
-</ul>
-<h3 id="请求重定向和请求转发的区别："><a href="#请求重定向和请求转发的区别：" class="headerlink" title="请求重定向和请求转发的区别："></a>请求重定向和请求转发的区别：</h3><p><img src="http://i.imgur.com/RwfiPOf.png" alt=""></p>
-<p>（1）一个web资源收到客户端请求后，通知服务器去调用另外一个web资源进行处理，称之为请求转发。这里的两个servlet共享一个request和response对象。同时地址栏不会发生变化。<br>（2）一个web资源收到客户端请求后，通知浏览器去访问另外一个web资源，称之为请求重定向。地址栏会发生变化。<br>（3）RequestDispatcher.forward方法只能将请求转发给同一个web应用中的组件（即多个servlet）；而HttpServletResponse.sendRedirect方法可以重定向到同一个站点上的其他应用程序中的资源（多个web应用），甚至是使用绝对URL重定向到其他站点的资源。<br>（4）调用HttpServletResponse.sendRedirect方法重定向的访问过程结束后，浏览器地址栏中显示的URL地址会发生变化，由初始的URL地址变成重定向的目标URL；调用RequestDispatcher.forward方法的请求转发过程结束后，浏览器地址栏保持初始的URL地址。<br>（5）HttpServletResponse.sendRedirect方法对浏览器的请求直接做出响应，响应的结果就是告诉浏览器去重新发出对另外一个URL的访问请求；RequestDispatcher.forward方法在服务器端内部将请求转发给另外一个资源（servlet），浏览器只知道发出了请求并得到了响应结果，并不知道在服务器内部发生了转发行为。<br>（6）RequestDispatcher.forward方法调用者与被调用者之间共享相同的request和response对象，它们属于同一个访问请求和响应过程；而HttpServletResponse.sendRedirect方法调用者与被调用者使用各自的request和response对象，它们属于两个独立的访问请求和响应过程。<br>（7）include方法<br>RequestDispatcher.include方法用于将RequestDispatcher对象封装的资源内容作为当前响应内容的一部分包含进来，从而实现可编程的服务器包含功能。被包含的servlet程序不能改变响应消息的状态码和响应头，如果它里面存在这样的语句，这些语句的执行结果将被忽略。</p>
-<h3 id="转发和包含的小细节："><a href="#转发和包含的小细节：" class="headerlink" title="转发和包含的小细节："></a>转发和包含的小细节：</h3><p>转发：</p>
-<ul>
-<li>转发前后，源输出的任何响应正文无效</li>
-<li>转发前会清空响应对象中的正文内容</li>
-</ul>
-<p>包含：</p>
-<ul>
-<li>只会包含目标的正文，头部信息包含前清空</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;今天写博客比以往都要早一点，从图书馆一回寝室就开始把今天学的凭记忆先记录下来，（其实主要还是怕贪玩又忘记写。）这是我写的第5篇博客，从上月22号坚持每天去图书馆刚好三周21天，是我戒烟的第25天。讲实话这些坚持真的让自己很难受，但当我看到这些统计出
     
     </summary>
     

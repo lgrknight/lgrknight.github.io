@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        SQL优化｜knight&#39;s blog
+        redis｜knight&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2018/01/22/SQL优化/">
+    <link rel="canonical" href="https://github.com/lgrknight/lgrknight.github.io/2018/02/06/redis/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg">
+     src="http://omhz9w11z.bkt.clouddn.com/backgroud1.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud3.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://omhz9w11z.bkt.clouddn.com/backgroud1.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>SQL优化</h1>
+                    <h1>redis</h1>
                     
                     <span class="meta">
                          作者 knight
                         <span>
-                          日期 2018-01-22
+                          日期 2018-02-06
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#数据库"
-                           title="数据库">数据库</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            SQL优化
+            redis
         </span>
     </div>
 </header>
@@ -177,51 +177,107 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>知事故而不世故</p>
+<p>我知道很多人的欲望很难突破，我也不赞成用压抑的方式去对待欲望。欲望是需要被穿越的，而穿越的方法有时候就是追逐、满足它。到了一定时候，你会像我一样精疲力竭，坐回到自己的位子上，才发现，原来我想要的一切，都已经在我出发地方等着我了。</p>
 </blockquote>
-<h3 id="优化指引"><a href="#优化指引" class="headerlink" title="优化指引"></a>优化指引</h3><ul>
-<li>每个表都要在关键字段（频繁用于查询的字段）建立索引。<br>查询字段不用*号，写出具体的字段名；只查询出需要用到的字段，查询字段越少查询速度就会越快。</li>
-<li>多表查询，尽量给每个表取别名，并在字段前加别名，减轻数据库用来解析每个字段归属表与歧义的时间。（经常有多个表有相同名的字段名）</li>
-<li>数据库一般按照从右到左的顺序处理from子句中的表名，from子句中写在最后的表(基础表)将被最先处理。在from子句中包含2个表的情况下，必须选择记录条数较少的表作为基础表；如果有3个以上的表连接查询，那就需要选择交叉表作为基础表。（交叉表是指那个被其他表所引用的表）。</li>
-<li>where子句中查询条件：用于表与表之间的连接部分，写在where子句靠前位置，能过滤掉越多记录数的查询条件，越写在WHERE子句的末尾。</li>
-<li>在where子句里，有索引的字段不要进行数据转换后再进行比较（比如用函数把数字转成字符，再比较），这样会失掉索引的作用。</li>
-<li>用到group by的sql，select后面的字段顺序和数量与group by后面的字段顺序和数量一致。</li>
-<li>能在on条件过滤掉的（如关联查询时）数据，不留到where；能在where条件中过滤掉的数据，不留到having过滤；having一般与一些聚合函数一起使用。</li>
-<li>避免在索引列判断is null 或is not null，否则索引将失效。</li>
-<li>比较运算，“&gt;=”符号比“&gt;”效率要高。</li>
-<li>能不用like 或 in ，就尽量不用。</li>
-<li>通常情况下，用union替换where子句中的or将会起到较好的效果。对索引列使用or将造成全表扫描，即索引失效，可考虑用union 把or分成两个sql，这样保证其中一个或者两个都可以用到索引。</li>
-<li>如果可用in与or，尽量用in，如：<br>高效：select … from tableA where A in ( 10,20,30)<br>低效：select … from tableA where A=10 or A=20 or A=30 </li>
-<li>用EXISTS替代IN、用NOT EXISTS替代NOT IN<br>高效：select … from tableA where exists(select 1 from tableB  where tableA.A=tableB.A and  tableB.B=’X’))<br>低效：select  … from tableA where tableA.A in(select tableB.A from tableB where tableB.B=’X’)</li>
-<li>子查询里使用group by会加快查询速度，尽量少用或不用distinct，如下边情况:<br>select  top 100  t1.*  from  table1  t1  where  t1.FId  in (<br>高效：select t2.FId from table2 t2 where t2.FName=‘xxx’ group by t2.FId<br>低效：select distinct t2.FId from table2 t2 where t2.FName=‘xxx’<br>)。</li>
-<li>不要写过于复杂的SQL语句。有限度的在from里使用嵌套子查询，就是from （select f1,f2,f3 from table1 where f4=‘xx’）p 的方式。遇到需要用到多个这样的嵌套查询时，建议使用临时表处理。使用临时表会提高查询速度，大数据量查询效果更明显。注意：临时表使用完后应该drop掉。</li>
-<li>多表查询时，尽量用表连接替换exists子句、子查询；能用inner join 的，尽量不用left/right join。</li>
-<li>count(<em>)快于conut(1)，如果列有索引，count(列)快于count(</em>)</li>
-<li>如果是全表数据删除，truncate比delete效率高，truncate 删除数据是不作日志记录的。</li>
-</ul>
-<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><p>应用程序里写SQL：</p>
-<ul>
-<li>禁止直接使用select * from Table1而不加条件限制；需要什么字段应写明字段名称。</li>
-<li>多表查询，查询条件里必须包含所有的表，禁止在where 部分仅写个where 1=1 而不加其它条件，因为这样相当做了一个笛卡尔积，如果两个表的记录都是1万，则查询的结果将是1亿行，这样就容易把数据库的tempdb爆满，引发故障并导致系统不能用。</li>
-<li>在代码里编写SQL语句，在进行多表关联查询时，表的后面必须加上别名；在字段名前也要加上表别名，明确字段归属的表。 别名的命名按次序a,b,c,d…，或者用简写，如tbMm1Traffic  tfc, tbNeIp  ip。</li>
-<li>为考虑数据库兼容与移植问题：<ul>
-<li>编写SQL时，字段名、表名必须遵循大小写敏感的规则，就算当前所用的数据库可以忽略大小写（例如MYSQL，oracle，SqlServer，DB2）。</li>
-<li>要求对字段起别名，并且别名也强制区分大小写，从而保证界面元素名称与字段的对应。<code>如：Select  iStaffId “iStffId”, sStaffName “sStaffName” from tbOsStaff。</code></li>
-<li>要将一个完整的SQL实例做为注释写在代码里（编程时，查询条件部分多为动态拼装，所以源码里的SQL一般不是完整的SQL实例，可以做一次完整查询，然后从控制台copy一个完整实例贴在注释里）。–此点为曹雄所提。</li>
-</ul>
-</li>
-<li>编写比较复杂的查询语句时，需要格式化（加上回车换行符）和加上详细的注释说明。</li>
-<li>一些枚举、基础配置表的翻译，不要使用数据库表关联的方式翻译；两个以上字段是这种情况，就应该单独查询出来，然后在程序中转换。</li>
-<li>不要将所有的应用压力都推向数据库。需要做比较复杂的运算时，不要企图用一个SQL语句实现或通过编写一批十分复杂的SQL实现，例如：数据的行转列，完全可以使用程序语言的灵活性处理。</li>
-<li>开发时要关注运行速度慢的SQL（标准：超过1秒的SQL），着情进行优化处理，对于不能优化的，用程序处理。</li>
-<li>查询字段的选择，尽量使用ID或有索引的字段，或者说对频繁查询的字段，应该加索引，这样可以大大加快查询的速度。</li>
-<li>尽量用短事务。在事务里尽量只写新增、删除、修改的语句，少写查询SQL。 </li>
-<li>如果要判断某一字符字段是否为空，应该使用以下的判断条件：rtrim(fieldName) is null。<code>如：rtrim(&#39;  &#39;) is null返回的是true； &#39;  &#39; is null 返回的是false。</code></li>
-<li>不要在in 条件里放过多的条件（in 里是子查询除外），这样有可能使查询失败，例如Sybase里in的条件不能超过300个。其他的数据库具体数目不清楚，不过在编写代码的时候必须要留意是否会有这样的情况出现。</li>
-<li>表里的时间字段，如果是取当前时间的，使用数据库服务器的时间。</li>
-<li>手工键入的字符串查询条件都要求模糊匹配。如果还要求不区分大小写，可用upper(fieldName) like upper(‘%+查询条件+%’)，查询字段和条件都用upper进行转换，注意索引失效的情况。</li>
-<li>尽量写标准的SQL，如： *=，= null 这些sybase 特有的语法，而标准SQL: a left join b on …，is null。</li>
-</ul>
+<h3 id="redis概述"><a href="#redis概述" class="headerlink" title="redis概述"></a>redis概述</h3><h4 id="关于关系型数据库和nosql数据库"><a href="#关于关系型数据库和nosql数据库" class="headerlink" title="关于关系型数据库和nosql数据库"></a>关于关系型数据库和nosql数据库</h4><p>NoSQL（not only SQL），意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型数据库。<br>关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据    库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库    要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实    际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。</p>
+<h4 id="为什么要使用Redis"><a href="#为什么要使用Redis" class="headerlink" title="为什么要使用Redis"></a>为什么要使用Redis</h4><p>随着互联网的发展，对数据产生了很多新的需求：</p>
+<ol>
+<li>对数据库高并发读写的需求</li>
+<li>对海量数据的高效率存储和访问的需求</li>
+<li>对数据库的搞可扩展性和高可用性的需求</li>
+</ol>
+<h4 id="redis在Linux上的安装"><a href="#redis在Linux上的安装" class="headerlink" title="redis在Linux上的安装"></a>redis在Linux上的安装</h4><p>1）安装redis编译的c环境，yum install gcc-c++<br>2）将redis-2.6.16.tar.gz上传到Linux系统中<br>3）解压到/usr/local下  tar -xvf redis-2.6.16.tar.gz -C /usr/local<br>4）进入redis-2.6.16目录 使用make命令编译redis<br>5）在redis-2.6.16目录中 使用make PREFIX=/usr/local/redis install命令安装redis到/usr/local/redis中<br>6）拷贝redis-2.6.16中的redis.conf到安装目录redis中<br>7）启动redis 在bin下执行命令redis-server redis.conf<br>8）如需远程连接redis，需配置redis端口6379在linux防火墙中开发<br>    /sbin/iptables -I INPUT -p tcp –dport 6379 -j ACCEPT<br>    /etc/rc.d/init.d/iptables save<br>将redis.conf文件中的daemonize从false修改成true表示后台启动<br>使用命令查看6379端口是否启动ps -ef | grep redis</p>
+<h3 id="Java操作Redis"><a href="#Java操作Redis" class="headerlink" title="Java操作Redis"></a>Java操作Redis</h3><p>一般通过Jedis操作</p>
+<h4 id="单实例连接"><a href="#单实例连接" class="headerlink" title="单实例连接"></a>单实例连接</h4><pre><code>@Test
+//获得单一的jedis对象操作数据库
+public void test1(){
+
+    //1、获得连接对象
+    Jedis jedis = new Jedis(&quot;192.168.186.131&quot;, 6379);
+
+    //2、获得数据
+    String username = jedis.get(&quot;username&quot;);
+    System.out.println(username);
+
+    //3、存储
+    jedis.set(&quot;addr&quot;, &quot;北京&quot;);
+    System.out.println(jedis.get(&quot;addr&quot;));
+
+    //4、释放资源
+    jedis.close();    
+}
+</code></pre><h4 id="通过jedis的pool获得jedis连接对象"><a href="#通过jedis的pool获得jedis连接对象" class="headerlink" title="通过jedis的pool获得jedis连接对象"></a>通过jedis的pool获得jedis连接对象</h4><pre><code>@Test
+public void test2(){
+    //0、创建池子的配置对象
+    JedisPoolConfig poolConfig = new JedisPoolConfig();
+    poolConfig.setMaxIdle(30);//最大闲置个数
+    poolConfig.setMinIdle(10);//最小闲置个数
+    poolConfig.setMaxTotal(50);//最大连接数
+
+    //1、创建一个redis的连接池
+    JedisPool pool = new JedisPool(poolConfig, &quot;192.168.186.131&quot;, 6379);
+
+    //2、从池子中获取redis的连接资源
+    Jedis jedis = pool.getResource();
+
+    //3、操作数据库
+    jedis.set(&quot;xxx&quot;,&quot;yyyy&quot;);
+    System.out.println(jedis.get(&quot;xxx&quot;));
+
+    //4、关闭资源
+    jedis.close();
+    pool.close();
+
+}
+</code></pre><h4 id="封装连接池工具类连接"><a href="#封装连接池工具类连接" class="headerlink" title="封装连接池工具类连接"></a>封装连接池工具类连接</h4><pre><code>public class JedisPoolUtils {
+
+    private static JedisPool pool = null;
+
+    static{            
+        //加载配置文件
+        InputStream in = JedisPoolUtils.class.getClassLoader().getResourceAsStream(&quot;redis.properties&quot;);
+        Properties pro = new Properties();
+        try {
+            pro.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //获得池子对象
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxIdle(Integer.parseInt(pro.get(&quot;redis.maxIdle&quot;).toString()));//最大闲置个数
+        poolConfig.setMinIdle(Integer.parseInt(pro.get(&quot;redis.minIdle&quot;).toString()));//最小闲置个数
+        poolConfig.setMaxTotal(Integer.parseInt(pro.get(&quot;redis.maxTotal&quot;).toString()));//最大连接数
+        pool = new JedisPool(poolConfig,pro.getProperty(&quot;redis.url&quot;) , Integer.parseInt(pro.get(&quot;redis.port&quot;).toString()));
+    }
+
+    //获得jedis资源的方法
+    public static Jedis getJedis(){
+        return pool.getResource();
+    }
+
+    public static void main(String[] args) {
+        Jedis jedis = getJedis();
+        System.out.println(jedis.get(&quot;xxx&quot;));
+    }    
+}
+</code></pre><h3 id="Redis的常用命令"><a href="#Redis的常用命令" class="headerlink" title="Redis的常用命令"></a>Redis的常用命令</h3><p>redis是一种高级的key-value的存储系统<br>key是字符串类型，尽可能满足如下几点：</p>
+<pre><code>1. key不要太长，最好不要操作1024个字节，这不仅会消耗内存还会降低查找        效率
+2.  key不要太短，如果太短会降低key的可读性
+3. 在项目中，key最好有一个统一的命名规范（根据企业的需求）
+</code></pre><p>value支持五种数据类型：</p>
+<pre><code>1. 字符串型 string
+2. 字符串列表 lists
+3. 字符串集合 sets
+4. 有序字符串集合 sorted sets
+5. 哈希类型 hashs
+</code></pre><p>存储字符串string<br>    字符串类型是Redis中最为基础的数据存储类型，它在Redis中是二进制安全的，这    便意味着该类型可以接受任何格式的数据。字符串类型的Value最多可以容纳的数据长度是512M</p>
+<pre><code>1. set key value：设定key持有指定的字符串value，如果该key存在则进行覆盖    操作。总是返回”OK”
+2. get key：获取key的value。如果与该key关联的value不是String类型，redis    将返回错误信息，因为get命令只能用于获取String value；如果该key不存在，返    回null。
+3. getset key value：先获取该key的值，然后在设置该key的值。
+4. incr key：将指定的key的value原子性的递增1.如果该key不存在，其初始值    为0，在incr之后其值为1。如果value的值不能转成整型，如hello，该操作将执    行失败并返回相应的错误信息。
+5. decr key：将指定的key的value原子性的递减1.如果该key不存在，其初始值    为0，在incr之后其值为-1。如果value的值不能转成整型，如hello，该操作将执    行失败并返回相应的错误信息。
+</code></pre><p>redis数据类型list<br>    arraylist和list的区别<br>        arraylist查询快，list更删改快</p>
 
                 <hr>
                 
@@ -229,14 +285,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/02/06/redis/" data-toggle="tooltip" data-placement="top"
-                           title="redis">&larr; Previous Post</a>
+                        <a href="/2018/02/06/Nginx安装配置/" data-toggle="tooltip" data-placement="top"
+                           title="Nginx安装配置">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2018/01/20/工厂方法模式和抽象工厂模式/" data-toggle="tooltip" data-placement="top"
-                           title="工厂方法模式和抽象工厂模式">Next Post &rarr;</a>
+                        <a href="/2018/01/22/SQL优化/" data-toggle="tooltip" data-placement="top"
+                           title="SQL优化">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -252,7 +308,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#优化指引"><span class="toc-text">优化指引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程规范"><span class="toc-text">编程规范</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis概述"><span class="toc-text">redis概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关于关系型数据库和nosql数据库"><span class="toc-text">关于关系型数据库和nosql数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要使用Redis"><span class="toc-text">为什么要使用Redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis在Linux上的安装"><span class="toc-text">redis在Linux上的安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java操作Redis"><span class="toc-text">Java操作Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单实例连接"><span class="toc-text">单实例连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过jedis的pool获得jedis连接对象"><span class="toc-text">通过jedis的pool获得jedis连接对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#封装连接池工具类连接"><span class="toc-text">封装连接池工具类连接</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis的常用命令"><span class="toc-text">Redis的常用命令</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -274,8 +330,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#数据库"
-                           title="数据库">数据库</a>
+                        <a class="tag" href="/tags/#java web"
+                           title="java web">java web</a>
                         
                     </div>
                 </section>
